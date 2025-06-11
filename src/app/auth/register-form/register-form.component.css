@@ -1,0 +1,49 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #1f75cc;
+  height: 100vh;
+  font-family: 'Press Start 2P', cursive;
+  padding: 20px;
+  color: white;
+}
+
+.form-container {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 4px 4px #000;
+  width: 100%;
+  max-width: 400px;
+  color: #000;
+}
+
+.form-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  font-family: 'Press Start 2P', cursive;
+  border-radius: 8px;
+  border: 2px solid #000;
+  font-size: 12px;
+}
+
+button {
+  background-color: #f3c427;
+  border: none;
+  padding: 12px;
+  font-family: 'Press Start 2P', cursive;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 3px 3px #000;
+  font-size: 12px;
+}

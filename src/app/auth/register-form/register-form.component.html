@@ -1,0 +1,14 @@
+<h2>Registro</h2>
+<form (ngSubmit)="register()">
+  <input [(ngModel)]="username" name="username" placeholder="Usuario" required>
+  <input [(ngModel)]="password" name="password" type="password" placeholder="Contraseña" required>
+  
+  <select [(ngModel)]="role" name="role">
+    <option value="student">Estudiante</option>
+    <option value="teacher">Maestro</option>
+  </select>
+
+  <input *ngIf="role === 'student'" [(ngModel)]="classCode" name="classCode" placeholder="Código de clase">
+
+  <button type="submit">Registrarse</button>
+</form>

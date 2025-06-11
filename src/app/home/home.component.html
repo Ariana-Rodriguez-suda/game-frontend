@@ -1,0 +1,101 @@
+<h1>Aventura Numeral</h1>
+
+<div class="button-container">
+  <button (click)="jugar()">Jugar</button>
+  <button (click)="ajustes()">Ajustes</button>
+<button (click)="irRegister()">Registrar</button>
+<button (click)="irLogin()">Iniciar Sesión</button>
+<button (click)="irProfile()">Perfil</button>
+
+</div>
+
+<!-- Íconos flotantes -->
+<div class="icon multiply icon-1">×</div>
+<div class="icon divide icon-2">÷</div>
+<div class="icon red icon-3">÷</div>
+<div class="icon orange icon-4">×</div>
+<div class="icon multiply icon-5">×</div>
+<div class="icon divide icon-6">÷</div>
+
+<style>
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #1f75cc; /* fondo azul */
+  font-family: 'Press Start 2P', cursive; /* estilo pixelado */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Botón central */
+.button-container {
+  background-color: #f3c427; /* amarillo */
+  border-radius: 12px;
+  padding: 20px 40px;
+  text-align: center;
+  box-shadow: 3px 3px #000;
+  cursor: pointer;
+  margin: 20px 0;
+}
+
+.button-container button {
+  display: block;
+  background: none;
+  border: none;
+  font-size: 16px;
+  margin: 10px 0;
+  cursor: pointer;
+  color: #000;
+}
+
+/* Título */
+h1 {
+  font-size: 24px;
+  color: white;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* Iconos de operaciones flotando */
+.icon {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  font-size: 30px;
+  text-align: center;
+  border-radius: 8px;
+  padding: 8px;
+  font-weight: bold;
+}
+
+.icon.multiply {
+  background-color: #ffeb3b;
+  color: #000;
+}
+
+.icon.divide {
+  background-color: #ffffff;
+  color: #000;
+}
+
+.icon.red {
+  background-color: #f44336;
+  color: #fff;
+}
+
+.icon.orange {
+  background-color: #ff9800;
+  color: #fff;
+}
+
+/* Posiciones */
+.icon-1 { top: 5%; left: 5%; }
+.icon-2 { top: 10%; right: 10%; }
+.icon-3 { bottom: 15%; left: 10%; }
+.icon-4 { bottom: 10%; right: 5%; }
+.icon-5 { top: 20%; left: 40%; }
+.icon-6 { bottom: 20%; right: 40%; }
+</style>
