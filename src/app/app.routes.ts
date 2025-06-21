@@ -1,12 +1,20 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { RegisterFormComponent } from './auth/register-form/register-form.component';
-import { LoginFormComponent } from './auth/login-form/login-form.component';
-import { UserProfileComponent } from './user/user-profile/user-profile.component';
 
 export const appRoutes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'register', component: RegisterFormComponent },
-  { path: 'login', component: LoginFormComponent },
-  { path: 'profile', component: UserProfileComponent },
+  {
+    path: '',
+    loadComponent: () => import('./home/home.component').then(m => m.HomeComponent),
+  },
+  {
+    path: 'register',
+    loadComponent: () => import('./auth/register-form/register-form.component').then(m => m.RegisterComponent),
+  },
+  {
+    path: 'login',
+    loadComponent: () => import('./auth/login-form/login-form.component').then(m => m.LoginFormComponent),
+  },
+  {
+    path: 'profile',
+    loadComponent: () => import('./user/user-profile/user-profile.component').then(m => m.UserProfileComponent),
+  },
 ];

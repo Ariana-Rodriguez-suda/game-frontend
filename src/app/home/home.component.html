@@ -2,19 +2,18 @@
 
 <div class="button-container">
   <button (click)="jugar()"></button>
-  <button (click)="ajustes()">Ajustes</button>
-<button (click)="irRegister()">Registrar</button>
 <button (click)="irLogin()">Iniciar Sesión</button>
-<button (click)="irProfile()"></button>
-
+<button (click)="irRegister()">Registrar</button>
+  <button (click)="ajustes()">Ajustes</button>
+  <button (click)="irProfile()"></button>
 </div>
 
 <!-- Íconos flotantes -->
 <div class="icon multiply icon-1">×</div>
-<div class="icon divide icon-2">÷</div>
+<div class="icon divide icon-2">-</div>
 <div class="icon red icon-3">÷</div>
 <div class="icon orange icon-4">×</div>
-<div class="icon multiply icon-5">×</div>
+<div class="icon multiply icon-5">+</div>
 <div class="icon divide icon-6">÷</div>
 
 <style>
@@ -62,9 +61,9 @@ h1 {
 /* Iconos de operaciones flotando */
 .icon {
   position: absolute;
-  width: 40px;
-  height: 40px;
-  font-size: 30px;
+  width: 60px;
+  height: 60px;
+  font-size: 40px;
   text-align: center;
   border-radius: 8px;
   padding: 8px;
@@ -96,6 +95,6 @@ h1 {
 .icon-2 { top: 10%; right: 10%; }
 .icon-3 { bottom: 15%; left: 10%; }
 .icon-4 { bottom: 10%; right: 5%; }
-.icon-5 { top: 20%; left: 40%; }
+.icon-5 { top: 10%; left: 40%; }
 .icon-6 { bottom: 20%; right: 40%; }
 </style>
