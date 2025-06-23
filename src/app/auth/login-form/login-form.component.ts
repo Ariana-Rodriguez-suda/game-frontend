@@ -12,15 +12,19 @@ import { CommonModule } from '@angular/common';
   imports: [FormsModule, CommonModule],
 })
 export class LoginFormComponent {
-  username = '';
+  email = '';
   password = '';
 
   constructor(private authService: AuthService, private router: Router) {}
 
   login() {
-    this.authService.login(this.username, this.password).subscribe({
-      next: () => this.router.navigate(['/profile']),
-      error: err => alert('Credenciales inválidas')
-    });
+this.authService.login(this.email, this.password).subscribe({
+  next: (res) => {
+    localStorage.setItem('token', res.access_token);
+    localStorage.setItem('userId', res.user.id);
+    this.router.navigate(['/user-profile']);
+  },
+  error: () => alert('Credenciales inválidas')
+});
   }
 }

@@ -12,8 +12,8 @@ export class AuthService {
     return this.http.post(this.apiUrl + '/auth/register', data);
   }
 
-  login(username: string, password: string): Observable<any> {
-    return this.http.post(this.apiUrl + '/auth/login', { username, password });
-  }
+// frontend - auth.service.ts
+login(email: string, password: string): Observable<any> {
+  return this.http.post(this.apiUrl + '/auth/login', { email, password });
 }
-
+}

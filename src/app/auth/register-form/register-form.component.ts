@@ -60,34 +60,23 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  onSubmit() {
-  console.log('onSubmit llamado');
-  if (this.registerform.invalid) {
-    console.log('Formulario inválido');
-    return;
+onSubmit() {
+  if (this.registerform.invalid) return;
+
+  const formData = this.registerform.value;
+
+  if (!this.hasClassCode) {
+    formData.classCode = null;
   }
-    const formData = this.registerform.value;
 
-    // Si no tiene código, limpiar campo classCode
-    if (!this.hasClassCode) {
-      formData.classCode = null;
-    }
-
-    // Si es maestro, enviar newClassName como classCode para crear la clase
-    if (formData.role === 'maestro' && formData.newClassName) {
-      formData.classCode = formData.newClassName;
-    }
-
-    // Llamar al servicio de registro
-    this.authService.register(formData).subscribe(() => {
-      // Redirigir según rol
-      if (formData.role === 'maestro') {
-        this.router.navigate(['/user-profile']); // Perfil maestro
-      } else if (formData.role === 'jugador') {
-        this.router.navigate(['/user-profile']); // Perfil jugador
-      } else {
-        this.router.navigate(['/login']);
-      }
-    });
+  if (formData.role === 'maestro' && formData.newClassName) {
+    formData.classCode = formData.newClassName;
   }
+
+  this.authService.register(formData).subscribe((res) => {
+    localStorage.setItem('token', res.access_token);
+    localStorage.setItem('userId', res.user.id);
+    this.router.navigate(['/user-profile']);
+  });
+}
 }
