@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class ClassService {
-  private apiUrl = 'http://localhost:3000'; // cambia si tu backend usa otro puerto
+  private apiUrl = 'https://game-backend-87km.onrender.com'; // cambia si tu backend usa otro puerto
 
   constructor(private http: HttpClient) {}
 

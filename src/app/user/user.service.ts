@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-  private apiUrl = 'http://localhost:3000'; // ajusta si tu backend usa otro puerto
+  private apiUrl = 'https://game-backend-87km.onrender.com'; // ajusta si tu backend usa otro puerto
 
   constructor(private http: HttpClient) {}
 
