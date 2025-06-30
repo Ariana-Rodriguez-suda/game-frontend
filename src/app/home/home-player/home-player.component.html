@@ -1,11 +1,9 @@
-<!-- Botón cambiar a maestro -->
-<div class="rol-button" (click)="cambiarARolMaestro()">
-  Maestro
-</div>
+<div class="home-container">
+  <button class="role-switch" (click)="goToTeacher()">Maestro</button>
 
-<h1>Aventura Numeral</h1>
-
-<div class="button-container">
-  <button (click)="irLogin()">Iniciar Sesión</button>
-  <button (click)="irRegister()">Registrarse</button>
+  <h1>Aventura Fraccional</h1>
+  <div class="button-group">
+    <button routerLink="/login-player">Iniciar Sesión</button>
+    <button routerLink="/register-player">Registrarse</button>
+  </div>
 </div>
