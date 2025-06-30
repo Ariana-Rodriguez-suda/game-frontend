@@ -17,7 +17,7 @@ export class LoginPlayerFormComponent {
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  login() {
+  loginPlayer() {
     const data = { username: this.username, password: this.password };
 
     this.authService.loginPlayer(data).subscribe({

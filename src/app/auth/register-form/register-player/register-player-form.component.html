@@ -1,6 +1,6 @@
 <div class="form-container">
   <h2>Registro - Jugador</h2>
-  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmitPlayer()">
     <input type="text" placeholder="Nombre de usuario" formControlName="username" />
     <input type="password" placeholder="Contraseña" formControlName="password" />
     <button type="submit">Registrarse</button>

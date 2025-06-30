@@ -22,7 +22,7 @@ export class RegisterTeacherFormComponent {
     });
   }
 
-  onSubmit() {
+  onSubmitTeacher() {
     if (this.registerForm.invalid) return;
 
     const data = {

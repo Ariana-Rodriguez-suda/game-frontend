@@ -21,7 +21,7 @@ export class RegisterPlayerFormComponent {
     });
   }
 
-  onSubmit() {
+  onSubmitPlayer() {
     if (this.registerForm.invalid) return;
 
     const data = {

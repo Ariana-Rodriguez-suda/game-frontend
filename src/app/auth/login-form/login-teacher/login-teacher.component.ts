@@ -17,7 +17,7 @@ export class LoginTeacherFormComponent {
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  login() {
+  loginTeacher() {
     const data = { email: this.email, password: this.password };
 
     this.authService.loginTeacher(data).subscribe({
