@@ -25,7 +25,12 @@ export class RegisterTeacherFormComponent {
   onSubmit() {
     if (this.registerForm.invalid) return;
 
-    this.authService.register(this.registerForm.value).subscribe((res) => {
+    const data = {
+      ...this.registerForm.value,
+      role: 'teacher',
+    };
+
+    this.authService.register(data).subscribe((res) => {
       localStorage.setItem('token', res.access_token);
       localStorage.setItem('userId', res.user.id);
       this.router.navigate(['/teacher-profile']);

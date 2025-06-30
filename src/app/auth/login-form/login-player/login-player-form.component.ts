@@ -18,7 +18,9 @@ export class LoginPlayerFormComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   login() {
-    this.authService.login(this.username, this.password).subscribe({
+    const data = { username: this.username, password: this.password };
+
+    this.authService.loginPlayer(data).subscribe({
       next: (res) => {
         localStorage.setItem('token', res.access_token);
         localStorage.setItem('userId', res.user.id);

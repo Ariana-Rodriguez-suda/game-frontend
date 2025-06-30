@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../auth.service';
-import { CommonModule, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-register-player-form',
@@ -24,7 +24,12 @@ export class RegisterPlayerFormComponent {
   onSubmit() {
     if (this.registerForm.invalid) return;
 
-    this.authService.register(this.registerForm.value).subscribe((res) => {
+    const data = {
+      ...this.registerForm.value,
+      role: 'player',
+    };
+
+    this.authService.register(data).subscribe((res) => {
       localStorage.setItem('token', res.access_token);
       localStorage.setItem('userId', res.user.id);
       this.router.navigate(['/player-profile']);

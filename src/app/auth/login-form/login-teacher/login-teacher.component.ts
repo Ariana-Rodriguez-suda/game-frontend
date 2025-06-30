@@ -18,7 +18,9 @@ export class LoginTeacherFormComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   login() {
-    this.authService.login(this.email, this.password).subscribe({
+    const data = { email: this.email, password: this.password };
+
+    this.authService.loginTeacher(data).subscribe({
       next: (res) => {
         localStorage.setItem('token', res.access_token);
         localStorage.setItem('userId', res.user.id);
