@@ -13,4 +13,13 @@ export class HomePlayerComponent {
   goToTeacher() {
     this.router.navigate(['/home-teacher']);
   }
+
+  goToLogin() {
+  this.router.navigate(['/login-player']); // o '/login-teacher'
+}
+
+goToRegister() {
+  this.router.navigate(['/register-player']); // o '/register-teacher'
+}
+
 }
