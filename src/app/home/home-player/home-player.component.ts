@@ -13,7 +13,7 @@ export class HomePlayerComponent {
   constructor(private router: Router) {}
 
   irLogin() {
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login-player']);
   }
 
   irRegister() {

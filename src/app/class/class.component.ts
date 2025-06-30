@@ -6,7 +6,7 @@ import { CommonModule, NgIf, NgFor } from '@angular/common';
 @Component({
   selector: 'app-class',
   standalone: true,
-  imports: [CommonModule, NgIf, NgFor],
+  imports: [CommonModule, NgFor],
   templateUrl: './class.component.html',
   styleUrls: ['./class.component.css']
 })

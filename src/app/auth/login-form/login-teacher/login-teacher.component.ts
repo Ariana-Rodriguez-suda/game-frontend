@@ -22,7 +22,7 @@ export class LoginTeacherFormComponent {
       next: (res) => {
         localStorage.setItem('token', res.access_token);
         localStorage.setItem('userId', res.user.id);
-        this.router.navigate(['/user-profile']);
+        this.router.navigate(['/teacher-profile']);
       },
       error: () => alert('Credenciales inválidas'),
     });
