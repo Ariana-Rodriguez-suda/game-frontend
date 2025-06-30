@@ -29,7 +29,7 @@ export class RegisterPlayerFormComponent {
       role: 'player',
     };
 
-    this.authService.register(data).subscribe((res) => {
+    this.authService.registerPlayer(data).subscribe((res) => {
       localStorage.setItem('token', res.access_token);
       localStorage.setItem('userId', res.user.id);
       this.router.navigate(['/player-profile']);

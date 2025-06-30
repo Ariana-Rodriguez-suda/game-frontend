@@ -30,7 +30,7 @@ export class RegisterTeacherFormComponent {
       role: 'teacher',
     };
 
-    this.authService.register(data).subscribe((res) => {
+    this.authService.registerTeacher(data).subscribe((res) => {
       localStorage.setItem('token', res.access_token);
       localStorage.setItem('userId', res.user.id);
       this.router.navigate(['/teacher-profile']);
