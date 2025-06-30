@@ -8,19 +8,19 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  registerPlayer(data: any): Observable<any> {
+  registerPlayer(data: { username: string; password: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/auth/player/register`, data);
   }
 
-  registerTeacher(data: any): Observable<any> {
+  registerTeacher(data: { username: string; email: string; password: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/auth/teacher/register`, data);
   }
 
-  loginTeacher(data: { email: string, password: string }): Observable<any> {
-    return this.http.post(`${this.apiUrl}/auth/login`, data);
+  loginTeacher(data: { email: string; password: string }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/auth/teacher/login`, data);
   }
 
-loginPlayer(username: string, password: string): Observable<any> {
-  return this.http.post(`${this.apiUrl}/auth/player/login`, { username, password });
-}
+  loginPlayer(data: { username: string; password: string }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/auth/player/login`, data);
+  }
 }
