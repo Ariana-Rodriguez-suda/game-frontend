@@ -19,9 +19,11 @@ export class TeacherProfileComponent implements OnInit {
   createdClassCode: string | null = null;
 
   // Para editar
-  editUsername = '';
-  editEmail = '';
-  editPassword = '';
+editMode = false;
+editUsername = '';
+editEmail = '';
+editPassword = '';
+
 
   constructor(
     private teacherService: TeacherService,

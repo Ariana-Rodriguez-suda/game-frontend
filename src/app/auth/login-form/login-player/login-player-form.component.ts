@@ -20,13 +20,13 @@ export class LoginPlayerFormComponent {
   loginPlayer() {
     const data = { username: this.username, password: this.password };
 
-    this.authService.loginPlayer(data).subscribe({
-      next: (res) => {
-        localStorage.setItem('token', res.access_token);
-        localStorage.setItem('userId', res.user.id);
-        this.router.navigate(['/player-profile']);
-      },
-      error: () => alert('Credenciales inválidas'),
-    });
+this.authService.loginPlayer(this.username, this.password).subscribe({
+  next: (res) => {
+    localStorage.setItem('token', res.access_token);
+    localStorage.setItem('userId', res.user.id);
+    this.router.navigate(['/player-profile']);
+  },
+  error: () => alert('Credenciales inválidas'),
+});
   }
 }

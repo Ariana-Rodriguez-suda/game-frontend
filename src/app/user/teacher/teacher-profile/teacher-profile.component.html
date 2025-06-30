@@ -1,16 +1,25 @@
 <div class="profile-card">
   <h2>Perfil de Maestro</h2>
 
-  <label>Usuario:</label>
-  <input [(ngModel)]="editUsername" />
+  <div *ngIf="!editMode">
+    <p><strong>Usuario:</strong> {{ user?.username }}</p>
+    <p><strong>Correo:</strong> {{ user?.email }}</p>
+    <button (click)="editMode = true">Modificar datos</button>
+  </div>
 
-  <label>Correo:</label>
-  <input [(ngModel)]="editEmail" />
+  <div *ngIf="editMode">
+    <label>Usuario:</label>
+    <input [(ngModel)]="editUsername" />
 
-  <label>Nueva Contraseña:</label>
-  <input [(ngModel)]="editPassword" type="password" />
+    <label>Correo:</label>
+    <input [(ngModel)]="editEmail" />
 
-  <button (click)="saveProfileChanges()">Guardar Cambios</button>
+    <label>Nueva Contraseña:</label>
+    <input [(ngModel)]="editPassword" type="password" />
+
+    <button (click)="saveProfileChanges()">Guardar Cambios</button>
+    <button (click)="editMode = false">Cancelar</button>
+  </div>
 
   <hr />
 

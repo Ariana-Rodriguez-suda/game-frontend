@@ -20,7 +20,7 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/auth/login`, data);
   }
 
-  loginPlayer(data: { username: string, password: string }): Observable<any> {
-    return this.http.post(`${this.apiUrl}/auth/login`, data);
-  }
+loginPlayer(username: string, password: string): Observable<any> {
+  return this.http.post(`${this.apiUrl}/auth/player/login`, { username, password });
+}
 }
