@@ -1,0 +1,32 @@
+<div class="profile-card">
+  <h2>Perfil de Maestro</h2>
+
+  <label>Usuario:</label>
+  <input [(ngModel)]="editUsername" />
+
+  <label>Correo:</label>
+  <input [(ngModel)]="editEmail" />
+
+  <label>Nueva Contraseña:</label>
+  <input [(ngModel)]="editPassword" type="password" />
+
+  <button (click)="saveProfileChanges()">Guardar Cambios</button>
+
+  <hr />
+
+  <h3>Crear nueva clase</h3>
+  <form (ngSubmit)="createClass()">
+    <input [(ngModel)]="newClassCode" name="classCode" placeholder="Nombre de nueva clase" required />
+    <button type="submit">Crear clase</button>
+  </form>
+
+  <div *ngIf="classes.length > 0">
+    <h3>Mis clases</h3>
+    <ul>
+      <li *ngFor="let c of classes">
+        {{ c.name }}
+        <button (click)="goToClass(c.id)">Ver estudiantes</button>
+      </li>
+    </ul>
+  </div>
+</div>

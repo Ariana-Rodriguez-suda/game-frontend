@@ -1,0 +1,7 @@
+<h2>Estudiantes Registrados</h2>
+<ul>
+  <li *ngFor="let student of students">
+    <img [src]="student.avatar?.imageUrl" alt="avatar" width="40" height="40" />
+    {{ student.username }} - Monedas: {{ student.coins }}
+  </li>
+</ul>

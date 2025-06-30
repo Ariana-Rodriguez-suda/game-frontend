@@ -1,0 +1,34 @@
+.avatar-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+.avatar-card {
+  background-color: white;
+  color: black;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 2px 2px #000;
+  text-align: center;
+  font-family: 'Press Start 2P', cursive;
+  width: 120px;
+}
+
+.avatar-card img {
+  display: block;
+  margin: 0 auto 10px;
+  border-radius: 6px;
+}
+
+button {
+  background-color: #f3c427;
+  border: none;
+  padding: 6px;
+  font-family: 'Press Start 2P', cursive;
+  cursor: pointer;
+  border-radius: 6px;
+  box-shadow: 2px 2px #000;
+  font-size: 10px;
+}

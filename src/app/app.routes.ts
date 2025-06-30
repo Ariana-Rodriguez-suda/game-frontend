@@ -1,12 +1,22 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { LoginFormComponent } from './auth/login-form/login-form.component';
-import { RegisterComponent } from './auth/register-form/register-form.component';
-import { UserProfileComponent } from './user/user-profile/user-profile.component';
+import { HomePlayerComponent } from './home/home-player/home-player.component';
+import { HomeTeacherComponent } from './home/home-teacher/home-teacher.component';
+import { LoginPlayerFormComponent } from './auth/login-form/login-player/login-player-form.component';
+import { LoginTeacherFormComponent } from './auth/login-form/login-teacher/login-teacher.component';
+import { RegisterPlayerFormComponent } from './auth/register-form/register-player/register-player-form.component';
+import { RegisterTeacherFormComponent } from './auth/register-form/register-teacher/register-teacher.component';
+import { PlayerProfileComponent } from './user/player/player-profile/player-profile.component';
+import { TeacherProfileComponent } from './user/teacher/teacher-profile/teacher-profile.component';
 
 export const appRoutes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'login', component: LoginFormComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'user-profile', component: UserProfileComponent }, 
+  { path: '', redirectTo: 'home-player', pathMatch: 'full' },
+  { path: 'home-player', component: HomePlayerComponent },
+  { path: 'home-teacher', component: HomeTeacherComponent },
+  { path: 'login-player', component: LoginPlayerFormComponent },
+  { path: 'login-teacher', component: LoginTeacherFormComponent },
+  { path: 'register-player', component: RegisterPlayerFormComponent },
+  { path: 'register-teacher', component: RegisterTeacherFormComponent },
+  { path: 'player-profile', component: PlayerProfileComponent },
+  { path: 'teacher-profile', component: TeacherProfileComponent },
 ];
+

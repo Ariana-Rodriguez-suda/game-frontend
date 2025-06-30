@@ -1,0 +1,24 @@
+h3 {
+  font-family: 'Press Start 2P', cursive;
+  color: #1f75cc;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.level-container {
+  background-color: #f3f3f3;
+  border: 2px solid #1f75cc;
+  border-radius: 12px;
+  padding: 20px;
+  max-width: 500px;
+  margin: 0 auto;
+  font-family: 'Arial', sans-serif;
+  text-align: center;
+}
+
+.fraction-block {
+  font-weight: bold;
+  font-size: 20px;
+  margin-top: 10px;
+  color: #333;
+}

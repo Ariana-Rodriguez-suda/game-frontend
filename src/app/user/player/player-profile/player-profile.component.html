@@ -1,0 +1,15 @@
+<div class="profile-card" *ngIf="player">
+  <h2>Perfil del Jugador</h2>
+  <p><strong>Usuario:</strong> {{ player.username }}</p>
+  <p><strong>Monedas:</strong> {{ player.coins }}</p>
+
+  <div *ngIf="player.activeAvatar">
+    <p><strong>Avatar activo:</strong></p>
+    <img [src]="player.activeAvatar.imageUrl" alt="Avatar" width="100" />
+  </div>
+
+  <button (click)="irMapa()">Ir al mapa</button>
+  <button (click)="irTienda()">Ir a la tienda</button>
+</div>
+
+<app-avatar-selector></app-avatar-selector>

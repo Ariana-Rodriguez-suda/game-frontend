@@ -3,16 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
-export class AuthService {
+export class MapService {
   private apiUrl = 'https://game-backend-87km.onrender.com';
 
   constructor(private http: HttpClient) {}
 
-  register(data: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/auth/register`, data);
-  }
-
-  login(email: string, password: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/auth/login`, { email, password });
+  getAvailableWorlds(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/map/worlds`);
   }
 }
