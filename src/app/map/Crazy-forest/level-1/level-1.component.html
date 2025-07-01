@@ -1,11 +1,42 @@
-<h3>Nivel 1 - Suma de fracciones</h3>
-
-<p>En este nivel aprenderás a sumar fracciones visualmente.</p>
-
-<!-- Aquí va la interfaz del juego para el nivel 1 -->
-
 <div class="level-container">
-  <!-- Ejemplo visual simple, puedes reemplazar con tu lógica -->
-  <p>Ejemplo visual de fracciones:</p>
-  <div class="fraction-block">1/4 + 1/4 = 2/4</div>
+
+  <div class="game-area">
+  <div class="character" #character></div>
+  <div class="platform"></div>
+</div>
+
+  <div class="message-box">
+    <p *ngFor="let msg of messages">{{ msg }}</p>
+  </div>
+
+  <div class="controls">
+    <button (click)="activarModoSuma()">Activar Modo Suma</button>
+  </div>
+
+  <div class="blocks-area">
+    <div 
+      class="block" 
+      *ngFor="let block of blocks" 
+      [attr.data-id]="block.id"
+      (click)="empujarBloque(block.id)">
+      
+      <div class="block-fraction">
+        <div 
+          class="block-part" 
+          *ngFor="let part of [].constructor(block.denominator); let i = index"
+          [class.filled]="i < block.numerator">
+        </div>
+      </div>
+
+      <span class="fraction-label">{{ block.numerator }}/{{ block.denominator }}</span>
+    </div>
+  </div>
+
+  <div class="fusion-area" *ngIf="mode === 'suma'">
+    <h3>Selecciona dos bloques para sumar</h3>
+    <input type="number" placeholder="ID Bloque 1" #id1>
+    <input type="number" placeholder="ID Bloque 2" #id2>
+    <button (click)="fusionarBloques(+id1.value, +id2.value)">Sumar</button>
+  </div>
+
 </div>

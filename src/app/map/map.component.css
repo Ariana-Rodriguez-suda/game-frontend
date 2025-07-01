@@ -1,0 +1,44 @@
+.map-container {
+  text-align: center;
+  padding: 2rem;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  background: linear-gradient(to bottom, #c6f0ff, #ffffff);
+  min-height: 100vh;
+}
+
+.world {
+  background-color: #e6ffe6;
+  border: 2px solid #66cc66;
+  padding: 1rem;
+  margin: 1rem auto;
+  width: 300px;
+  border-radius: 12px;
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.world:hover {
+  transform: scale(1.05);
+}
+
+.unlocked {
+  display: block;
+  color: green;
+  font-weight: bold;
+  margin-top: 0.5rem;
+}
+
+.locked {
+  background-color: #f0f0f0;
+  border-color: gray;
+  color: gray;
+  cursor: not-allowed;
+}
+
+.locked-text {
+  display: block;
+  color: red;
+  font-weight: bold;
+  margin-top: 0.5rem;
+}

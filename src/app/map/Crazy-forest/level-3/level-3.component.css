@@ -1,24 +1,107 @@
-h3 {
-  font-family: 'Press Start 2P', cursive;
-  color: #1f75cc;
+.level-container {
+  padding: 30px;
+  background-color: #ffe0f0;
+  font-family: 'Comic Sans MS', cursive;
   text-align: center;
+}
+
+.message-box {
+  background-color: #fff8dc;
+  border-left: 5px solid #f08080;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+.boss-area {
   margin-bottom: 20px;
 }
 
-.level-container {
-  background-color: #fff8e1;
-  border: 2px solid #1f75cc;
-  border-radius: 12px;
-  padding: 20px;
-  max-width: 500px;
+.boss {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  background-color: #8b0000;
   margin: 0 auto;
-  font-family: 'Arial', sans-serif;
-  text-align: center;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #000;
 }
 
-.fraction-block {
+.boss-label {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
   font-weight: bold;
   font-size: 20px;
-  margin-top: 10px;
-  color: #333;
+}
+
+.boss-health-bar {
+  position: absolute;
+  bottom: -30px;
+  left: 0;
+  width: 100%;
+  height: 15px;
+  background-color: #ddd;
+  border: 1px solid #000;
+  border-radius: 5px;
+}
+
+.boss-health-fill {
+  height: 100%;
+  background-color: #00ff00;
+  border-radius: 5px 0 0 5px;
+  transition: width 0.3s;
+}
+
+.operation-area {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px dashed #888;
+  width: 300px;
+  margin: 0 auto;
+}
+
+.end-screen {
+  margin-top: 40px;
+  background-color: #d0ffe6;
+  padding: 20px;
+  border-radius: 10px;
+  animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.boss.shake {
+  animation: shake 0.4s;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  50% { transform: translateX(10px); }
+  75% { transform: translateX(-10px); }
+  100% { transform: translateX(0); }
+}
+
+.attack-ray {
+  position: absolute;
+  width: 4px;
+  height: 120px;
+  background-color: #00f6ff;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: zap 0.4s ease-out;
+}
+
+@keyframes zap {
+  0% { height: 0; opacity: 0.8; }
+  50% { height: 120px; opacity: 1; }
+  100% { height: 0; opacity: 0; }
 }

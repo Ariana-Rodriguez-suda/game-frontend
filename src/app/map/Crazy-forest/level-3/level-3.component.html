@@ -1,10 +1,27 @@
-<h3>Nivel 3 - Operaciones combinadas</h3>
-
-<p>En este nivel resolverás operaciones combinadas con fracciones.</p>
-
-<!-- Aquí va la interfaz del juego para el nivel 3 -->
-
 <div class="level-container">
-  <p>Ejemplo visual:</p>
-  <div class="fraction-block">(1/2 + 1/3) × 3/4 = ?</div>
+  <div class="message-box">
+    <p>{{ message }}</p>
+  </div>
+
+  <div class="boss-area">
+    <div class="boss">
+      <div class="attack-ray" *ngIf="rayoActivo"></div>
+      <div class="boss-label">Jefe Malvado</div>
+      <div class="boss-health-bar">
+        <div class="boss-health-fill" [style.width.%]="bossHealth"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="operation-area">
+    <h3>Realiza la operación combinada:</h3>
+    <p>(2/3 + 1/3) × 3/4 = ?</p>
+    <input type="text" [(ngModel)]="respuestaJugador" placeholder="Ej: 0.75">
+    <button (click)="atacarJefe()">Atacar</button>
+  </div>
+
+  <div *ngIf="jefeDerrotado" class="end-screen">
+    <h2>¡Has derrotado al jefe!</h2>
+    <p>🎉 ¡Continuará...!</p>
+  </div>
 </div>

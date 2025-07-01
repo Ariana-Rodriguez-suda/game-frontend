@@ -1,12 +1,44 @@
-<h3>Nivel 2 - Resta, multiplicación y división</h3>
-
-<p>En este nivel aprenderás a restar, multiplicar y dividir fracciones.</p>
-
-<!-- Aquí va la interfaz del juego para el nivel 2 -->
-
 <div class="level-container">
-  <p>Ejemplo visual:</p>
-  <div class="fraction-block">3/4 - 1/4 = 2/4</div>
-  <div class="fraction-block">1/2 × 2/3 = 2/6</div>
-  <div class="fraction-block">3/4 ÷ 1/2 = 3/4 × 2/1 = 6/4</div>
+  <div class="message-box">
+    <p>{{ message }}</p>
+  </div>
+
+  <div class="controls">
+    <button (click)="activarModo('resta')">Modo Resta</button>
+    <button (click)="activarModo('multiplicacion')">Modo Multiplicación</button>
+    <button (click)="activarModo('division')">Modo División</button>
+    <button (click)="activarModo('suma-mcm')">Modo Suma (MCM)</button>
+  </div>
+
+  <div class="game-area">
+    <div class="character" #character></div>
+    <div class="enemy" *ngFor="let e of enemies" [style.left.px]="e.left"></div>
+    <div class="platform"></div>
+
+    <div 
+      class="block" 
+      *ngFor="let block of blocks" 
+      [style.left.px]="block.left"
+      [attr.data-id]="block.id">
+      <div class="block-fraction">
+        <div 
+          class="block-part" 
+          *ngFor="let part of [].constructor(block.denominator); let i = index"
+          [class.filled]="i < block.numerator">
+        </div>
+      </div>
+      <span class="fraction-label">{{ block.numerator }}/{{ block.denominator }}</span>
+    </div>
+  </div>
+
+  <div class="interaction" *ngIf="mode !== 'normal'">
+    <input type="number" placeholder="ID Bloque 1" #id1>
+    <input type="number" placeholder="ID Bloque 2" #id2>
+    <button (click)="interactuarBloques(+id1.value, +id2.value)">Aplicar operación</button>
+  </div>
+
+  <div class="mcm" *ngIf="mode === 'suma-mcm'">
+    <p>También puedes usar el Rayo MCM:</p>
+    <button (click)="usarRayoMCM(+id1, +id2)">Aplicar Rayo MCM</button>
+  </div>
 </div>
