@@ -12,7 +12,15 @@ import { CommonModule, NgForOf } from '@angular/common';
 })
 export class AvatarComponent implements OnInit {
   avatars: any[] = [];
-  playerId: string | null = null;
+avatarImages: { [key: number]: string } = {
+    1: 'assets/sprites/avatar-boy-temporal.png',
+    2: 'assets/sprites/avatar-girl-temporal.png',
+
+  };
+
+getAvatarImage(id: number): string {
+  return this.avatarImages[id] || 'assets/avatars/default.png';
+}
 
   constructor(
     private avatarService: AvatarService,
@@ -20,21 +28,20 @@ export class AvatarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.playerId = localStorage.getItem('userId');
-    if (!this.playerId) return;
-
-    this.avatarService.getOwnedAvatars(this.playerId).subscribe({
+    this.avatarService.getAllAvatars().subscribe({
       next: (res) => {
-        this.avatars = res;
+        // Convertir el id a number para evitar errores en el template
+        this.avatars = res.map(avatar => ({
+          ...avatar,
+          id: Number(avatar.id)
+        }));
       },
       error: () => alert('Error al obtener avatares'),
     });
   }
 
   activarAvatar(avatarId: number) {
-    if (!this.playerId) return;
-
-    this.playerService.setActiveAvatar(+this.playerId, avatarId).subscribe({
+    this.playerService.setActiveAvatar(avatarId).subscribe({
       next: () => alert('Avatar activado con éxito'),
       error: () => alert('No se pudo activar el avatar'),
     });

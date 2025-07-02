@@ -8,11 +8,17 @@ export class InventoryService {
 
   constructor(private http: HttpClient) {}
 
-  getInventory(playerId: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/player/${playerId}/inventory`);
-  }
+buyItem(itemId: number) {
+  const token = localStorage.getItem('token');
+  return this.http.post('/inventory/buy', { itemId }, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+}
 
-  useItem(itemId: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/player/inventory/use`, { itemId });
-  }
+getInventory() {
+  const token = localStorage.getItem('token');
+  return this.http.get('/inventory', {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+}
 }

@@ -8,20 +8,29 @@ export class PlayerService {
 
   constructor(private http: HttpClient) {}
 
-  // Obtener detalles del jugador
-  getPlayerDetails(id: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/player/${id}/details`);
-  }
-
-  // Obtener progreso del jugador
-  getProgress(id: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/progress/player/${id}`);
-  }
-
-  // Cambiar avatar activo
-  setActiveAvatar(playerId: number, avatarId: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/player/${playerId}/set-avatar`, {
-      itemId: avatarId,
+  // Obtener perfil del jugador autenticado
+  getProfile(): Observable<any> {
+    const token = localStorage.getItem('token');
+    return this.http.get(`${this.apiUrl}/player/profile`, {
+      headers: { Authorization: `Bearer ${token}` }
     });
   }
+
+  // Obtener progreso del jugador (progreso general)
+  getProgress(): Observable<any> {
+    const token = localStorage.getItem('token');
+    return this.http.get(`${this.apiUrl}/progress`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+  }
+
+setActiveAvatar(avatarId: number): Observable<any> {
+  const token = localStorage.getItem('token') || '';
+  return this.http.patch(`${this.apiUrl}/avatar/select`, { avatarId }, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+}
+
 }

@@ -1,17 +1,10 @@
-.home-container {
-  background: linear-gradient(#f2f7ff, #d9e6ff);
-  min-height: 100vh;
-  text-align: center;
-  padding: 3rem 1rem;
-  font-family: 'Comic Sans MS', cursive;
-  position: relative;
-}
-
-h1 {
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
-  color: #4b3f72;
-  text-shadow: 1px 1px #fff;
+:host {
+  display: block;
+  height: 100vh; /* altura completa de la ventana */
+  background-image: url('/assets/images/background_home.jpg');
+  background-size: cover;    /* para que la imagen cubra todo el fondo */
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 
 .button-group {

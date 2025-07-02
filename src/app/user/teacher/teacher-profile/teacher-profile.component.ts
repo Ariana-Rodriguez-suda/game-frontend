@@ -4,6 +4,7 @@ import { ClassService } from '../../../class/class.service';
 import { Router } from '@angular/router';
 import { CommonModule, NgIf, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TeacherUser } from '../teacher.interface';
 
 @Component({
   selector: 'app-teacher-profile',
@@ -13,18 +14,15 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./teacher-profile.component.css'],
 })
 export class TeacherProfileComponent implements OnInit {
-  user: any;
+user!: TeacherUser;
   classes: any[] = [];
-  newClassCode = '';
-  createdClassCode: string | null = null;
   newClassName = '';
-newClassSubject = '';
-newClassInstitution = '';
-editMode = false;
-editUsername = '';
-editEmail = '';
-editPassword = '';
-
+  newClassSubject = '';
+  newClassInstitution = '';
+  editMode = false;
+  editUsername = '';
+  editEmail = '';
+  editPassword = '';
 
   constructor(
     private teacherService: TeacherService,
@@ -32,43 +30,40 @@ editPassword = '';
     private router: Router
   ) {}
 
-  ngOnInit() {
-    const userId = localStorage.getItem('userId');
-    if (userId) {
-      this.teacherService.getTeacherDetails(userId).subscribe(data => {
-        this.user = data;
-        this.editUsername = data.username;
-        this.editEmail = data.email;
-        this.loadClasses(userId);
-      });
-    }
-  }
-
-  loadClasses(userId: string) {
-    this.teacherService.getMyClasses(userId).subscribe(classes => {
-      this.classes = classes;
-    });
-  }
-
-createClass() {
-  const payload = {
-    name: this.newClassName,
-    subject: this.newClassSubject,
-    institution: this.newClassInstitution,
-  };
-
-  this.classService.createClass(payload).subscribe({
-    next: () => {
-      alert('Clase creada con éxito');
-      this.newClassName = '';
-      this.newClassSubject = '';
-      this.newClassInstitution = '';
-      this.loadClasses(this.user.id);
-    },
-    error: (err) => alert('Error creando clase: ' + err.message),
+ngOnInit() {
+  this.teacherService.getTeacherDetails().subscribe((data: TeacherUser) => {
+    this.user = data;
+    this.editUsername = data.username;
+    this.editEmail = data.email;
+    this.loadClasses();
   });
 }
 
+
+loadClasses() {
+  this.teacherService.getMyClasses().subscribe(classes => {
+    this.classes = classes;
+  });
+}
+
+  createClass() {
+    const payload = {
+      name: this.newClassName,
+      subject: this.newClassSubject,
+      institution: this.newClassInstitution,
+    };
+
+    this.classService.createClass(payload).subscribe({
+      next: () => {
+        alert('Clase creada con éxito');
+        this.newClassName = '';
+        this.newClassSubject = '';
+        this.newClassInstitution = '';
+        this.loadClasses();
+      },
+      error: (err) => alert('Error creando clase: ' + err.message),
+    });
+  }
 
   saveProfileChanges() {
     const updatedData = {
@@ -77,7 +72,7 @@ createClass() {
       password: this.editPassword || undefined,
     };
 
-    this.teacherService.updateTeacher(this.user.id, updatedData).subscribe({
+    this.teacherService.updateTeacher(updatedData).subscribe({
       next: () => alert('Perfil actualizado con éxito'),
       error: () => alert('Error actualizando perfil'),
     });

@@ -1,12 +1,22 @@
+// level-2.service.ts
 import { Injectable } from '@angular/core';
-import { Block } from './block.interface';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
+interface Block {
+  id: number;
+  numerator: number;
+  denominator: number;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class Level2Service {
-private blocks: Block[] = [];
+  private blocks: Block[] = [];
+  private apiUrl = 'https://game-backend-87km.onrender.com/level-2';
+
+  constructor(private http: HttpClient) {}
 
   init() {
     this.blocks = [
@@ -18,10 +28,9 @@ private blocks: Block[] = [];
     return this.blocks;
   }
 
-getBlocks(): Block[] {
-  return this.blocks;
-}
-
+  getBlocks(): Block[] {
+    return this.blocks;
+  }
 
   operarBloques(id1: number, id2: number, modo: string) {
     const b1 = this.blocks.find(b => b.id === id1);
@@ -62,7 +71,21 @@ getBlocks(): Block[] {
   }
 
   private mcm(a: number, b: number): number {
-    const gcd = (x: number, y: number): number => y === 0 ? x : gcd(y, x % y);
+    const gcd = (x: number, y: number): number => (y === 0 ? x : gcd(y, x % y));
     return (a * b) / gcd(a, b);
+  }
+
+  saveProgress(data: { score: number; completed: boolean }): Observable<any> {
+    const token = localStorage.getItem('token');
+    return this.http.post(this.apiUrl, data, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+  }
+
+  getProgress(): Observable<any> {
+    const token = localStorage.getItem('token');
+    return this.http.get(this.apiUrl, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
   }
 }

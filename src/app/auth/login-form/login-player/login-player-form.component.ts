@@ -20,7 +20,7 @@ export class LoginPlayerFormComponent {
   onSubmit() {
 this.authService.loginPlayer({ username: this.username, password: this.password }).subscribe({
   next: (res) => {
-    localStorage.setItem('token', res.token);
+localStorage.setItem('token', res.access_token);
     localStorage.setItem('userId', res.user.id);
     this.router.navigate(['/player-profile']);
   },

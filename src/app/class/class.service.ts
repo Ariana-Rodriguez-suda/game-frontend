@@ -8,8 +8,24 @@ export class ClassService {
 
   constructor(private http: HttpClient) {}
 
-  createClass(data: { name: string }): Observable<any> {
-    const userId = localStorage.getItem('userId');
-    return this.http.post(`${this.apiUrl}/teacher/${userId}/classes`, data);
-  }
+createClass(data: any) {
+  const token = localStorage.getItem('token');
+  return this.http.post('/classes', data, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+}
+
+getMyClasses() {
+  const token = localStorage.getItem('token');
+  return this.http.get('/classes', {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+}
+
+getStudents(classId: number) {
+  const token = localStorage.getItem('token');
+  return this.http.get(`/classes/${classId}/students`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+}
 }

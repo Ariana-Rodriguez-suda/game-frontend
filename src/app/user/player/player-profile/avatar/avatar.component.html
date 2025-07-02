@@ -2,7 +2,7 @@
 
 <div class="avatar-list">
   <div class="avatar-card" *ngFor="let avatar of avatars">
-    <img [src]="avatar.imageUrl" alt="{{ avatar.name }}" width="80" />
+    <img [src]="avatarImages[avatar.id]" alt="{{ avatar.name }}" width="80" />
     <p>{{ avatar.name }}</p>
     <button (click)="activarAvatar(avatar.id)">Usar</button>
   </div>

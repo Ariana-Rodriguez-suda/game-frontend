@@ -1,10 +1,16 @@
+// level-1.service.ts
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Level1Service {
   private blocks: any[] = [];
+  private apiUrl = 'https://game-backend-87km.onrender.com/level-1';
+
+  constructor(private http: HttpClient) {}
 
   initLevel() {
     this.blocks = [
@@ -28,7 +34,6 @@ export class Level1Service {
     const b2 = this.blocks.find(b => b.id === id2);
     if (!b1 || !b2) return { success: false };
 
-    const commonDen = b1.denominator;
     if (b1.denominator === b2.denominator) {
       const sum = b1.numerator + b2.numerator;
       if (sum === 8 && b1.denominator === 16) {
@@ -36,5 +41,19 @@ export class Level1Service {
       }
     }
     return { success: false };
+  }
+
+  saveProgress(data: { score: number; completed: boolean }): Observable<any> {
+    const token = localStorage.getItem('token');
+    return this.http.post(this.apiUrl, data, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+  }
+
+  getProgress(): Observable<any> {
+    const token = localStorage.getItem('token');
+    return this.http.get(this.apiUrl, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
   }
 }

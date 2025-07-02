@@ -8,7 +8,15 @@ export class AvatarService {
 
   constructor(private http: HttpClient) {}
 
-  getOwnedAvatars(playerId: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/inventory/${playerId}/avatars`);
-  }
+getOwnedAvatars(): Observable<any[]> {
+  const token = localStorage.getItem('token') || '';
+  return this.http.get<any[]>(`${this.apiUrl}/inventory`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+}
+
+getAllAvatars(): Observable<any[]> {
+  return this.http.get<any[]>(`${this.apiUrl}/avatar`);
+}
+
 }
