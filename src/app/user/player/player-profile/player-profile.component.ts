@@ -12,29 +12,27 @@ import { AvatarComponent } from './avatar/avatar.component';
   styleUrls: ['./player-profile.component.css'],
 })
 export class PlayerProfileComponent implements OnInit {
-  player: any;
+  player: any | null = null;
 
   constructor(private playerService: PlayerService, private router: Router) {}
 
   ngOnInit(): void {
-    const id = localStorage.getItem('userId');
-    if (!id) return;
-
-    this.playerService.getPlayerDetails(id).subscribe({
-      next: (data) => {
+    this.playerService.getProfile().subscribe({
+      next: (data: any) => {
         this.player = data;
       },
-      error: () => {
+      error: (err: any) => {
+        console.error('Error fetching player profile', err);
         alert('Error al obtener datos del jugador');
       },
     });
   }
 
-irJugar() {
-  this.router.navigate(['/map/crazy-forest/level-1']);
-}
+  irJugar(): void {
+    this.router.navigate(['/map/crazy-forest/level-1']);
+  }
 
-  irTienda() {
+  irTienda(): void {
     this.router.navigate(['/map/shop']);
   }
 }

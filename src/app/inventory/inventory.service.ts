@@ -15,10 +15,11 @@ buyItem(itemId: number) {
   });
 }
 
-getInventory() {
+getInventory(): Observable<any[]> {
   const token = localStorage.getItem('token');
-  return this.http.get('/inventory', {
+  return this.http.get<any[]>(`${this.apiUrl}/inventory`, {
     headers: { Authorization: `Bearer ${token}` }
   });
 }
+
 }

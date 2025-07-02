@@ -20,12 +20,9 @@ export class InventoryComponent implements OnInit {
 
   constructor(private inventoryService: InventoryService) {}
 
-  ngOnInit() {
-    const playerId = localStorage.getItem('userId') || '';
-    if (playerId) {
-      this.inventoryService.getInventory(playerId).subscribe(items => {
-        this.inventory = items;
-      });
-    }
-  }
+ngOnInit() {
+  this.inventoryService.getInventory().subscribe((items: any[]) => {
+    this.inventory = items;
+  });
+}
 }
