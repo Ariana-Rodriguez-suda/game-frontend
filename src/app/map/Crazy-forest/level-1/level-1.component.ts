@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Level1Service } from './level-1.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-level-1',
@@ -11,8 +12,10 @@ export class Level1Component implements OnInit {
   blocks: any[] = [];
   messages: string[] = [];
   progress = 0;
+  estrellasGanadas: number = 0;
+  nivelCompletado: boolean = false;
 
-  constructor(private level1Service: Level1Service) {}
+  constructor(private level1Service: Level1Service, private router: Router) {}
 
   ngOnInit(): void {
     this.level1Service.initLevel();
@@ -81,4 +84,14 @@ export class Level1Component implements OnInit {
     character.style.left = `${left}px`;
   });
 }
+
+mostrarResultados(estrellas: number) {
+  this.estrellasGanadas = estrellas;
+  this.nivelCompletado = true;
+}
+
+avanzar() {
+  this.router.navigate(['/map/crazy-forest/level-2']);
+}
+
 }

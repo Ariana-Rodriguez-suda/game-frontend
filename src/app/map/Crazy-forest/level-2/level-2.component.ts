@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Level2Service } from './level-2.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-level-2',
@@ -13,8 +14,10 @@ export class Level2Component implements OnInit, AfterViewInit {
   enemies = [{ left: 300 }, { left: 600 }];
   id1: number = 0;
   id2: number = 0;
+  estrellasGanadas: number = 0;
+  nivelCompletado: boolean = false;
 
-  constructor(private level2Service: Level2Service) {}
+  constructor(private level2Service: Level2Service, private router: Router) {}
 
   ngOnInit(): void {
     this.blocks = this.level2Service.init();
@@ -72,4 +75,14 @@ this.message = res.message || '';
       character.style.left = `${left}px`;
     });
   }
+
+mostrarResultados(estrellas: number) {
+  this.estrellasGanadas = estrellas;
+  this.nivelCompletado = true;
+}
+
+avanzar() {
+  this.router.navigate(['/map/crazy-forest/level-3']);
+}
+
 }

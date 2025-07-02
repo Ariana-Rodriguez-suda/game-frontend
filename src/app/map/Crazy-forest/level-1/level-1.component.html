@@ -39,4 +39,11 @@
     <button (click)="fusionarBloques(+id1.value, +id2.value)">Sumar</button>
   </div>
 
+<div *ngIf="nivelCompletado" class="end-screen">
+  <h2>¡Nivel completado!</h2>
+  <p>⭐ x {{ estrellasGanadas }}</p>
+  <button (click)="avanzar()">Siguiente nivel</button>
+</div>
+
+
 </div>

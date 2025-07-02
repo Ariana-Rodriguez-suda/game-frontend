@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Level3Service } from './level-3.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-level-3',
@@ -16,8 +17,10 @@ export class Level3Component {
   respuestaJugador = '';
   message = '¡Derrota al jefe resolviendo la operación combinada!';
   rayoActivo = false;
+  estrellasGanadas: number = 0;
+  nivelCompletado: boolean = false;
 
-  constructor(private level3Service: Level3Service) {}
+  constructor(private level3Service: Level3Service, private router: Router) {}
 
 atacarJefe() {
   const correcta = this.level3Service.verificarResultado(this.respuestaJugador);
@@ -47,5 +50,14 @@ atacarJefe() {
 
   this.respuestaJugador = '';
 }
+
+mostrarResultados(estrellas: number) {
+  this.estrellasGanadas = estrellas;
+  this.nivelCompletado = true;
+}
+
+  avanzar() {
+    this.router.navigate(['/player-profile']);
+  }
 
 }

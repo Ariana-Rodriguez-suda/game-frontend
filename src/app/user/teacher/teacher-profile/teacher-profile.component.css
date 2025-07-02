@@ -30,6 +30,7 @@
   border-radius: 8px;
   margin-bottom: 10px;
   background-color: #fff;
+  font-size: 14px;
 }
 
 button {
@@ -41,11 +42,12 @@ button {
   font-weight: bold;
   margin: 5px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, transform 0.2s;
 }
 
 button:hover {
   background-color: #023047;
+  transform: scale(1.05);
 }
 
 hr {
@@ -66,4 +68,5 @@ ul li {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-size: 14px;
 }

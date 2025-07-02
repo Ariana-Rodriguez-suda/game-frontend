@@ -24,4 +24,11 @@
     <h2>¡Has derrotado al jefe!</h2>
     <p>🎉 ¡Continuará...!</p>
   </div>
+
+  <div *ngIf="nivelCompletado" class="end-screen">
+  <h2>¡Nivel completado!</h2>
+  <p>⭐ x {{ estrellasGanadas }}</p>
+    <button (click)="avanzar()">Volver al perfil</button>
+</div>
+
 </div>

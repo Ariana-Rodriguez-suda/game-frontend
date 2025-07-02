@@ -41,4 +41,11 @@
     <p>También puedes usar el Rayo MCM:</p>
     <button (click)="usarRayoMCM(+id1, +id2)">Aplicar Rayo MCM</button>
   </div>
+
+  <div *ngIf="nivelCompletado" class="end-screen">
+  <h2>¡Nivel completado!</h2>
+  <p>⭐ x {{ estrellasGanadas }}</p>
+  <button (click)="avanzar()">Siguiente nivel</button>
+</div>
+
 </div>

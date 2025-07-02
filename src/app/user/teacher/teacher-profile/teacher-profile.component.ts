@@ -17,8 +17,9 @@ export class TeacherProfileComponent implements OnInit {
   classes: any[] = [];
   newClassCode = '';
   createdClassCode: string | null = null;
-
-  // Para editar
+  newClassName = '';
+newClassSubject = '';
+newClassInstitution = '';
 editMode = false;
 editUsername = '';
 editEmail = '';
@@ -49,19 +50,25 @@ editPassword = '';
     });
   }
 
-  createClass() {
-    if (!this.newClassCode.trim()) return;
+createClass() {
+  const payload = {
+    name: this.newClassName,
+    subject: this.newClassSubject,
+    institution: this.newClassInstitution,
+  };
 
-    this.classService.createClass({ name: this.newClassCode.trim() }).subscribe({
-      next: () => {
-        this.createdClassCode = this.newClassCode.trim();
-        this.newClassCode = '';
-        alert('Clase creada con éxito');
-        this.loadClasses(this.user.id);
-      },
-      error: (err) => alert('Error creando clase: ' + err.message),
-    });
-  }
+  this.classService.createClass(payload).subscribe({
+    next: () => {
+      alert('Clase creada con éxito');
+      this.newClassName = '';
+      this.newClassSubject = '';
+      this.newClassInstitution = '';
+      this.loadClasses(this.user.id);
+    },
+    error: (err) => alert('Error creando clase: ' + err.message),
+  });
+}
+
 
   saveProfileChanges() {
     const updatedData = {

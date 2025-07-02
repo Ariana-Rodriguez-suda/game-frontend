@@ -30,9 +30,9 @@ export class PlayerProfileComponent implements OnInit {
     });
   }
 
-  irMapa() {
-    this.router.navigate(['/map']);
-  }
+irJugar() {
+  this.router.navigate(['/map/crazy-forest/level-1']);
+}
 
   irTienda() {
     this.router.navigate(['/map/shop']);

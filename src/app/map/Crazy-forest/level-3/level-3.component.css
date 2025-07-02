@@ -1,6 +1,6 @@
 .level-container {
   padding: 30px;
-  background-color: #ffe0f0;
+  background: linear-gradient(to bottom, #ffe0f0, #fff);
   font-family: 'Comic Sans MS', cursive;
   text-align: center;
 }
@@ -11,20 +11,28 @@
   padding: 10px;
   margin-bottom: 20px;
   border-radius: 8px;
+  font-size: 16px;
 }
 
 .boss-area {
   margin-bottom: 20px;
+  position: relative;
 }
 
 .boss {
-  position: relative;
   width: 200px;
   height: 200px;
   background-color: #8b0000;
   margin: 0 auto;
   border-radius: 50%;
-  box-shadow: 0 0 10px #000;
+  box-shadow: 0 0 12px #000;
+  position: relative;
+  animation: idleBounce 2s infinite;
+}
+
+@keyframes idleBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
 
 .boss-label {
@@ -59,9 +67,10 @@
   background-color: #fff;
   padding: 20px;
   border-radius: 10px;
-  border: 2px dashed #888;
-  width: 300px;
+  border: 3px dashed #888;
+  width: 320px;
   margin: 0 auto;
+  font-size: 16px;
 }
 
 .end-screen {
@@ -70,6 +79,8 @@
   padding: 20px;
   border-radius: 10px;
   animation: fadeIn 1s ease-in;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 @keyframes fadeIn {

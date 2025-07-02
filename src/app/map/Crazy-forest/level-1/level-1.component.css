@@ -90,3 +90,28 @@
   height: 20px;
   background-color: #654321;
 }
+
+.end-screen {
+  margin-top: 40px;
+  background-color: #d0ffe6;
+  padding: 20px;
+  border-radius: 10px;
+  animation: fadeIn 1s ease-in;
+  text-align: center;
+}
+
+.end-screen h2 {
+  color: #1f75cc;
+}
+
+.end-screen button {
+  background-color: #f3c427;
+  padding: 10px 20px;
+  border: none;
+  font-family: 'Press Start 2P', cursive;
+  border-radius: 8px;
+  box-shadow: 2px 2px #000;
+  cursor: pointer;
+  margin-top: 15px;
+}
+

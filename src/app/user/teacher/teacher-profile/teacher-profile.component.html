@@ -23,11 +23,13 @@
 
   <hr />
 
-  <h3>Crear nueva clase</h3>
-  <form (ngSubmit)="createClass()">
-    <input [(ngModel)]="newClassCode" name="classCode" placeholder="Nombre de nueva clase" required />
-    <button type="submit">Crear clase</button>
-  </form>
+<h3>Crear nueva clase</h3>
+<form (ngSubmit)="createClass()">
+  <input [(ngModel)]="newClassName" name="newClassName" placeholder="Nombre" required />
+  <input [(ngModel)]="newClassSubject" name="newClassSubject" placeholder="Materia" required />
+  <input [(ngModel)]="newClassInstitution" name="newClassInstitution" placeholder="Institución" required />
+  <button type="submit">Crear clase</button>
+</form>
 
   <div *ngIf="classes.length > 0">
     <h3>Mis clases</h3>
