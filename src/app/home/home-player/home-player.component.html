@@ -1,4 +1,7 @@
-<div class="home-container">
+<div
+  class="home-container"
+  [ngStyle]="{ 'background-image': 'url(' + backgroundUrl + ')' }"
+>
   <button class="role-switch" (click)="goToTeacher()">Cambiar a Maestro</button>
 
   <div class="button-group">

@@ -3,12 +3,11 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-image: url('./assets/images/background_home.jpg');
+  font-family: 'Press Start 2P', cursive;
+  position: relative;
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  font-family: 'Press Start 2P', cursive;
-  position: relative;
 }
 
 .home-container {
@@ -19,6 +18,10 @@
   gap: 2rem;
   text-align: center;
   z-index: 2;
+  background-color: rgba(255, 255, 255, 0.8); /* opcional para legibilidad */
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .button-group {
