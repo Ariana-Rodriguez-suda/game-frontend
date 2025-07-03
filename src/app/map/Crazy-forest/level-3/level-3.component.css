@@ -1,17 +1,21 @@
 .level-container {
   padding: 30px;
-  background: linear-gradient(to bottom, #ffe0f0, #fff);
+  background: linear-gradient(to bottom, #ffe0f0, #ffffff);
   font-family: 'Comic Sans MS', cursive;
   text-align: center;
+  min-height: 100vh;
 }
 
 .message-box {
   background-color: #fff8dc;
   border-left: 5px solid #f08080;
-  padding: 10px;
+  padding: 12px;
   margin-bottom: 20px;
   border-radius: 8px;
   font-size: 16px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .boss-area {
@@ -37,12 +41,13 @@
 
 .boss-label {
   position: absolute;
-  top: -30px;
+  top: -35px;
   left: 50%;
   transform: translateX(-50%);
   color: #fff;
   font-weight: bold;
   font-size: 20px;
+  text-shadow: 1px 1px 2px #000;
 }
 
 .boss-health-bar {
@@ -50,27 +55,53 @@
   bottom: -30px;
   left: 0;
   width: 100%;
-  height: 15px;
+  height: 16px;
   background-color: #ddd;
   border: 1px solid #000;
   border-radius: 5px;
+  overflow: hidden;
 }
 
 .boss-health-fill {
   height: 100%;
   background-color: #00ff00;
-  border-radius: 5px 0 0 5px;
-  transition: width 0.3s;
+  transition: width 0.3s ease-in-out;
 }
 
 .operation-area {
-  background-color: #fff;
+  background-color: #ffffff;
   padding: 20px;
-  border-radius: 10px;
-  border: 3px dashed #888;
+  border-radius: 12px;
+  border: 3px dashed #555;
   width: 320px;
   margin: 0 auto;
   font-size: 16px;
+  box-shadow: 4px 4px 0px #000;
+}
+
+.operation-area input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  border: 2px solid #888;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.operation-area button {
+  padding: 10px 20px;
+  background-color: #ffd700;
+  border: none;
+  border-radius: 6px;
+  font-family: 'Press Start 2P', cursive;
+  cursor: pointer;
+  box-shadow: 2px 2px 0px #000;
+  transition: background-color 0.2s;
+}
+
+.operation-area button:hover {
+  background-color: #ffcd00;
 }
 
 .end-screen {
@@ -81,6 +112,7 @@
   animation: fadeIn 1s ease-in;
   font-size: 18px;
   font-weight: bold;
+  box-shadow: 4px 4px 0px #000;
 }
 
 @keyframes fadeIn {

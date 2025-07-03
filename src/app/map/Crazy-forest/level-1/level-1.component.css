@@ -1,7 +1,8 @@
 .level-container {
   padding: 20px;
-  font-family: 'Comic Sans MS', cursive;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
   background-color: #f0ffe0;
+  color: #000; /* Mejor contraste */
 }
 
 .message-box {
@@ -11,6 +12,7 @@
   margin-bottom: 15px;
   font-size: 16px;
   border-radius: 8px;
+  min-height: 40px; /* Evita colapsar si no hay mensajes */
 }
 
 .controls {
@@ -22,11 +24,24 @@
   gap: 20px;
   flex-wrap: wrap;
   margin-bottom: 20px;
+  justify-content: center; /* Centra bloques */
 }
 
 .block {
   cursor: pointer;
   text-align: center;
+  outline: none;
+  user-select: none; /* Evita selección accidental */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.block:hover,
+.block:focus {
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  background-color: #e6f0ff;
 }
 
 .block-fraction {
@@ -37,6 +52,8 @@
   flex-direction: column-reverse;
   justify-content: flex-start;
   background-color: #e0e0e0;
+  border-radius: 6px;
+  overflow: hidden;
 }
 
 .block-part {
@@ -45,6 +62,7 @@
   box-sizing: border-box;
   border-top: 1px solid #aaa;
   background-color: transparent;
+  transition: background-color 0.3s ease;
 }
 
 .block-part.filled {
@@ -54,6 +72,8 @@
 .fraction-label {
   margin-top: 5px;
   font-weight: bold;
+  font-size: 14px;
+  user-select: none;
 }
 
 .fusion-area {
@@ -62,6 +82,8 @@
   border: 1px dashed #cc3399;
   border-radius: 6px;
   width: fit-content;
+  margin: 0 auto 20px;
+  text-align: center;
 }
 
 .game-area {
@@ -71,6 +93,7 @@
   background-color: #d4f7d4;
   border: 2px solid #555;
   overflow: hidden;
+  border-radius: 12px;
 }
 
 .character {
@@ -81,6 +104,7 @@
   bottom: 0;
   left: 100px;
   transition: left 0.1s, bottom 0.1s;
+  border-radius: 6px;
 }
 
 .platform {
@@ -89,6 +113,7 @@
   width: 100%;
   height: 20px;
   background-color: #654321;
+  border-radius: 0 0 12px 12px;
 }
 
 .end-screen {
@@ -102,6 +127,7 @@
 
 .end-screen h2 {
   color: #1f75cc;
+  margin-bottom: 15px;
 }
 
 .end-screen button {
@@ -113,5 +139,15 @@
   box-shadow: 2px 2px #000;
   cursor: pointer;
   margin-top: 15px;
+  transition: background-color 0.3s ease;
 }
 
+.end-screen button:hover {
+  background-color: #e6b800;
+}
+
+/* Animación fadeIn */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

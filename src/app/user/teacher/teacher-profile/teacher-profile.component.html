@@ -9,13 +9,13 @@
 
   <div *ngIf="editMode">
     <label>Usuario:</label>
-    <input [(ngModel)]="editUsername" />
+    <input [(ngModel)]="editUsername" name="editUsername" />
 
     <label>Correo:</label>
-    <input [(ngModel)]="editEmail" />
+    <input [(ngModel)]="editEmail" name="editEmail" />
 
     <label>Nueva Contraseña:</label>
-    <input [(ngModel)]="editPassword" type="password" />
+    <input [(ngModel)]="editPassword" name="editPassword" type="password" />
 
     <button (click)="saveProfileChanges()">Guardar Cambios</button>
     <button (click)="editMode = false">Cancelar</button>

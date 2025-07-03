@@ -1,9 +1,17 @@
 <h3>Selecciona un avatar</h3>
 
-<div class="avatar-list">
+<div class="avatar-list" *ngIf="avatars.length > 0; else noAvatars">
   <div class="avatar-card" *ngFor="let avatar of avatars">
-    <img [src]="avatarImages[avatar.id]" alt="{{ avatar.name }}" width="80" />
+    <img 
+      [src]="avatarImages[avatar.id] || 'assets/avatars/default.png'" 
+      alt="{{ avatar.name }}" 
+      width="80"
+    />
     <p>{{ avatar.name }}</p>
     <button (click)="activarAvatar(avatar.id)">Usar</button>
   </div>
 </div>
+
+<ng-template #noAvatars>
+  <p>No hay avatares disponibles.</p>
+</ng-template>

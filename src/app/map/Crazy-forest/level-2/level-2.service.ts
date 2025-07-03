@@ -1,9 +1,8 @@
-// level-2.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-interface Block {
+export interface Block {
   id: number;
   numerator: number;
   denominator: number;
@@ -18,14 +17,23 @@ export class Level2Service {
 
   constructor(private http: HttpClient) {}
 
-  init() {
-    this.blocks = [
+  async init(): Promise<Block[]> {
+    try {
+      const backendBlocks = await this.http.get<Block[]>(`${this.apiUrl}/blocks`).toPromise();
+      this.blocks = backendBlocks || this.getDefaultBlocks();
+    } catch {
+      this.blocks = this.getDefaultBlocks();
+    }
+    return this.blocks;
+  }
+
+  private getDefaultBlocks(): Block[] {
+    return [
       { id: 1, numerator: 6, denominator: 8 },
       { id: 2, numerator: 3, denominator: 8 },
       { id: 3, numerator: 2, denominator: 5 },
       { id: 4, numerator: 3, denominator: 10 }
     ];
-    return this.blocks;
   }
 
   getBlocks(): Block[] {
@@ -35,7 +43,7 @@ export class Level2Service {
   operarBloques(id1: number, id2: number, modo: string) {
     const b1 = this.blocks.find(b => b.id === id1);
     const b2 = this.blocks.find(b => b.id === id2);
-    if (!b1 || !b2) return { success: false };
+    if (!b1 || !b2) return { success: false, message: 'Bloques no encontrados' };
 
     switch (modo) {
       case 'resta':
@@ -43,17 +51,19 @@ export class Level2Service {
           const res = b1.numerator - b2.numerator;
           if (res >= 0) {
             return { success: true, message: '¡Obstáculo destruido!' };
+          } else {
+            return { success: false, message: 'Resultado negativo no permitido' };
           }
+        } else {
+          return { success: false, message: 'Denominadores deben ser iguales para resta' };
         }
-        break;
       case 'multiplicacion':
         return { success: true, message: 'Multiplicación aplicada: bloques combinados.' };
       case 'division':
         return { success: true, message: 'División aplicada: bloques divididos.' };
       default:
-        return { success: false };
+        return { success: false, message: 'Modo inválido' };
     }
-    return { success: false };
   }
 
   transformarConMCM(id1: number, id2: number) {
@@ -62,12 +72,16 @@ export class Level2Service {
     if (!b1 || !b2) return { success: false, message: 'Bloques no válidos' };
 
     const mcm = this.mcm(b1.denominator, b2.denominator);
-    b1.numerator = (b1.numerator * mcm) / b1.denominator;
-    b1.denominator = mcm;
-    b2.numerator = (b2.numerator * mcm) / b2.denominator;
-    b2.denominator = mcm;
+    const newB1 = { ...b1, numerator: (b1.numerator * mcm) / b1.denominator, denominator: mcm };
+    const newB2 = { ...b2, numerator: (b2.numerator * mcm) / b2.denominator, denominator: mcm };
 
-    return { success: true, message: `Rayo MCM aplicado. Denominador común: ${mcm}` };
+    this.blocks = this.blocks.map(b => {
+      if (b.id === id1) return newB1;
+      if (b.id === id2) return newB2;
+      return b;
+    });
+
+    return { success: true, message: `Rayo MCM aplicado. Denominador común: ${mcm}`, blocks: this.blocks };
   }
 
   private mcm(a: number, b: number): number {

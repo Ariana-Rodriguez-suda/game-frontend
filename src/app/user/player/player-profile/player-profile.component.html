@@ -1,5 +1,6 @@
 <div class="profile-card" *ngIf="player">
   <h2>Perfil del Jugador</h2>
+
   <p><strong>Usuario:</strong> {{ player.username }}</p>
   <p><strong>Monedas:</strong> {{ player.coins }}</p>
 
@@ -9,8 +10,9 @@
   </div>
 
   <button (click)="irJugar()">Jugar</button>
-  <button (click)="irTienda()">Ir a la tienda</button>
-</div>
+  <!--<button (click)="irTienda()">Tienda</button>--->
 
-<app-avatar-selector></app-avatar-selector>
-<button (click)="irTienda()">Tienda</button>
+  <hr />
+
+  <app-avatar-selector></app-avatar-selector>
+</div>

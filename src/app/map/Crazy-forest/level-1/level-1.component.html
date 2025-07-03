@@ -1,16 +1,16 @@
 <div class="level-container">
 
   <div class="game-area">
-  <div class="character" #character></div>
-  <div class="platform"></div>
-</div>
+    <div class="character" #character></div>
+    <div class="platform"></div>
+  </div>
 
   <div class="message-box">
     <p *ngFor="let msg of messages">{{ msg }}</p>
   </div>
 
   <div class="controls">
-    <button (click)="activarModoSuma()">Activar Modo Suma</button>
+    <button (click)="activarModoSuma()" [attr.aria-pressed]="mode === 'suma'">Activar Modo Suma</button>
   </div>
 
   <div class="blocks-area">
@@ -18,7 +18,10 @@
       class="block" 
       *ngFor="let block of blocks" 
       [attr.data-id]="block.id"
-      (click)="empujarBloque(block.id)">
+      (click)="empujarBloque(block.id)"
+      role="listitem"
+      tabindex="0"
+      [attr.aria-label]="'Bloque con fracción ' + block.numerator + ' sobre ' + block.denominator">
       
       <div class="block-fraction">
         <div 
@@ -39,11 +42,10 @@
     <button (click)="fusionarBloques(+id1.value, +id2.value)">Sumar</button>
   </div>
 
-<div *ngIf="nivelCompletado" class="end-screen">
-  <h2>¡Nivel completado!</h2>
-  <p>⭐ x {{ estrellasGanadas }}</p>
-  <button (click)="avanzar()">Siguiente nivel</button>
-</div>
-
+  <div *ngIf="nivelCompletado" class="end-screen">
+    <h2>¡Nivel completado!</h2>
+    <p>⭐ x {{ estrellasGanadas }}</p>
+    <button (click)="avanzar()">Siguiente nivel</button>
+  </div>
 
 </div>

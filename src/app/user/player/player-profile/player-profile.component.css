@@ -2,25 +2,47 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   background: linear-gradient(to bottom, #1f75cc, #003f88);
   font-family: 'Press Start 2P', cursive;
   color: white;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .profile-card {
   background-color: #ffffff;
-  color: #000;
+  color: #000000;
   padding: 24px;
   border-radius: 14px;
   box-shadow: 4px 4px #000;
   text-align: center;
-  max-width: 400px;
-  width: 90%;
+  max-width: 420px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.profile-card h2 {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.profile-card p {
+  margin: 10px 0;
+  font-size: 12px;
+}
+
+.profile-card img {
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  margin: 10px auto;
+  display: block;
+  border: 2px solid #000;
 }
 
 button {
-  margin: 10px;
+  margin: 10px 0;
   background-color: #f3c427;
   border: none;
   padding: 12px;
@@ -30,9 +52,15 @@ button {
   border-radius: 10px;
   box-shadow: 3px 3px #000;
   font-size: 12px;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, background-color 0.3s ease;
 }
 
 button:hover {
   transform: scale(1.05);
+  background-color: #ffd60a;
+}
+
+hr {
+  border: 1px dashed #aaa;
+  margin: 25px 0;
 }
