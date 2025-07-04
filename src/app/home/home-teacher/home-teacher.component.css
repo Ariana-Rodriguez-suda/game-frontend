@@ -16,8 +16,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-top: 60px; /* empuja hacia abajo sin romper el centrado */
-  gap: 2rem;
+  padding-top: 70px; /* empuja hacia abajo sin romper el centrado */
+  gap: 1rem;
 }
 
 .button-group {
