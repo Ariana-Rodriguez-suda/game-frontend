@@ -4,7 +4,7 @@
   align-items: center;
   height: 100vh;
   overflow: hidden; /* evita espacio sobrante */
-  background-image: url('assets/images/background_home.jpg');
+  background-image: url('/assets/images/background_home.jpg');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
