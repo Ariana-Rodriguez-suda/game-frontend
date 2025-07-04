@@ -1,6 +1,21 @@
-<h2>Iniciar Sesión - Maestro</h2>
-<form (ngSubmit)="loginTeacher()">
-  <input type="email" [(ngModel)]="email" name="email" placeholder="Correo electrónico" required />
-  <input type="password" [(ngModel)]="password" name="password" placeholder="Contraseña" required />
-  <button type="submit">Iniciar sesión</button>
-</form>
+<div class="form-container">
+  <h2>Iniciar Sesión - Maestro</h2>
+
+  <form (ngSubmit)="loginTeacher()">
+    <input
+      type="email"
+      [(ngModel)]="email"
+      name="email"
+      placeholder="Correo electrónico"
+      required
+    />
+    <input
+      type="password"
+      [(ngModel)]="password"
+      name="password"
+      placeholder="Contraseña"
+      required
+    />
+    <button type="submit">Iniciar sesión</button>
+  </form>
+</div>

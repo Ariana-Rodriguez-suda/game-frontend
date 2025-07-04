@@ -17,16 +17,19 @@ export class LoginTeacherFormComponent {
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  loginTeacher() {
-    const credentials = { email: this.email, password: this.password };
+loginTeacher() {
+  const credentials = {
+    email: this.email.trim(),
+    password: this.password.trim(),
+  };
 
-    this.authService.loginTeacher(credentials).subscribe({
-      next: (res) => {
-        localStorage.setItem('token', res.access_token);
-        localStorage.setItem('userId', res.user.id);
-        this.router.navigate(['/teacher-profile']);
-      },
-      error: () => alert('Credenciales inválidas'),
-    });
-  }
+  this.authService.loginTeacher(credentials).subscribe({
+    next: (res) => {
+      localStorage.setItem('token', res.access_token);
+      localStorage.setItem('userId', res.user.id);
+      this.router.navigate(['/teacher-profile']);
+    },
+    error: () => alert('Credenciales inválidas'),
+  });
+}
 }
