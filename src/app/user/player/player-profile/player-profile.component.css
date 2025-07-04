@@ -2,14 +2,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  background: linear-gradient(to bottom, #1f75cc, #003f88);
+  height: 100vh;
+  overflow: hidden; /* evita espacio sobrante */
+  background-image: url('/assets/images/fondo.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
   font-family: 'Press Start 2P', cursive;
-  color: white;
-  padding: 20px;
-  box-sizing: border-box;
+  position: relative;
 }
-
 .profile-card {
   background-color: #ffffff;
   color: #000000;

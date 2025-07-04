@@ -1,12 +1,15 @@
 :host {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  background-color: #1f75cc;
-  color: white;
-  font-family: 'Press Start 2P', cursive;
-  padding: 20px;
   height: 100vh;
+  overflow: hidden; /* evita espacio sobrante */
+  background-image: url('/assets/images/fondo.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  font-family: 'Press Start 2P', cursive;
+  position: relative;
 }
 
 h2 {

@@ -1,13 +1,15 @@
 :host {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  background-color: #1f75cc;
+  align-items: center;
   height: 100vh;
+  overflow: hidden; /* evita espacio sobrante */
+  background-image: url('/assets/images/fondo.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
   font-family: 'Press Start 2P', cursive;
-  padding: 20px;
-  color: white;
+  position: relative;
 }
 
 .form-container {
