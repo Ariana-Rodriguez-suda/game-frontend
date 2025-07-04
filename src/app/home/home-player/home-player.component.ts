@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 })
 export class HomePlayerComponent {
   constructor(private router: Router) {}
-
+  backgroundUrl = '/assets/images/background_home.jpg';
   goToTeacher() {
     this.router.navigate(['/home-teacher']);
   }
