@@ -19,7 +19,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-top: 90px; /* empuja hacia abajo sin romper el centrado */
+  padding-top: 120px; /* empuja hacia abajo sin romper el centrado */
   gap: 1rem;
 }
 
