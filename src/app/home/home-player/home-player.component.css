@@ -11,13 +11,16 @@
 
 
 .home-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   height: 100%;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 60px; /* empuja hacia abajo sin romper el centrado */
+  gap: 2rem;
 }
+
 
 
 .button-group {
