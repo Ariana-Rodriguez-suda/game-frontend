@@ -1,3 +1,4 @@
+// avatar-selector.component.ts
 import { Component, OnInit } from '@angular/core';
 import { AvatarService } from './avatar.service';
 import { PlayerService } from '../../player.service';
@@ -11,17 +12,12 @@ import { Location } from '@angular/common';
   templateUrl: './avatar.component.html',
   styleUrls: ['./avatar.component.css'],
 })
-export class AvatarComponent implements OnInit {
+export class AvatarSelectorComponent implements OnInit {
   avatars: any[] = [];
-avatarImages: { [key: number]: string } = {
+  avatarImages: { [key: number]: string } = {
     1: 'assets/sprites/avatar-boy-temporal.png',
     2: 'assets/sprites/avatar-girl-temporal.png',
-
   };
-
-getAvatarImage(id: number): string {
-  return this.avatarImages[id] || 'assets/avatars/default.png';
-}
 
   constructor(
     private avatarService: AvatarService,
@@ -32,24 +28,20 @@ getAvatarImage(id: number): string {
   ngOnInit(): void {
     this.avatarService.getAllAvatars().subscribe({
       next: (res) => {
-        // Convertir el id a number para evitar errores en el template
-        this.avatars = res.map(avatar => ({
-          ...avatar,
-          id: Number(avatar.id)
-        }));
+        this.avatars = res.map(a => ({ ...a, id: Number(a.id) }));
       },
       error: () => alert('Error al obtener avatares'),
     });
   }
 
-  activarAvatar(avatarId: number) {
-    this.playerService.setActiveAvatar(avatarId).subscribe({
+  activarAvatar(id: number) {
+    this.playerService.setActiveAvatar(id).subscribe({
       next: () => alert('Avatar activado con éxito'),
       error: () => alert('No se pudo activar el avatar'),
     });
   }
 
   goBack() {
-  this.location.back();
-}
+    this.location.back();
+  }
 }

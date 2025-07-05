@@ -14,7 +14,7 @@ import { Level3Component } from './map/Crazy-forest/level-3/level-3.component';
 import { ShopComponent } from './map/Shop/shop.component';
 import { JoinClassComponent } from './class/join-class.component';
 import { ClassComponent } from './class/class.component';
-import { AvatarComponent } from './user/player/player-profile/avatar/avatar.component';
+import { AvatarSelectorComponent } from './user/player/player-profile/avatar/avatar-selector.component';
 
 export const appRoutes: Routes = [
   { path: '', redirectTo: 'home-player', pathMatch: 'full' },
@@ -33,5 +33,5 @@ export const appRoutes: Routes = [
   { path: 'map/crazy-forest/level-2', component: Level2Component },
   { path: 'map/crazy-forest/level-3', component: Level3Component },
   { path: 'map/shop', component: ShopComponent },
-  { path: '/avatar', component: AvatarComponent },
+  { path: '/avatar-selector', component: AvatarSelectorComponent },
 ];

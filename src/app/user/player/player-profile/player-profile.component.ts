@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { PlayerService } from '../player.service';
 import { CommonModule, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
+import { AvatarDisplayComponent } from './avatar/avatar-display.component';
 
 @Component({
   selector: 'app-player-profile',
   standalone: true,
-  imports: [CommonModule, NgIf],
+  imports: [CommonModule, NgIf, AvatarDisplayComponent],
   templateUrl: './player-profile.component.html',
   styleUrls: ['./player-profile.component.css'],
 })
@@ -36,7 +37,7 @@ export class PlayerProfileComponent implements OnInit {
   }
 
     irSeleccionarAvatar() {
-    this.router.navigate(['/avatar']);
+    this.router.navigate(['/app-avatar-selector']);
   }
 
     goBack() {

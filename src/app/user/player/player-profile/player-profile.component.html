@@ -5,6 +5,7 @@
   <p><strong>Monedas:</strong> {{ player.coins }}</p>
 
   <div *ngIf="player.activeAvatar">
+<app-avatar [avatarUrl]="player.activeAvatar?.image"></app-avatar>
     <p><strong>Avatar activo:</strong></p>
     <img [src]="player.activeAvatar.imageUrl" alt="Avatar" />
   </div>
