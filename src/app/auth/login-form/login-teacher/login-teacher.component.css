@@ -21,6 +21,21 @@
   width: 100%;
   max-width: 400px;
   color: #000;
+  position: relative;
+}
+
+/* Botón de regreso */
+.back-button {
+  background-color: #ccc;
+  border: none;
+  padding: 10px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 10px;
+  cursor: pointer;
+  width: auto;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  box-shadow: 2px 2px #000;
 }
 
 /* Título */
@@ -41,7 +56,7 @@ input {
   font-size: 12px;
 }
 
-/* Botón */
+/* Botón de login */
 button {
   background-color: #f3c427;
   border: none;

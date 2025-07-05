@@ -22,7 +22,7 @@ loginTeacher() {
     email: this.email.trim(),
     password: this.password.trim(),
   };
-
+  console.log('Intentando login con:', credentials);
   this.authService.loginTeacher(credentials).subscribe({
     next: (res) => {
       localStorage.setItem('token', res.access_token);
@@ -32,4 +32,8 @@ loginTeacher() {
     error: () => alert('Credenciales inválidas'),
   });
 }
+
+  goBack() {
+    this.router.navigate(['/home-teacher']);
+  }
 }

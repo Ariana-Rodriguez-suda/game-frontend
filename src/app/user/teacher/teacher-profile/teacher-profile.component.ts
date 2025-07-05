@@ -81,4 +81,43 @@ loadClasses() {
   goToClass(classId: number) {
     this.router.navigate(['/class', classId, 'students']);
   }
+
+  volverHome() {
+  this.router.navigate(['/home-teacher']);
+}
+
+deleteClass(classId: number) {
+  if (!confirm('¿Estás seguro de que deseas eliminar esta clase?')) return;
+
+  this.classService.deleteClass(classId).subscribe({
+    next: () => {
+      alert('Clase eliminada correctamente');
+      this.loadClasses();
+    },
+    error: () => alert('Error al eliminar la clase'),
+  });
+}
+
+editClass(clase: any) {
+  const nuevoNombre = prompt('Nuevo nombre de clase:', clase.name);
+  const nuevaMateria = prompt('Nueva materia:', clase.subject);
+  const nuevaInstitucion = prompt('Nueva institución:', clase.institution);
+
+  if (!nuevoNombre || !nuevaMateria || !nuevaInstitucion) return;
+
+  const payload = {
+    name: nuevoNombre,
+    subject: nuevaMateria,
+    institution: nuevaInstitucion
+  };
+
+  this.classService.updateClass(clase.id, payload).subscribe({
+    next: () => {
+      alert('Clase actualizada correctamente');
+      this.loadClasses();
+    },
+    error: () => alert('Error al actualizar la clase')
+  });
+}
+
 }

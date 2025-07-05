@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  overflow: hidden; /* evita espacio sobrante */
+  overflow: hidden;
   background-image: url('/assets/images/fondo.jpg');
   background-size: cover;
   background-position: center center;
@@ -20,6 +20,7 @@
   width: 100%;
   max-width: 400px;
   color: #000;
+  position: relative;
 }
 
 h2 {
@@ -48,4 +49,18 @@ button {
   border-radius: 10px;
   box-shadow: 3px 3px #000;
   font-size: 12px;
+}
+
+/* Botón de regreso */
+.back-button {
+  background-color: #ccc;
+  border: none;
+  padding: 10px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 10px;
+  cursor: pointer;
+  width: auto;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  box-shadow: 2px 2px #000;
 }

@@ -27,4 +27,8 @@ localStorage.setItem('token', res.access_token);
   error: () => alert('Credenciales inválidas'),
 });
   }
+
+    goBack() {
+    this.router.navigate(['/home-player']);
+  }
 }

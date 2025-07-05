@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AvatarService } from './avatar.service';
 import { PlayerService } from '../../player.service';
 import { CommonModule, NgForOf } from '@angular/common';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-avatar-selector',
@@ -24,7 +25,8 @@ getAvatarImage(id: number): string {
 
   constructor(
     private avatarService: AvatarService,
-    private playerService: PlayerService
+    private playerService: PlayerService,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
@@ -46,4 +48,8 @@ getAvatarImage(id: number): string {
       error: () => alert('No se pudo activar el avatar'),
     });
   }
+
+  goBack() {
+  this.location.back();
+}
 }

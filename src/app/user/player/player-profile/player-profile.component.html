@@ -6,13 +6,14 @@
 
   <div *ngIf="player.activeAvatar">
     <p><strong>Avatar activo:</strong></p>
-    <img [src]="player.activeAvatar.imageUrl" alt="Avatar" width="100" />
+    <img [src]="player.activeAvatar.imageUrl" alt="Avatar" />
   </div>
 
-  <button (click)="irJugar()">Jugar</button>
-  <!--<button (click)="irTienda()">Tienda</button>--->
-
-  <hr />
-
-  <app-avatar-selector></app-avatar-selector>
+  <div class="button-group">
+    <button (click)="irJugar()">Jugar</button>
+    <button (click)="irSeleccionarAvatar()">Seleccionar Avatar</button>
+    <button (click)="irTienda()">Tienda</button>
+    <button (click)="irUnirseClase()">Unirse a Clase</button>
+    <button class="back-button" (click)="goBack()">Volver a Inicio</button>
+  </div>
 </div>

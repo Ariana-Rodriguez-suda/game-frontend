@@ -1,4 +1,6 @@
 <div class="form-container">
+  <button class="back-button" (click)="goBack()">Volver a Inicio</button>
+
   <h2>Registro - Jugador</h2>
   <form [formGroup]="registerForm" (ngSubmit)="onSubmitPlayer()">
     <input type="text" placeholder="Nombre de usuario" formControlName="username" />

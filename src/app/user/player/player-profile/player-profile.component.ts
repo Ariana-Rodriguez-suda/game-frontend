@@ -2,12 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { PlayerService } from '../player.service';
 import { CommonModule, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
-import { AvatarComponent } from './avatar/avatar.component';
 
 @Component({
   selector: 'app-player-profile',
   standalone: true,
-  imports: [CommonModule, NgIf, AvatarComponent],
+  imports: [CommonModule, NgIf],
   templateUrl: './player-profile.component.html',
   styleUrls: ['./player-profile.component.css'],
 })
@@ -35,4 +34,16 @@ export class PlayerProfileComponent implements OnInit {
   irTienda(): void {
     this.router.navigate(['/map/shop']);
   }
+
+    irSeleccionarAvatar() {
+    this.router.navigate(['/avatar']);
+  }
+
+    goBack() {
+    this.router.navigate(['/home-player']);
+  }
+
+  irUnirseClase() {
+  this.router.navigate(['/join-class']); // Ajusta si tu ruta es distinta
+}
 }

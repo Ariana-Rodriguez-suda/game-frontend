@@ -3,11 +3,73 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  overflow: hidden; /* evita espacio sobrante */
+  overflow: hidden;
   background-image: url('/assets/images/fondo.jpg');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
   font-family: 'Press Start 2P', cursive;
   position: relative;
+}
+
+.shop {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  max-width: 700px;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  box-shadow: 4px 4px #000;
+  justify-content: center;
+}
+
+.item {
+  background-color: #fff;
+  border: 2px solid #000;
+  border-radius: 12px;
+  box-shadow: 3px 3px #000;
+  width: 140px;
+  text-align: center;
+  padding: 12px;
+  font-size: 12px;
+  cursor: default;
+  transition: transform 0.2s ease;
+}
+
+.item:hover {
+  transform: scale(1.05);
+  background-color: #fff3b0;
+}
+
+.item img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin-bottom: 8px;
+  border: 2px solid #000;
+  border-radius: 8px;
+}
+
+.item p {
+  margin: 6px 0 12px;
+  font-weight: bold;
+}
+
+.item button {
+  background-color: #f3c427;
+  border: none;
+  padding: 10px;
+  font-family: 'Press Start 2P', cursive;
+  cursor: pointer;
+  border-radius: 10px;
+  box-shadow: 3px 3px #000;
+  font-size: 12px;
+  width: 100%;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.item button:hover {
+  background-color: #ffd60a;
+  transform: scale(1.05);
 }

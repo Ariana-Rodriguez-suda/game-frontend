@@ -13,24 +13,43 @@ export class ShopComponent implements OnInit {
   items: any[] = [];
   playerId: string | null = null;
 
+  // Precios y nombres por defecto (si el backend no los trae)
+  defaultItems = [
+    { id: 1, name: 'Sombrero Mágico', price: 50, image: 'item-1.png' },
+    { id: 2, name: 'Capa Invisible', price: 75, image: 'item-2.png' },
+    { id: 3, name: 'Espada Legendaria', price: 100, image: 'item-3.png' },
+    { id: 4, name: 'Botas Rápidas', price: 40, image: 'item-4.png' },
+    { id: 5, name: 'Escudo Fuerte', price: 60, image: 'item-5.png' },
+    { id: 6, name: 'Anillo de Poder', price: 80, image: 'item-6.png' },
+    { id: 7, name: 'Pergamino Secreto', price: 30, image: 'item-7.png' },
+  ];
+
   constructor(private shopService: ShopService) {}
 
   ngOnInit() {
     this.playerId = localStorage.getItem('userId');
-    if (!this.playerId) return;
-
     this.shopService.getItems().subscribe({
-      next: (res) => (this.items = res),
-      error: () => alert('Error al cargar la tienda'),
+      next: (res) => {
+        // Si backend no trae nombre o precio, usar default
+        this.items = res.map((item: any) => {
+          const defaultItem = this.defaultItems.find(d => d.id === item.id);
+          return {
+            ...item,
+            name: item.name || (defaultItem ? defaultItem.name : 'Ítem'),
+            price: item.price || (defaultItem ? defaultItem.price : 0),
+            image: item.image || (defaultItem ? defaultItem.image : 'item-1.png')
+          };
+        });
+      },
+      error: () => {
+        alert('Error al cargar la tienda');
+        this.items = [...this.defaultItems];
+      },
     });
   }
 
   comprar(itemId: number) {
-    if (!this.playerId) return;
-
-    this.shopService.buyItem(+this.playerId, itemId).subscribe({
-      next: () => alert('Compra realizada'),
-      error: () => alert('No se pudo comprar'),
-    });
+    // Por ahora no hacer nada porque monedas no implementadas
+    alert('La compra no está habilitada aún.');
   }
 }

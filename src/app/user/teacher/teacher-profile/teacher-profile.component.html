@@ -1,4 +1,6 @@
 <div class="profile-card">
+<button class="volver-btn" (click)="volverHome()">← Volver a inicio</button>
+
   <h2>Perfil de Maestro</h2>
 
   <div *ngIf="!editMode">
@@ -31,13 +33,22 @@
     <button type="submit">Crear clase</button>
   </form>
 
+  <hr />
+
   <div *ngIf="classes.length > 0">
     <h3>Mis clases</h3>
     <ul>
-      <li *ngFor="let c of classes">
-        {{ c.name }}
-        <button (click)="goToClass(c.id)">Ver estudiantes</button>
-      </li>
+<li *ngFor="let c of classes">
+  <div class="class-info">
+    <strong>{{ c.name }}</strong> - {{ c.subject }} ({{ c.institution }})<br />
+    <small><strong>Código:</strong> {{ c.code }}</small>
+  </div>
+  <div class="class-buttons">
+    <button (click)="goToClass(c.id)">Ver estudiantes</button>
+    <button (click)="editClass(c)">Editar</button>
+    <button (click)="deleteClass(c.id)">Eliminar</button>
+  </div>
+</li>
     </ul>
   </div>
 </div>

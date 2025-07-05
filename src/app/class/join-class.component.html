@@ -1,0 +1,16 @@
+<div class="join-container">
+  <h2>Unirse a una clase</h2>
+
+  <form (ngSubmit)="unirseClase()">
+    <input
+      type="text"
+      [(ngModel)]="codigo"
+      name="codigo"
+      placeholder="Código de clase"
+      required
+    />
+    <button type="submit">Unirse</button>
+  </form>
+
+  <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+</div>

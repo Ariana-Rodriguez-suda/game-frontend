@@ -35,4 +35,8 @@ export class RegisterPlayerFormComponent {
       this.router.navigate(['/player-profile']);
     });
   }
+
+    goBack() {
+    this.router.navigate(['/home-player']);
+  }
 }

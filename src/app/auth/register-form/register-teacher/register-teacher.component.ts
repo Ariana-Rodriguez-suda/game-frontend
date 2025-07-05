@@ -36,4 +36,8 @@ export class RegisterTeacherFormComponent {
       this.router.navigate(['/teacher-profile']);
     });
   }
+
+    goBack() {
+    this.router.navigate(['/home-teacher']);
+  }
 }

@@ -1,8 +1,8 @@
 <div class="shop">
   <div class="item" *ngFor="let item of items">
-    <img [src]="item.imageUrl" width="80" />
+    <img [src]="'assets/shop/' + item.image" alt="{{ item.name }}" />
     <p>{{ item.name }}</p>
-    <button (click)="comprar(item.id)">
+    <button (click)="comprar(item.id)" disabled>
       Comprar ({{ item.price }} monedas)
     </button>
   </div>

@@ -24,13 +24,53 @@ export class PlayerService {
     });
   }
 
-setActiveAvatar(avatarId: number): Observable<any> {
-  const token = localStorage.getItem('token') || '';
-  return this.http.patch(`${this.apiUrl}/avatar/select`, { avatarId }, {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  });
-}
+  // Establecer avatar activo
+  setActiveAvatar(avatarId: number): Observable<any> {
+    const token = localStorage.getItem('token') || '';
+    return this.http.patch(`${this.apiUrl}/avatar/select`, { avatarId }, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+  }
 
+  // Obtener lista de avatares disponibles para el jugador
+  getAvatars(): Observable<any[]> {
+    const token = localStorage.getItem('token') || '';
+    return this.http.get<any[]>(`${this.apiUrl}/avatar/list`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+  }
+
+  // Unirse a una clase con código
+  joinClass(code: string): Observable<any> {
+    const token = localStorage.getItem('token') || '';
+    return this.http.post(`${this.apiUrl}/player/join-class`, { code }, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+  }
+
+  // Comprar un item en la tienda (aún sin implementación completa)
+  buyItem(itemId: number): Observable<any> {
+    const token = localStorage.getItem('token') || '';
+    return this.http.post(`${this.apiUrl}/shop/buy`, { itemId }, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+  }
+
+  // Actualizar perfil (por ejemplo, cambiar usuario o contraseña)
+  updateProfile(data: { username?: string; password?: string; }): Observable<any> {
+    const token = localStorage.getItem('token') || '';
+    return this.http.patch(`${this.apiUrl}/player/profile`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+  }
 }

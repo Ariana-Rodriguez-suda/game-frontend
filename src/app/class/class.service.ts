@@ -28,4 +28,28 @@ getStudents(classId: number) {
     headers: { Authorization: `Bearer ${token}` }
   });
 }
+
+// Eliminar clase
+deleteClass(classId: number) {
+  const token = localStorage.getItem('token');
+  return this.http.delete(`${this.apiUrl}/classes/${classId}`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+}
+
+// Actualizar clase
+updateClass(classId: number, data: any) {
+  const token = localStorage.getItem('token');
+  return this.http.patch(`${this.apiUrl}/classes/${classId}`, data, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+}
+
+getClassById(classId: number) {
+  const token = localStorage.getItem('token');
+  return this.http.get(`https://game-backend-87km.onrender.com/classes/${classId}`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+}
+
 }

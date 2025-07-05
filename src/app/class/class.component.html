@@ -1,7 +1,22 @@
+<div *ngIf="classInfo" class="class-info">
+  <h2>{{ classInfo.name }}</h2>
+  <p><strong>Materia:</strong> {{ classInfo.subject }}</p>
+  <p><strong>Código:</strong> {{ classInfo.code }}</p>
+</div>
+
 <h2>Estudiantes Registrados</h2>
-<ul>
+
+<ul *ngIf="students.length > 0; else noStudents">
   <li *ngFor="let student of students">
     <img [src]="student.avatar?.imageUrl" alt="avatar" width="40" height="40" />
-    {{ student.username }} - Monedas: {{ student.coins }}
+    {{ student.username }} - Nivel: {{ student.nivel }}
   </li>
 </ul>
+
+<ng-template #noStudents>
+  <div class="empty-message">
+    Aún no hay estudiantes registrados en esta clase.
+  </div>
+</ng-template>
+
+<button (click)="goBack()">Volver</button>

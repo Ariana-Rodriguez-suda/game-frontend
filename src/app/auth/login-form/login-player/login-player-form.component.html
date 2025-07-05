@@ -1,9 +1,13 @@
-<form (ngSubmit)="onSubmit()">
-  <label>Usuario:</label>
-  <input [(ngModel)]="username" name="username" required />
+<div class="form-container">
+  <button class="back-button" (click)="goBack()">Volver a Inicio</button>
 
-  <label>Contraseña:</label>
-  <input [(ngModel)]="password" name="password" type="password" required />
+  <form (ngSubmit)="onSubmit()">
+    <label>Usuario:</label>
+    <input [(ngModel)]="username" name="username" required />
 
-  <button type="submit">Iniciar sesión</button>
-</form>
+    <label>Contraseña:</label>
+    <input [(ngModel)]="password" name="password" type="password" required />
+
+    <button type="submit">Iniciar sesión</button>
+  </form>
+</div>
