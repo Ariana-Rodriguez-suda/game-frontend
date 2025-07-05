@@ -15,13 +15,13 @@ export class ShopComponent implements OnInit {
 
   // Precios y nombres por defecto (si el backend no los trae)
   defaultItems = [
-    { id: 1, name: 'Sombrero Mágico', price: 50, image: 'item-1.png' },
-    { id: 2, name: 'Capa Invisible', price: 75, image: 'item-2.png' },
-    { id: 3, name: 'Espada Legendaria', price: 100, image: 'item-3.png' },
-    { id: 4, name: 'Botas Rápidas', price: 40, image: 'item-4.png' },
-    { id: 5, name: 'Escudo Fuerte', price: 60, image: 'item-5.png' },
-    { id: 6, name: 'Anillo de Poder', price: 80, image: 'item-6.png' },
-    { id: 7, name: 'Pergamino Secreto', price: 30, image: 'item-7.png' },
+    { id: 1, name: 'Sombrero de Vaquero', price: 5, image: 'item-1.png' },
+    { id: 2, name: 'Sombrero de Santa', price: 7, image: 'item-2.png' },
+    { id: 3, name: 'Sombrero de Mago', price: 10, image: 'item-3.png' },
+    { id: 4, name: 'Sombrero elegante', price: 4, image: 'item-4.png' },
+    { id: 5, name: 'Sombrero de paja', price: 6, image: 'item-5.png' },
+    { id: 6, name: 'Beanie', price: 8, image: 'item-6.png' },
+    { id: 7, name: 'Sombrero mexicano', price: 3, image: 'item-7.png' },
   ];
 
   constructor(private shopService: ShopService) {}
@@ -52,4 +52,8 @@ export class ShopComponent implements OnInit {
     // Por ahora no hacer nada porque monedas no implementadas
     alert('La compra no está habilitada aún.');
   }
+
+    goBack() {
+  history.back(); // o this.router.navigate(['/teacher-profile']);
+}
 }

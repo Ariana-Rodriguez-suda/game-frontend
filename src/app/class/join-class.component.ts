@@ -28,4 +28,8 @@ export class JoinClassComponent {
       },
     });
   }
+
+    goBack() {
+  history.back(); // o this.router.navigate(['/teacher-profile']);
+}
 }

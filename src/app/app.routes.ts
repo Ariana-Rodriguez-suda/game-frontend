@@ -12,6 +12,9 @@ import { Level1Component } from './map/Crazy-forest/level-1/level-1.component';
 import { Level2Component } from './map/Crazy-forest/level-2/level-2.component';
 import { Level3Component } from './map/Crazy-forest/level-3/level-3.component';
 import { ShopComponent } from './map/Shop/shop.component';
+import { JoinClassComponent } from './class/join-class.component';
+import { ClassComponent } from './class/class.component';
+import { AvatarComponent } from './user/player/player-profile/avatar/avatar.component';
 
 export const appRoutes: Routes = [
   { path: '', redirectTo: 'home-player', pathMatch: 'full' },
@@ -23,10 +26,12 @@ export const appRoutes: Routes = [
   { path: 'register-teacher', component: RegisterTeacherFormComponent },
   { path: 'player-profile', component: PlayerProfileComponent },
   { path: 'teacher-profile', component: TeacherProfileComponent },
+  { path: 'join-class', component: JoinClassComponent },
+  { path: 'class/:id/students', component: ClassComponent },
   { path: 'map/crazy-forest', component: CrazyForestComponent },
   { path: 'map/crazy-forest/level-1', component: Level1Component },
   { path: 'map/crazy-forest/level-2', component: Level2Component },
   { path: 'map/crazy-forest/level-3', component: Level3Component },
-  { path: 'map/shop', component: ShopComponent }, 
+  { path: 'map/shop', component: ShopComponent },
+  { path: '/avatar', component: AvatarComponent },
 ];
-
