@@ -10,21 +10,21 @@ export class ClassService {
 
 createClass(data: any) {
   const token = localStorage.getItem('token');
-  return this.http.post('/classes', data, {
+return this.http.post(`${this.apiUrl}/classes`, data, {
     headers: { Authorization: `Bearer ${token}` }
   });
 }
 
 getMyClasses() {
   const token = localStorage.getItem('token');
-  return this.http.get('/classes', {
+  return this.http.get(`${this.apiUrl}/classes`, {
     headers: { Authorization: `Bearer ${token}` }
   });
 }
 
 getStudents(classId: number) {
   const token = localStorage.getItem('token');
-  return this.http.get(`/classes/${classId}/students`, {
+  return this.http.get(`${this.apiUrl}/classes/${classId}/students`, {
     headers: { Authorization: `Bearer ${token}` }
   });
 }
