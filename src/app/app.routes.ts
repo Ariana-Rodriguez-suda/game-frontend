@@ -33,5 +33,5 @@ export const appRoutes: Routes = [
   { path: 'map/crazy-forest/level-2', component: Level2Component },
   { path: 'map/crazy-forest/level-3', component: Level3Component },
   { path: 'map/shop', component: ShopComponent },
-  { path: '/avatar-selector', component: AvatarSelectorComponent },
+  { path: 'app-avatar-selector', component: AvatarSelectorComponent },
 ];
