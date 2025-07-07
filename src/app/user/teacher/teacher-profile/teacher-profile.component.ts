@@ -31,11 +31,24 @@ user!: TeacherUser;
   ) {}
 
 ngOnInit() {
-  this.teacherService.getTeacherDetails().subscribe((data: TeacherUser) => {
-    this.user = data;
-    this.editUsername = data.username;
-    this.editEmail = data.email;
-    this.loadClasses();
+  this.teacherService.getTeacherDetails().subscribe({
+    next: (data: TeacherUser) => {
+      if (!data) {
+        alert('No se pudo cargar el perfil del maestro.');
+        this.router.navigate(['/login-teacher']); // o redirige a otro lado si quieres
+        return;
+      }
+
+      this.user = data;
+      this.editUsername = data.username;
+      this.editEmail = data.email;
+      this.loadClasses();
+    },
+    error: (err) => {
+      console.error('Error al cargar perfil del maestro:', err);
+      alert('Hubo un error cargando tu perfil. Intenta iniciar sesión de nuevo.');
+      this.router.navigate(['/login-teacher']); // Redirige al login si hay error
+    }
   });
 }
 
