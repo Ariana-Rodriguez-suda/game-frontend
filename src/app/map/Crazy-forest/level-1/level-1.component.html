@@ -1,73 +1,102 @@
 <div class="level-container">
 
-  <!-- HUD superior -->
-  <app-hud [coins]="coins" [level]="1"></app-hud>
+  <div #gameArea class="game-area" [style.width.px]="viewportWidth" [style.overflowX]="'hidden'">
+    <!-- Mundo desplazable -->
+    <div
+      class="world"
+      [style.width.px]="worldWidth"
+      [style.transform]="'translateX(-' + scrollX + 'px)'"
+      [style.position]="'relative'"
+      [style.height.px]="300"
+    >
+      <!-- Plataformas -->
+      <div
+        *ngFor="let p of platforms"
+        class="platform"
+        [style.left.px]="p.x"
+        [style.bottom.px]="p.y"
+        [style.width.px]="p.width"
+        [style.height.px]="p.height"
+      ></div>
 
-  <!-- Área de juego con desplazamiento -->
-  <div class="game-area-scroll">
-
-    <!-- Personaje principal -->
-    <div class="character" #character></div>
-
-    <!-- Plataforma base -->
-    <div class="platform ground"></div>
-
-    <!-- Plataformas elevadas -->
-    <div class="platform elevated" style="left: 400px; bottom: 100px;"></div>
-    <div class="platform elevated" style="left: 700px; bottom: 150px;"></div>
-    <div class="platform elevated" style="left: 1000px; bottom: 80px;"></div>
-
-    <!-- Monedas -->
-    <div 
-      class="coin" 
-      *ngFor="let moneda of monedasMapa" 
-      [style.left.px]="moneda.x">
-      🪙
-    </div>
-
-    <!-- Bloques fraccionarios -->
-    <div 
-      class="block" 
-      *ngFor="let block of blocks" 
-      [attr.id]="'block-' + block.id"
-      [attr.data-id]="block.id"
-      (click)="empujarBloque(block.id)"
-      role="listitem"
-      tabindex="0"
-      [style.left.px]="block.x"
-      [attr.aria-label]="'Bloque con fracción ' + block.numerator + ' sobre ' + block.denominator">
-
-      <div class="block-fraction">
-        <div 
-          class="block-part" 
-          *ngFor="let part of [].constructor(block.denominator); let i = index"
-          [class.filled]="i < block.numerator">
-        </div>
+      <!-- NPC en puente -->
+      <div
+        class="npc"
+        [style.left.px]="npcX"
+        [style.bottom.px]="npcY"
+        title="NPC Puente"
+      >
+        🧙‍♂️
       </div>
 
-      <span class="fraction-label">{{ block.numerator }}/{{ block.denominator }}</span>
-    </div>
+      <!-- Bloques -->
+      <div
+        *ngFor="let block of blocks"
+        class="block"
+        [id]="'block-' + block.id"
+        (click)="seleccionarBloqueParaSuma(block.id)"
+        [class.selected]="sumaSeleccionados.includes(block)"
+        [attr.aria-label]="'Bloque ' + block.numerator + '/' + block.denominator"
+      >
+        <div class="block-fraction">
+          <div
+            *ngFor="let _ of [].constructor(block.denominator); let i = index"
+            class="block-part"
+            [class.filled]="i < block.numerator"
+          ></div>
+        </div>
+        <span class="fraction-label">{{ block.numerator }}/{{ block.denominator }}</span>
+      </div>
 
-    <!-- NPC en el puente -->
-    <div class="npc" [style.left.px]="npcPosition.x">
-      🧓
+      <!-- Bloque fusionado -->
+      <div
+        *ngIf="fusionBlock"
+        class="block fusion-block"
+        [id]="'block-' + fusionBlock.id"
+        [attr.aria-label]="'Bloque ' + fusionBlock.numerator + '/' + fusionBlock.denominator"
+      >
+        <div class="block-fraction">
+          <div
+            *ngFor="let _ of [].constructor(fusionBlock.denominator); let i = index"
+            class="block-part"
+            [class.filled]="i < fusionBlock.numerator"
+          ></div>
+        </div>
+        <span class="fraction-label">{{ fusionBlock.numerator }}/{{ fusionBlock.denominator }}</span>
+      </div>
+
+      <!-- Monedas -->
+      <div
+        *ngFor="let coin of coins"
+        class="coin"
+        [style.left.px]="coin.x"
+        [style.bottom.px]="getPlatformHeightAt(coin.x) + 40"
+        [class.collected]="coin.collected"
+      >🪙</div>
+
+      <!-- Personaje -->
+      <div #character class="character"></div>
     </div>
   </div>
 
-  <!-- Cuadro de mensajes -->
+  <!-- Mensajes -->
   <div class="message-box">
     <p *ngFor="let msg of messages">{{ msg }}</p>
   </div>
 
-  <!-- Indicador de modo suma -->
-  <div class="status-box">
-    <span *ngIf="mode === 'suma'">🔢 Modo suma activado</span>
+  <!-- Botón para empujar bloque -->
+  <div class="instructions">
+    <p>Para empujar un bloque, acércate y haz clic en él (modo normal).</p>
+    <p>Presiona la tecla S para activar/desactivar modo suma.</p>
+    <p>En modo suma, haz clic en dos bloques para sumar.</p>
+    <p>Habla con el NPC en el puente con la tecla Z para instrucciones.</p>
   </div>
 
   <!-- Pantalla final -->
   <div *ngIf="nivelCompletado" class="final-screen">
     <h2>¡Nivel completado!</h2>
     <p>Estrellas: {{ estrellasGanadas }}</p>
+    <app-hud [coins]="coinsCollected" [level]="1"></app-hud>
     <app-button (click)="avanzar()">Siguiente nivel</app-button>
   </div>
 
