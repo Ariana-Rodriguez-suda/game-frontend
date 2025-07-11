@@ -1,39 +1,84 @@
-/* Layout general */
 .level-container {
-  padding: 20px;
   font-family: 'Comic Sans MS', cursive, sans-serif;
   background-color: #f0ffe0;
   color: #000;
+  overflow-x: auto;
+  padding: 20px;
 }
 
-.message-box {
-  background-color: #fffdd0;
-  border: 2px dashed #8b8b00;
-  padding: 10px;
-  margin-bottom: 15px;
-  font-size: 16px;
-  border-radius: 8px;
-  min-height: 40px;
-}
-
-.controls {
-  margin-bottom: 10px;
-}
-
-/* Bloques de fracción */
-.blocks-area {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
+.game-area-scroll {
+  position: relative;
+  width: 1400px; /* Área grande para scroll horizontal */
+  height: 300px;
+  background-color: #d4f7d4;
+  border: 2px solid #555;
+  overflow: hidden;
+  border-radius: 12px;
   margin-bottom: 20px;
-  justify-content: center;
 }
 
+/* Personaje jugador */
+.character {
+  position: absolute;
+  width: 40px;
+  height: 60px;
+  background-color: #ff9900;
+  bottom: 0;
+  left: 100px;
+  border-radius: 6px;
+  transition: left 0.1s, bottom 0.1s;
+}
+
+/* Animaciones personaje */
+.character.walking {
+  animation: walkAnimation 0.2s steps(2) infinite;
+  background-color: #ffcc00;
+}
+
+.character.jumping {
+  background-color: #ff6600;
+}
+
+@keyframes walkAnimation {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+  100% { transform: translateY(0); }
+}
+
+/* Plataforma base */
+.platform.ground {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 20px;
+  background-color: #654321;
+  border-radius: 0 0 12px 12px;
+}
+
+/* Plataformas elevadas */
+.platform.elevated {
+  position: absolute;
+  width: 120px;
+  height: 20px;
+  background-color: #4c3825;
+  border-radius: 6px;
+}
+
+/* Monedas */
+.coin {
+  position: absolute;
+  bottom: 60px;
+  font-size: 24px;
+  transition: opacity 0.3s;
+}
+
+/* Bloques fraccionarios */
 .block {
+  position: absolute;
   cursor: pointer;
   text-align: center;
-  outline: none;
   user-select: none;
+  outline: none;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
@@ -52,6 +97,7 @@
   border: 2px solid #000;
   display: flex;
   flex-direction: column-reverse;
+  justify-content: flex-start;
   background-color: #e0e0e0;
   border-radius: 6px;
   overflow: hidden;
@@ -60,10 +106,8 @@
 .block-part {
   width: 100%;
   height: 10%;
-  box-sizing: border-box;
   border-top: 1px solid #aaa;
   background-color: transparent;
-  transition: background-color 0.3s ease;
 }
 
 .block-part.filled {
@@ -74,64 +118,6 @@
   margin-top: 5px;
   font-weight: bold;
   font-size: 14px;
-  user-select: none;
-}
-
-/* Área de fusión */
-.fusion-area {
-  background-color: #fff0f5;
-  padding: 15px;
-  border: 1px dashed #cc3399;
-  border-radius: 6px;
-  width: fit-content;
-  margin: 0 auto 20px;
-  text-align: center;
-}
-
-/* Zona de juego */
-.game-area {
-  position: relative;
-  width: 100%;
-  height: 300px;
-  background-color: #d4f7d4;
-  border: 2px solid #555;
-  overflow: hidden;
-  border-radius: 12px;
-}
-
-.character {
-  position: absolute;
-  width: 40px;
-  height: 60px;
-  background-color: #ff9900;
-  bottom: 0;
-  left: 100px;
-  transition: left 0.1s, bottom 0.1s;
-  border-radius: 6px;
-}
-
-.character.walking {
-  animation: walkAnimation 0.2s steps(2) infinite;
-  background-color: #ffcc00;
-}
-
-.character.jumping {
-  background-color: #ff6600;
-}
-
-@keyframes walkAnimation {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-2px); }
-  100% { transform: translateY(0); }
-}
-
-.platform {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 20px;
-  background-color: #654321;
-  border-radius: 0 0 12px 12px;
 }
 
 /* NPC */
@@ -141,12 +127,23 @@
   font-size: 32px;
 }
 
-/* Monedas */
-.coin {
-  position: absolute;
-  bottom: 60px;
-  font-size: 24px;
-  transition: opacity 0.3s;
+/* Cuadro de mensajes */
+.message-box {
+  background-color: #fffdd0;
+  border: 2px dashed #8b8b00;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  min-height: 40px;
+  margin-bottom: 10px;
+}
+
+/* Indicador de modo suma */
+.status-box {
+  text-align: center;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #333;
 }
 
 /* Pantalla final */
@@ -161,39 +158,4 @@
   text-align: center;
   box-shadow: 5px 5px #000;
   z-index: 10000;
-}
-
-.end-screen {
-  margin-top: 40px;
-  background-color: #d0ffe6;
-  padding: 20px;
-  border-radius: 10px;
-  animation: fadeIn 1s ease-in;
-  text-align: center;
-}
-
-.end-screen h2 {
-  color: #1f75cc;
-  margin-bottom: 15px;
-}
-
-.end-screen button {
-  background-color: #f3c427;
-  padding: 10px 20px;
-  border: none;
-  font-family: 'Press Start 2P', cursive;
-  border-radius: 8px;
-  box-shadow: 2px 2px #000;
-  cursor: pointer;
-  margin-top: 15px;
-  transition: background-color 0.3s ease;
-}
-
-.end-screen button:hover {
-  background-color: #e6b800;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
 }
