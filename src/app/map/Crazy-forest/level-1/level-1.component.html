@@ -1,18 +1,36 @@
 <div class="level-container">
 
+  <!-- HUD y Personaje -->
   <div class="game-area">
     <div class="character" #character></div>
     <div class="platform"></div>
+
+    <!-- Monedas en el mapa -->
+    <div 
+      class="coin" 
+      *ngFor="let moneda of monedasMapa" 
+      [style.left.px]="moneda.x">
+      🪙
+    </div>
+
+    <!-- NPC visible en el mapa -->
+    <div class="npc" [style.left.px]="npcPosition.x">🧙‍♂️</div>
+    <div class="npc" style="left: 800px; bottom: 0;">🧓</div>
   </div>
 
+  <!-- Mensajes -->
   <div class="message-box">
     <p *ngFor="let msg of messages">{{ msg }}</p>
   </div>
 
+  <!-- Botón para activar modo suma -->
   <div class="controls">
-    <button (click)="activarModoSuma()" [attr.aria-pressed]="mode === 'suma'">Activar Modo Suma</button>
+    <button (click)="activarModoSuma()" [attr.aria-pressed]="mode === 'suma'">
+      Activar Modo Suma
+    </button>
   </div>
 
+  <!-- Bloques -->
   <div class="blocks-area">
     <div 
       class="block" 
@@ -22,7 +40,7 @@
       role="listitem"
       tabindex="0"
       [attr.aria-label]="'Bloque con fracción ' + block.numerator + ' sobre ' + block.denominator">
-      
+
       <div class="block-fraction">
         <div 
           class="block-part" 
@@ -35,6 +53,7 @@
     </div>
   </div>
 
+  <!-- Área de fusión -->
   <div class="fusion-area" *ngIf="mode === 'suma'">
     <h3>Selecciona dos bloques para sumar</h3>
     <input type="number" placeholder="ID Bloque 1" #id1>
@@ -42,10 +61,12 @@
     <button (click)="fusionarBloques(+id1.value, +id2.value)">Sumar</button>
   </div>
 
-  <div *ngIf="nivelCompletado" class="end-screen">
+  <!-- Pantalla final -->
+  <div *ngIf="nivelCompletado" class="final-screen">
     <h2>¡Nivel completado!</h2>
-    <p>⭐ x {{ estrellasGanadas }}</p>
-    <button (click)="avanzar()">Siguiente nivel</button>
+    <p>Estrellas: {{ estrellasGanadas }}</p>
+    <app-hud [coins]="coins" [level]="1"></app-hud>
+    <app-button (click)="avanzar()">Siguiente nivel</app-button>
   </div>
 
 </div>
