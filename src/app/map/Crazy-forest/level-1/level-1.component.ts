@@ -39,12 +39,13 @@ export class Level1Component implements OnInit, AfterViewInit {
 
   worldWidth = 1600;
   viewportWidth = 800;
+bridge = { x: 500, width: 100, repaired: false };
 
   playerX = 100;
   playerY = 0;
   playerWidth = 40;
   playerHeight = 60;
-  velocityY = 0;
+  velocityY = 20;
   gravity = 3;
   jumping = false;
   walkingDirection: 'left' | 'right' | null = null;
@@ -56,10 +57,10 @@ export class Level1Component implements OnInit, AfterViewInit {
     { x: 1000, y: 120, width: 180, height: 20 }
   ];
 
-  blocks: Block[] = [
-    { id: 1, numerator: 10, denominator: 8, x: 350, pushed: false },
-    { id: 2, numerator: 6, denominator: 8, x: 450, pushed: false }
-  ];
+blocks: Block[] = [
+  { id: 1, numerator: 10, denominator: 8, x: 310, pushed: false }, // sobre plataforma x:300
+  { id: 2, numerator: 6, denominator: 8, x: 610, pushed: false }   // sobre plataforma x:600
+];
 
   fusionBlockId = 99;
   fusionBlock: Block | null = null;
@@ -71,8 +72,8 @@ export class Level1Component implements OnInit, AfterViewInit {
   ];
   coinsCollected = 0;
 
-  npcX = 1050;
-  npcY = 140;
+npcX = 620; // justo después del puente
+npcY = 20;  // sobre el suelo
 
   scrollX = 0;
 
@@ -85,6 +86,11 @@ isSelected(blockId: number): boolean {
   constructor(private level1Service: Level1Service, private router: Router) {}
 
   ngOnInit(): void {
+    this.blocks.push(
+  { id: 100, numerator: 1, denominator: 4, x: 120, pushed: false },
+  { id: 101, numerator: 2, denominator: 4, x: 180, pushed: false },
+  { id: 102, numerator: 3, denominator: 4, x: 240, pushed: false }
+);
     this.mostrarMensajeIntro();
   }
 
@@ -94,12 +100,12 @@ isSelected(blockId: number): boolean {
   }
 
   mostrarMensajeIntro() {
-    this.messages = [
-      'Bienvenido al nivel 1.',
-      'Las fracciones se representan con bloques que puedes empujar hacia el agujero para cruzar.',
-      'Avanza, recolecta monedas y suma bloques con el NPC en el puente.',
-      'Presiona la tecla S para activar el modo suma cuando estés listo.'
-    ];
+this.messages = [
+  '¡Mira estos bloques!',
+  'Cada parte azul representa una fracción.',
+  '1/4 tiene 1 parte pintada, 2/4 tiene dos, etc.',
+  'Ahora avanza y recolecta monedas.'
+];
   }
 
   gameLoop() {
@@ -286,17 +292,27 @@ isSelected(blockId: number): boolean {
     } else {
       this.messages = ['Esa suma no da 16/8. Intenta con otros bloques.'];
       this.sumaSeleccionados = [];
-    }
+    } if (this.fusionBlock && this.mode === 'normal') {
+  const distX = Math.abs(this.playerX - this.fusionBlock.x);
+  const alturaJugador = this.getPlatformHeightAt(this.playerX);
+  const alturaBloque = this.getPlatformHeightAt(this.fusionBlock.x);
+
+  if (distX < 50 && alturaJugador === alturaBloque) {
+    this.fusionBlock.x += 15;
+  }
+}
+
   }
 
   checkEntregaBloque() {
     if (!this.fusionBlock) return;
 
-    if (Math.abs(this.fusionBlock.x - this.npcX) < 30) {
-      this.messages = ['¡Gracias! El puente está reparado. Avanza con cuidado.'];
-      this.progress++;
-      this.fusionBlock = null;
-    }
+if (Math.abs(this.fusionBlock.x - this.npcX) < 30) {
+  this.messages = ['¡Gracias! El puente está reparado. Avanza con cuidado.'];
+  this.progress++;
+  this.fusionBlock = null;
+  this.bridge.repaired = true;
+}
   }
 
   checkMonedas() {
@@ -361,7 +377,7 @@ isSelected(blockId: number): boolean {
         break;
       case ' ':
         if (!this.jumping) {
-          this.velocityY = 20;
+          this.velocityY = 30;
           this.jumping = true;
         }
         break;
