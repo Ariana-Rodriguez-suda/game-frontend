@@ -9,7 +9,7 @@ interface Block {
   id: number;
   numerator: number;
   denominator: number;
-  x: number; // posición horizontal dentro del mundo
+  x: number;
   pushed: boolean;
 }
 
@@ -37,11 +37,9 @@ export class Level1Component implements OnInit, AfterViewInit {
   estrellasGanadas = 0;
   nivelCompletado = false;
 
-  // Mundo
-  worldWidth = 1600; // ancho del nivel (scroll)
-  viewportWidth = 800; // visible en pantalla
+  worldWidth = 1600;
+  viewportWidth = 800;
 
-  // Jugador
   playerX = 100;
   playerY = 0;
   playerWidth = 40;
@@ -51,25 +49,21 @@ export class Level1Component implements OnInit, AfterViewInit {
   jumping = false;
   walkingDirection: 'left' | 'right' | null = null;
 
-  // Plataforma
   platforms = [
-    { x: 0, y: 0, width: 1600, height: 20 },       // Suelo
-    { x: 300, y: 100, width: 150, height: 20 },    // Plataforma elevada 1
-    { x: 600, y: 150, width: 200, height: 20 },    // Plataforma elevada 2
-    { x: 1000, y: 120, width: 180, height: 20 }    // Plataforma puente donde está NPC
+    { x: 0, y: 0, width: 1600, height: 20 },
+    { x: 300, y: 100, width: 150, height: 20 },
+    { x: 600, y: 150, width: 200, height: 20 },
+    { x: 1000, y: 120, width: 180, height: 20 }
   ];
 
-  // Bloques para empujar
   blocks: Block[] = [
     { id: 1, numerator: 10, denominator: 8, x: 350, pushed: false },
     { id: 2, numerator: 6, denominator: 8, x: 450, pushed: false }
   ];
 
-  // Bloque resultado (desaparece hasta la suma)
   fusionBlockId = 99;
   fusionBlock: Block | null = null;
 
-  // Monedas
   coins: Coin[] = [
     { id: 1, x: 200, collected: false },
     { id: 2, x: 750, collected: false },
@@ -77,15 +71,16 @@ export class Level1Component implements OnInit, AfterViewInit {
   ];
   coinsCollected = 0;
 
-  // NPC
   npcX = 1050;
   npcY = 140;
 
-  // Scroll
   scrollX = 0;
 
-  // Modo suma
-  sumaSeleccionados: Block[] = [];
+sumaSeleccionados: Block[] = [];
+
+isSelected(blockId: number): boolean {
+  return this.sumaSeleccionados.some(b => b.id === blockId);
+}
 
   constructor(private level1Service: Level1Service, private router: Router) {}
 
@@ -101,7 +96,7 @@ export class Level1Component implements OnInit, AfterViewInit {
   mostrarMensajeIntro() {
     this.messages = [
       'Bienvenido al nivel 1.',
-      'Las fracciones se representan con bloques que puedes empujar.',
+      'Las fracciones se representan con bloques que puedes empujar hacia el agujero para cruzar.',
       'Avanza, recolecta monedas y suma bloques con el NPC en el puente.',
       'Presiona la tecla S para activar el modo suma cuando estés listo.'
     ];
@@ -110,41 +105,51 @@ export class Level1Component implements OnInit, AfterViewInit {
   gameLoop() {
     requestAnimationFrame(() => this.gameLoop());
 
-    // Aplica gravedad
-    this.velocityY += this.gravity;
-    this.playerY -= this.velocityY;
+    // Gravedad
+    this.velocityY -= this.gravity;
+    this.playerY += this.velocityY;
 
-    // Detectar colisiones con plataformas (simple)
+    // Colisión con plataformas (más precisa)
     let onPlatform = false;
     for (const plat of this.platforms) {
+      const playerBottom = this.playerY;
+      const playerLeft = this.playerX;
+      const playerRight = this.playerX + this.playerWidth;
+
+      const platTop = plat.y + plat.height;
+      const platLeft = plat.x;
+      const platRight = plat.x + plat.width;
+
       if (
-        this.playerX + this.playerWidth > plat.x &&
-        this.playerX < plat.x + plat.width &&
-        this.playerY <= plat.y + plat.height &&
-        this.playerY >= plat.y
+        playerRight > platLeft &&
+        playerLeft < platRight &&
+        playerBottom <= platTop + 5 && // tolerancia para caída suave
+        playerBottom >= platTop - 10 && // para caer justo en la plataforma
+        this.velocityY <= 0
       ) {
-        // Correcto para que el jugador esté arriba de la plataforma
-        this.playerY = plat.y + plat.height;
+        this.playerY = platTop;
         this.velocityY = 0;
         this.jumping = false;
         onPlatform = true;
         break;
       }
     }
-    if (!onPlatform && this.playerY <= 0) { // suelo (nivel 0)
+
+    // Limitar que jugador no caiga bajo 0 (suelo)
+    if (!onPlatform && this.playerY < 0) {
       this.playerY = 0;
       this.velocityY = 0;
       this.jumping = false;
     }
 
-    // Movimiento horizontal (si camina)
+    // Movimiento horizontal
     if (this.walkingDirection === 'left') {
       this.playerX = Math.max(0, this.playerX - 6);
     } else if (this.walkingDirection === 'right') {
       this.playerX = Math.min(this.worldWidth - this.playerWidth, this.playerX + 6);
     }
 
-    // Actualizar scroll para centrar al jugador (limitar scroll)
+    // Scroll para centrar al jugador
     const centerScreen = this.scrollX + this.viewportWidth / 2;
     if (this.playerX > centerScreen + 50) {
       this.scrollX = Math.min(this.playerX - this.viewportWidth / 2, this.worldWidth - this.viewportWidth);
@@ -154,6 +159,7 @@ export class Level1Component implements OnInit, AfterViewInit {
 
     this.updateCharacterPosition();
     this.updateBlocks();
+    this.checkBloqueEnAgujero();
     this.checkMonedas();
     this.checkEntregaBloque();
     this.checkNivelCompletado();
@@ -167,7 +173,6 @@ export class Level1Component implements OnInit, AfterViewInit {
   }
 
   updateBlocks() {
-    // Actualizar posición de los bloques en pantalla (simple lógica visual)
     for (const block of this.blocks) {
       const el = document.getElementById(`block-${block.id}`);
       if (el) {
@@ -185,7 +190,6 @@ export class Level1Component implements OnInit, AfterViewInit {
   }
 
   getPlatformHeightAt(x: number): number {
-    // Devuelve la altura de plataforma (bottom) bajo x
     for (const plat of this.platforms) {
       if (x >= plat.x && x <= plat.x + plat.width) {
         return plat.y + plat.height;
@@ -194,27 +198,40 @@ export class Level1Component implements OnInit, AfterViewInit {
     return 0;
   }
 
-  // Mover bloque empujado: solo si está cerca del jugador y en modo normal
+  // Empujar bloque: se mueve hacia la derecha y si llega al agujero, permite cruzar
   empujarBloque(id: number) {
     if (this.mode !== 'normal') return;
     const block = this.blocks.find(b => b.id === id);
     if (!block) return;
 
-    // Solo si el jugador está cerca (distancia horizontal < 50) y en la misma plataforma
-    const distancia = Math.abs(this.playerX - block.x);
+    // Solo si el jugador está cerca y en misma altura
+    const distX = Math.abs(this.playerX - block.x);
     const alturaJugador = this.getPlatformHeightAt(this.playerX);
     const alturaBloque = this.getPlatformHeightAt(block.x);
 
-    if (distancia < 50 && alturaJugador === alturaBloque) {
-      block.x += 20; // empuja el bloque 20 px a la derecha
+    if (distX < 50 && alturaJugador === alturaBloque) {
+      block.x += 15;
       block.pushed = true;
-      this.messages = ['Has empujado un bloque.'];
 
-      // Cuando bloques empujados: se activa progreso, cambiar mensajes
       if (this.progress === 0) {
+        this.messages = ['Has empujado el bloque hacia el agujero. ¡Puedes cruzar ahora!'];
         this.progress++;
-        this.messages = ['Muy bien. Ahora habla con el NPC en el puente para sumar bloques. Presiona Z cuando estés cerca.'];
       }
+    }
+  }
+
+  // Detectar si bloque llegó al "agujero" (puente)
+  checkBloqueEnAgujero() {
+    if (this.progress < 1) return;
+    const agujeroX = 500; // Posición del agujero
+    const agujeroWidth = 40;
+
+    const bloque = this.blocks.find(b => b.pushed);
+    if (bloque && bloque.x >= agujeroX && bloque.x <= agujeroX + agujeroWidth) {
+      this.messages = ['¡Bloque colocado en el agujero! Ahora puedes cruzar al puente.'];
+      this.progress++;
+      // Eliminar bloque que cruzó (simula que se insertó)
+      this.blocks = this.blocks.filter(b => b.id !== bloque.id);
     }
   }
 
@@ -230,14 +247,12 @@ export class Level1Component implements OnInit, AfterViewInit {
     }
   }
 
-  // Seleccionar bloques para sumar (modo suma)
   seleccionarBloqueParaSuma(id: number) {
     if (this.mode !== 'suma') return;
     const block = this.blocks.find(b => b.id === id);
     if (!block) return;
 
     if (this.sumaSeleccionados.find(b => b.id === id)) {
-      // ya seleccionado, quitarlo
       this.sumaSeleccionados = this.sumaSeleccionados.filter(b => b.id !== id);
     } else {
       if (this.sumaSeleccionados.length < 2) {
@@ -254,18 +269,14 @@ export class Level1Component implements OnInit, AfterViewInit {
     const [b1, b2] = this.sumaSeleccionados;
     if (!b1 || !b2) return;
 
-    // Validar si suman a 16/8
-    const denom = b1.denominator; // ambos deben tener igual denominador
+    const denom = b1.denominator;
     if (b1.denominator === b2.denominator && (b1.numerator + b2.numerator) === 16 && denom === 8) {
-      // Éxito
       this.messages = ['¡Genial! Has formado el bloque 16/8. Llévalo al NPC en el puente.'];
-
-      // Crear bloque fusionado y eliminar bloques anteriores
       this.fusionBlock = {
         id: this.fusionBlockId,
         numerator: 16,
         denominator: 8,
-        x: Math.min(b1.x, b2.x), // lo dejamos en la posición más a la izquierda
+        x: Math.min(b1.x, b2.x),
         pushed: false
       };
       this.blocks = this.blocks.filter(b => b.id !== b1.id && b.id !== b2.id);
@@ -278,11 +289,9 @@ export class Level1Component implements OnInit, AfterViewInit {
     }
   }
 
-  // Detectar entrega bloque al NPC
   checkEntregaBloque() {
     if (!this.fusionBlock) return;
 
-    // Si la distancia horizontal entre bloque y NPC es menor a 30 px, entregar
     if (Math.abs(this.fusionBlock.x - this.npcX) < 30) {
       this.messages = ['¡Gracias! El puente está reparado. Avanza con cuidado.'];
       this.progress++;
@@ -290,7 +299,6 @@ export class Level1Component implements OnInit, AfterViewInit {
     }
   }
 
-  // Detectar monedas recolectadas
   checkMonedas() {
     for (const coin of this.coins) {
       if (!coin.collected && Math.abs(this.playerX - coin.x) < 30 && this.playerY <= this.getPlatformHeightAt(coin.x) + 40) {
@@ -308,13 +316,11 @@ export class Level1Component implements OnInit, AfterViewInit {
     audio.play();
   }
 
-  // Detectar fin de nivel (jugador llega al final del mapa)
   checkNivelCompletado() {
-    if (this.playerX >= this.worldWidth - 100 && !this.nivelCompletado && this.progress >= 3) {
+    if (this.playerX >= this.worldWidth - 100 && !this.nivelCompletado && this.progress >= 4) {
       this.nivelCompletado = true;
       this.estrellasGanadas = this.coinsCollected >= 3 ? 3 : 2;
       this.messages = ['¡Nivel completado!'];
-      // Guardar progreso
       this.level1Service.saveProgress({
         score: this.coinsCollected,
         completed: true
@@ -342,7 +348,6 @@ export class Level1Component implements OnInit, AfterViewInit {
     ];
   }
 
-  // Control de teclado para movimiento, salto y acciones
   @HostListener('window:keydown', ['$event'])
   onKeyDown(event: KeyboardEvent) {
     if (this.nivelCompletado) return;
@@ -360,10 +365,10 @@ export class Level1Component implements OnInit, AfterViewInit {
           this.jumping = true;
         }
         break;
-      case 's': // activar modo suma
+      case 's':
         this.activarModoSuma();
         break;
-      case 'z': // diálogo npc
+      case 'z':
         if (this.estaCercaDelNpc()) {
           this.mostrarDialogoNpc();
         }
@@ -377,5 +382,4 @@ export class Level1Component implements OnInit, AfterViewInit {
       this.walkingDirection = null;
     }
   }
-
 }
