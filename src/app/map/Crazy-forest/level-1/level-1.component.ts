@@ -58,7 +58,11 @@ export class Level1Component implements OnInit, AfterViewInit {
     { x: 0, y: 0, width: 1600, height: 20 },
     { x: 300, y: 100, width: 150, height: 20 },
     { x: 600, y: 150, width: 200, height: 20 },
-    { x: 1000, y: 120, width: 180, height: 20 }
+    { x: 1000, y: 120, width: 180, height: 20 },
+    { x: 180, y: 0, width: 60, height: 20 }, // primer tramo
+// agujero visual en x: 240 a 300 (no se define plataforma)
+// luego continúa el piso:
+{ x: 300, y: 0, width: 1300, height: 20 },
   ];
 
   blocks: Block[] = [
@@ -92,11 +96,9 @@ export class Level1Component implements OnInit, AfterViewInit {
   constructor(private level1Service: Level1Service, private router: Router) {}
 
   ngOnInit(): void {
-    this.introBlocks = [
-      { id: 100, numerator: 1, denominator: 4, x: 120, pushed: false },
-      { id: 101, numerator: 2, denominator: 4, x: 180, pushed: false },
-      { id: 102, numerator: 3, denominator: 4, x: 240, pushed: false }
-    ];
+this.introBlocks = [
+  { id: 100, numerator: 4, denominator: 8, x: 120, pushed: false }
+];
     this.mostrarMensajeIntro();
   }
 
@@ -397,7 +399,11 @@ export class Level1Component implements OnInit, AfterViewInit {
           this.mostrarDialogoNpc();
         }
         break;
-    }
+    case 'e':
+  const bloqueIntro = this.introBlocks.find(b => Math.abs(b.x - this.playerX) < 50);
+  if (bloqueIntro) this.empujarBloque(bloqueIntro.id);
+  break;
+      } 
   }
 
   @HostListener('window:keyup', ['$event'])
