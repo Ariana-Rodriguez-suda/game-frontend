@@ -1,9 +1,8 @@
 <div class="level-container">
-
   <div class="game-area">
     <div class="world" [style.width.px]="worldWidth" [style.transform]="'translateX(-' + scrollX + 'px)'">
 
-      <!-- HUD (fijo visualmente, pero dentro del nivel) -->
+      <!-- HUD fijo dentro del nivel -->
       <div class="hud-top" style="position: absolute; top: 10px; left: 10px; z-index: 10;">
         🧡 Vida: 3 | 🪙 Monedas: {{ coinsCollected }}
       </div>
@@ -27,35 +26,28 @@
         [style.backgroundColor]="bridge.repaired ? '#8b4513' : '#bbb'">
       </div>
 
-<!-- Bloques (tanto introductorios como de suma) -->
-<div 
-  *ngFor="let block of blocks" 
-  class="block" 
-  [id]="'block-' + block.id"
-  [style.left.px]="block.x"
-  (click)="seleccionarBloqueParaSuma(block.id)"
-  [class.selected]="isSelected(block.id)"
-  tabindex="0"
-  role="button"
-  [attr.aria-label]="'Bloque con fracción ' + block.numerator + ' sobre ' + block.denominator">
-
-  <div class="block-fraction">
-    <div 
-      class="block-part" 
-      *ngFor="let i of [].constructor(block.denominator); let idx = index"
-      [class.filled]="idx < block.numerator">
-    </div>
-  </div>
-  <span class="fraction-label">{{ block.numerator }} / {{ block.denominator }}</span>
-</div>
-
-
-      <!-- Personaje -->
-      <div #character class="character"></div>
-
-      <!-- Bloques interactivos -->
+      <!-- Bloques introductorios (1/4, 2/4, 3/4) -->
       <div 
-        *ngFor="let block of blocks" 
+        *ngFor="let block of blocks.slice(2)" 
+        class="block" 
+        [id]="'block-' + block.id"
+        [style.left.px]="block.x"
+        tabindex="0"
+        role="img"
+        [attr.aria-label]="'Fracción ' + block.numerator + '/' + block.denominator">
+        <div class="block-fraction">
+          <div 
+            class="block-part" 
+            *ngFor="let i of [].constructor(block.denominator); let idx = index"
+            [class.filled]="idx < block.numerator">
+          </div>
+        </div>
+        <span class="fraction-label">{{ block.numerator }} / {{ block.denominator }}</span>
+      </div>
+
+      <!-- Bloques interactivos para suma -->
+      <div 
+        *ngFor="let block of blocks.slice(0, 2)" 
         class="block" 
         [id]="'block-' + block.id"
         [style.left.px]="block.x"
@@ -93,6 +85,9 @@
         <span class="fraction-label">{{ fusionBlock.numerator }} / {{ fusionBlock.denominator }}</span>
       </div>
 
+      <!-- Personaje -->
+      <div #character class="character"></div>
+
       <!-- Monedas -->
       <div 
         *ngFor="let coin of coins" 
@@ -114,7 +109,7 @@
         🧙‍♂️
       </div>
 
-      <!-- Cuadro de mensajes (HUD fijo dentro del nivel) -->
+      <!-- Cuadro de mensajes -->
       <div 
         class="message-box" 
         style="position: absolute; bottom: 10px; left: 10px; z-index: 10;"
@@ -127,7 +122,7 @@
     </div> <!-- Fin .world -->
   </div> <!-- Fin .game-area -->
 
-  <!-- Botón de modo suma -->
+  <!-- Controles -->
   <div class="controls">
     <button (click)="activarModoSuma()" [attr.aria-pressed]="mode === 'suma'">
       {{ mode === 'suma' ? 'Desactivar' : 'Activar' }} Modo Suma (tecla S)
@@ -141,5 +136,4 @@
     <app-hud [coins]="coinsCollected" [level]="1"></app-hud>
     <app-button (click)="avanzar()">Siguiente nivel</app-button>
   </div>
-
 </div>

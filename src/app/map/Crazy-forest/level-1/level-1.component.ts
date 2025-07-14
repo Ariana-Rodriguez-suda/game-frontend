@@ -27,7 +27,6 @@ interface Coin {
   styleUrls: ['./level-1.component.css']
 })
 export class Level1Component implements OnInit, AfterViewInit {
-
   @ViewChild('gameArea') gameAreaRef!: ElementRef<HTMLDivElement>;
   @ViewChild('character') characterRef!: ElementRef<HTMLDivElement>;
 
@@ -39,7 +38,12 @@ export class Level1Component implements OnInit, AfterViewInit {
 
   worldWidth = 1600;
   viewportWidth = 800;
-bridge = { x: 500, width: 100, repaired: false };
+
+  bridge = {
+    x: 980,
+    width: 100,
+    repaired: false
+  };
 
   playerX = 100;
   playerY = 0;
@@ -57,10 +61,12 @@ bridge = { x: 500, width: 100, repaired: false };
     { x: 1000, y: 120, width: 180, height: 20 }
   ];
 
-blocks: Block[] = [
-  { id: 1, numerator: 10, denominator: 8, x: 310, pushed: false }, // sobre plataforma x:300
-  { id: 2, numerator: 6, denominator: 8, x: 610, pushed: false }   // sobre plataforma x:600
-];
+  blocks: Block[] = [
+    { id: 1, numerator: 10, denominator: 8, x: 310, pushed: false },
+    { id: 2, numerator: 6, denominator: 8, x: 610, pushed: false }
+  ];
+
+  introBlocks: Block[] = [];
 
   fusionBlockId = 99;
   fusionBlock: Block | null = null;
@@ -72,25 +78,25 @@ blocks: Block[] = [
   ];
   coinsCollected = 0;
 
-npcX = 620; // justo después del puente
-npcY = 20;  // sobre el suelo
+  npcX = 620;
+  npcY = 20;
 
   scrollX = 0;
 
-sumaSeleccionados: Block[] = [];
+  sumaSeleccionados: Block[] = [];
 
-isSelected(blockId: number): boolean {
-  return this.sumaSeleccionados.some(b => b.id === blockId);
-}
+  isSelected(blockId: number): boolean {
+    return this.sumaSeleccionados.some(b => b.id === blockId);
+  }
 
   constructor(private level1Service: Level1Service, private router: Router) {}
 
   ngOnInit(): void {
-    this.blocks.push(
-  { id: 100, numerator: 1, denominator: 4, x: 120, pushed: false },
-  { id: 101, numerator: 2, denominator: 4, x: 180, pushed: false },
-  { id: 102, numerator: 3, denominator: 4, x: 240, pushed: false }
-);
+    this.introBlocks = [
+      { id: 100, numerator: 1, denominator: 4, x: 120, pushed: false },
+      { id: 101, numerator: 2, denominator: 4, x: 180, pushed: false },
+      { id: 102, numerator: 3, denominator: 4, x: 240, pushed: false }
+    ];
     this.mostrarMensajeIntro();
   }
 
@@ -100,25 +106,24 @@ isSelected(blockId: number): boolean {
   }
 
   mostrarMensajeIntro() {
-this.messages = [
-  '¡Mira estos bloques!',
-  'Cada parte azul representa una fracción.',
-  '1/4 tiene 1 parte pintada, 2/4 tiene dos, etc.',
-  'Ahora avanza y recolecta monedas.'
-];
+    this.messages = [
+      '¡Mira estos bloques!',
+      'Cada parte azul representa una fracción.',
+      '1/4 tiene 1 parte pintada, 2/4 tiene dos, etc.',
+      'Ahora avanza y recolecta monedas.'
+    ];
   }
 
   gameLoop() {
     requestAnimationFrame(() => this.gameLoop());
 
-    // Gravedad
     this.velocityY -= this.gravity;
     this.playerY += this.velocityY;
 
-    // Colisión con plataformas (más precisa)
     let onPlatform = false;
     for (const plat of this.platforms) {
       const playerBottom = this.playerY;
+      const playerTop = this.playerY + this.playerHeight;
       const playerLeft = this.playerX;
       const playerRight = this.playerX + this.playerWidth;
 
@@ -129,8 +134,8 @@ this.messages = [
       if (
         playerRight > platLeft &&
         playerLeft < platRight &&
-        playerBottom <= platTop + 5 && // tolerancia para caída suave
-        playerBottom >= platTop - 10 && // para caer justo en la plataforma
+        playerBottom <= platTop + 5 &&
+        playerBottom >= platTop - 10 &&
         this.velocityY <= 0
       ) {
         this.playerY = platTop;
@@ -141,21 +146,18 @@ this.messages = [
       }
     }
 
-    // Limitar que jugador no caiga bajo 0 (suelo)
     if (!onPlatform && this.playerY < 0) {
       this.playerY = 0;
       this.velocityY = 0;
       this.jumping = false;
     }
 
-    // Movimiento horizontal
     if (this.walkingDirection === 'left') {
       this.playerX = Math.max(0, this.playerX - 6);
     } else if (this.walkingDirection === 'right') {
       this.playerX = Math.min(this.worldWidth - this.playerWidth, this.playerX + 6);
     }
 
-    // Scroll para centrar al jugador
     const centerScreen = this.scrollX + this.viewportWidth / 2;
     if (this.playerX > centerScreen + 50) {
       this.scrollX = Math.min(this.playerX - this.viewportWidth / 2, this.worldWidth - this.viewportWidth);
@@ -165,6 +167,7 @@ this.messages = [
 
     this.updateCharacterPosition();
     this.updateBlocks();
+    this.empujarFusionBlock();
     this.checkBloqueEnAgujero();
     this.checkMonedas();
     this.checkEntregaBloque();
@@ -180,6 +183,13 @@ this.messages = [
 
   updateBlocks() {
     for (const block of this.blocks) {
+      const el = document.getElementById(`block-${block.id}`);
+      if (el) {
+        el.style.left = `${block.x - this.scrollX}px`;
+        el.style.bottom = `${this.getPlatformHeightAt(block.x)}px`;
+      }
+    }
+    for (const block of this.introBlocks) {
       const el = document.getElementById(`block-${block.id}`);
       if (el) {
         el.style.left = `${block.x - this.scrollX}px`;
@@ -204,13 +214,22 @@ this.messages = [
     return 0;
   }
 
-  // Empujar bloque: se mueve hacia la derecha y si llega al agujero, permite cruzar
+  empujarFusionBlock() {
+    if (!this.fusionBlock || this.mode !== 'normal') return;
+    const distX = Math.abs(this.playerX - this.fusionBlock.x);
+    const alturaJugador = this.getPlatformHeightAt(this.playerX);
+    const alturaBloque = this.getPlatformHeightAt(this.fusionBlock.x);
+
+    if (distX < 50 && alturaJugador === alturaBloque) {
+      this.fusionBlock.x += 15;
+    }
+  }
+
   empujarBloque(id: number) {
     if (this.mode !== 'normal') return;
     const block = this.blocks.find(b => b.id === id);
     if (!block) return;
 
-    // Solo si el jugador está cerca y en misma altura
     const distX = Math.abs(this.playerX - block.x);
     const alturaJugador = this.getPlatformHeightAt(this.playerX);
     const alturaBloque = this.getPlatformHeightAt(block.x);
@@ -226,17 +245,16 @@ this.messages = [
     }
   }
 
-  // Detectar si bloque llegó al "agujero" (puente)
   checkBloqueEnAgujero() {
     if (this.progress < 1) return;
-    const agujeroX = 500; // Posición del agujero
-    const agujeroWidth = 40;
+
+    const agujeroX = this.bridge.x;
+    const agujeroWidth = this.bridge.width;
 
     const bloque = this.blocks.find(b => b.pushed);
     if (bloque && bloque.x >= agujeroX && bloque.x <= agujeroX + agujeroWidth) {
       this.messages = ['¡Bloque colocado en el agujero! Ahora puedes cruzar al puente.'];
       this.progress++;
-      // Eliminar bloque que cruzó (simula que se insertó)
       this.blocks = this.blocks.filter(b => b.id !== bloque.id);
     }
   }
@@ -292,27 +310,18 @@ this.messages = [
     } else {
       this.messages = ['Esa suma no da 16/8. Intenta con otros bloques.'];
       this.sumaSeleccionados = [];
-    } if (this.fusionBlock && this.mode === 'normal') {
-  const distX = Math.abs(this.playerX - this.fusionBlock.x);
-  const alturaJugador = this.getPlatformHeightAt(this.playerX);
-  const alturaBloque = this.getPlatformHeightAt(this.fusionBlock.x);
-
-  if (distX < 50 && alturaJugador === alturaBloque) {
-    this.fusionBlock.x += 15;
-  }
-}
-
+    }
   }
 
   checkEntregaBloque() {
     if (!this.fusionBlock) return;
 
-if (Math.abs(this.fusionBlock.x - this.npcX) < 30) {
-  this.messages = ['¡Gracias! El puente está reparado. Avanza con cuidado.'];
-  this.progress++;
-  this.fusionBlock = null;
-  this.bridge.repaired = true;
-}
+    if (Math.abs(this.fusionBlock.x - this.npcX) < 30) {
+      this.messages = ['¡Gracias! El puente está reparado. Avanza con cuidado.'];
+      this.progress++;
+      this.fusionBlock = null;
+      this.bridge.repaired = true;
+    }
   }
 
   checkMonedas() {
@@ -320,7 +329,6 @@ if (Math.abs(this.fusionBlock.x - this.npcX) < 30) {
       if (!coin.collected && Math.abs(this.playerX - coin.x) < 30 && this.playerY <= this.getPlatformHeightAt(coin.x) + 40) {
         coin.collected = true;
         this.coinsCollected++;
-        this.messages = [`Moneda recolectada: ${this.coinsCollected}`];
         this.playCoinSound();
       }
     }
