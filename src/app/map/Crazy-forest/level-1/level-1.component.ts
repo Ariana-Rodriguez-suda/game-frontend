@@ -36,7 +36,7 @@ export class Level1Component implements OnInit, AfterViewInit {
   estrellasGanadas = 0;
   nivelCompletado = false;
 
-  worldWidth = 1600;
+  worldWidth = 2000;
   viewportWidth = 800;
 
   bridge = {
@@ -55,14 +55,12 @@ export class Level1Component implements OnInit, AfterViewInit {
   walkingDirection: 'left' | 'right' | null = null;
 
   platforms = [
-    { x: 0, y: 0, width: 1600, height: 20 },
+    { x: 0, y: 0, width: 180, height: 20 },
+    // agujero visual entre 240 y 300
+    { x: 300, y: 0, width: 1700, height: 20 },
     { x: 300, y: 100, width: 150, height: 20 },
     { x: 600, y: 150, width: 200, height: 20 },
-    { x: 1000, y: 120, width: 180, height: 20 },
-    { x: 180, y: 0, width: 60, height: 20 }, // primer tramo
-// agujero visual en x: 240 a 300 (no se define plataforma)
-// luego continúa el piso:
-{ x: 300, y: 0, width: 1300, height: 20 },
+    { x: 1000, y: 120, width: 180, height: 20 }
   ];
 
   blocks: Block[] = [
@@ -76,7 +74,7 @@ export class Level1Component implements OnInit, AfterViewInit {
   fusionBlock: Block | null = null;
 
   coins: Coin[] = [
-    { id: 1, x: 200, collected: false },
+    { id: 1, x: 300, collected: false },
     { id: 2, x: 750, collected: false },
     { id: 3, x: 1400, collected: false }
   ];
@@ -96,9 +94,9 @@ export class Level1Component implements OnInit, AfterViewInit {
   constructor(private level1Service: Level1Service, private router: Router) {}
 
   ngOnInit(): void {
-this.introBlocks = [
-  { id: 100, numerator: 4, denominator: 8, x: 120, pushed: false }
-];
+    this.introBlocks = [
+      { id: 100, numerator: 4, denominator: 8, x: 120, pushed: false }
+    ];
     this.mostrarMensajeIntro();
   }
 
@@ -109,10 +107,10 @@ this.introBlocks = [
 
   mostrarMensajeIntro() {
     this.messages = [
-      '¡Mira estos bloques!',
-      'Cada parte azul representa una fracción.',
-      '1/4 tiene 1 parte pintada, 2/4 tiene dos, etc.',
-      'Ahora avanza y recolecta monedas.'
+      '¡Mira este bloque!',
+      'Tiene 4 partes azules de un total de 8.',
+      'Eso significa que representa la fracción 4/8.',
+      'Empújalo para llenar el agujero y avanzar (presiona E cuando estés cerca).'
     ];
   }
 
@@ -169,7 +167,6 @@ this.introBlocks = [
 
     this.updateCharacterPosition();
     this.updateBlocks();
-    this.empujarFusionBlock();
     this.checkBloqueEnAgujero();
     this.checkMonedas();
     this.checkEntregaBloque();
@@ -184,14 +181,8 @@ this.introBlocks = [
   }
 
   updateBlocks() {
-    for (const block of this.blocks) {
-      const el = document.getElementById(`block-${block.id}`);
-      if (el) {
-        el.style.left = `${block.x - this.scrollX}px`;
-        el.style.bottom = `${this.getPlatformHeightAt(block.x)}px`;
-      }
-    }
-    for (const block of this.introBlocks) {
+    const allBlocks = [...this.blocks, ...this.introBlocks];
+    for (const block of allBlocks) {
       const el = document.getElementById(`block-${block.id}`);
       if (el) {
         el.style.left = `${block.x - this.scrollX}px`;
@@ -216,20 +207,10 @@ this.introBlocks = [
     return 0;
   }
 
-  empujarFusionBlock() {
-    if (!this.fusionBlock || this.mode !== 'normal') return;
-    const distX = Math.abs(this.playerX - this.fusionBlock.x);
-    const alturaJugador = this.getPlatformHeightAt(this.playerX);
-    const alturaBloque = this.getPlatformHeightAt(this.fusionBlock.x);
-
-    if (distX < 50 && alturaJugador === alturaBloque) {
-      this.fusionBlock.x += 15;
-    }
-  }
-
   empujarBloque(id: number) {
     if (this.mode !== 'normal') return;
-    const block = this.blocks.find(b => b.id === id);
+    const all = [...this.blocks, ...this.introBlocks];
+    const block = all.find(b => b.id === id);
     if (!block) return;
 
     const distX = Math.abs(this.playerX - block.x);
@@ -241,7 +222,7 @@ this.introBlocks = [
       block.pushed = true;
 
       if (this.progress === 0) {
-        this.messages = ['Has empujado el bloque hacia el agujero. ¡Puedes cruzar ahora!'];
+        this.messages = ['¡Bien hecho! El bloque ha llenado el agujero. Sigue adelante.'];
         this.progress++;
       }
     }
@@ -250,27 +231,23 @@ this.introBlocks = [
   checkBloqueEnAgujero() {
     if (this.progress < 1) return;
 
-    const agujeroX = this.bridge.x;
-    const agujeroWidth = this.bridge.width;
+    const agujeroX = 240;
+    const agujeroWidth = 60;
 
-    const bloque = this.blocks.find(b => b.pushed);
+    const bloque = this.introBlocks.find(b => b.pushed);
     if (bloque && bloque.x >= agujeroX && bloque.x <= agujeroX + agujeroWidth) {
-      this.messages = ['¡Bloque colocado en el agujero! Ahora puedes cruzar al puente.'];
+      this.messages = ['¡Bloque colocado en el agujero!'];
+      this.introBlocks = this.introBlocks.filter(b => b.id !== bloque.id);
       this.progress++;
-      this.blocks = this.blocks.filter(b => b.id !== bloque.id);
     }
   }
 
   activarModoSuma() {
-    if (this.mode === 'suma') {
-      this.mode = 'normal';
-      this.sumaSeleccionados = [];
-      this.messages = ['Modo suma desactivado.'];
-    } else {
-      this.mode = 'suma';
-      this.sumaSeleccionados = [];
-      this.messages = ['Modo suma activado. Selecciona dos bloques para sumar (haz clic en ellos).'];
-    }
+    this.mode = this.mode === 'suma' ? 'normal' : 'suma';
+    this.sumaSeleccionados = [];
+    this.messages = this.mode === 'suma'
+      ? ['Modo suma activado. Selecciona dos bloques.']
+      : ['Modo suma desactivado.'];
   }
 
   seleccionarBloqueParaSuma(id: number) {
@@ -278,12 +255,10 @@ this.introBlocks = [
     const block = this.blocks.find(b => b.id === id);
     if (!block) return;
 
-    if (this.sumaSeleccionados.find(b => b.id === id)) {
+    if (this.sumaSeleccionados.some(b => b.id === id)) {
       this.sumaSeleccionados = this.sumaSeleccionados.filter(b => b.id !== id);
-    } else {
-      if (this.sumaSeleccionados.length < 2) {
-        this.sumaSeleccionados.push(block);
-      }
+    } else if (this.sumaSeleccionados.length < 2) {
+      this.sumaSeleccionados.push(block);
     }
 
     if (this.sumaSeleccionados.length === 2) {
@@ -293,11 +268,7 @@ this.introBlocks = [
 
   intentarSumarBloques() {
     const [b1, b2] = this.sumaSeleccionados;
-    if (!b1 || !b2) return;
-
-    const denom = b1.denominator;
-    if (b1.denominator === b2.denominator && (b1.numerator + b2.numerator) === 16 && denom === 8) {
-      this.messages = ['¡Genial! Has formado el bloque 16/8. Llévalo al NPC en el puente.'];
+    if (b1.denominator === b2.denominator && b1.numerator + b2.numerator === 16 && b1.denominator === 8) {
       this.fusionBlock = {
         id: this.fusionBlockId,
         numerator: 16,
@@ -306,29 +277,29 @@ this.introBlocks = [
         pushed: false
       };
       this.blocks = this.blocks.filter(b => b.id !== b1.id && b.id !== b2.id);
+      this.messages = ['¡Formaste 16/8! Llévalo al NPC.'];
       this.mode = 'normal';
-      this.sumaSeleccionados = [];
       this.progress++;
     } else {
-      this.messages = ['Esa suma no da 16/8. Intenta con otros bloques.'];
-      this.sumaSeleccionados = [];
+      this.messages = ['Esa suma no da 16/8. Intenta otra combinación.'];
     }
+    this.sumaSeleccionados = [];
   }
 
   checkEntregaBloque() {
     if (!this.fusionBlock) return;
 
     if (Math.abs(this.fusionBlock.x - this.npcX) < 30) {
-      this.messages = ['¡Gracias! El puente está reparado. Avanza con cuidado.'];
-      this.progress++;
-      this.fusionBlock = null;
       this.bridge.repaired = true;
+      this.fusionBlock = null;
+      this.progress++;
+      this.messages = ['¡Gracias! El puente está reparado.'];
     }
   }
 
   checkMonedas() {
     for (const coin of this.coins) {
-      if (!coin.collected && Math.abs(this.playerX - coin.x) < 30 && this.playerY <= this.getPlatformHeightAt(coin.x) + 40) {
+      if (!coin.collected && Math.abs(this.playerX - coin.x) < 30) {
         coin.collected = true;
         this.coinsCollected++;
         this.playCoinSound();
@@ -350,10 +321,7 @@ this.introBlocks = [
       this.level1Service.saveProgress({
         score: this.coinsCollected,
         completed: true
-      }).subscribe({
-        next: () => console.log('Progreso guardado'),
-        error: () => console.error('Error al guardar progreso')
-      });
+      }).subscribe();
     }
   }
 
@@ -370,7 +338,7 @@ this.introBlocks = [
       '¡Hola! El puente está roto.',
       'Necesitamos una fracción de 16/8 para repararlo.',
       'Empuja los bloques y usa el modo suma (tecla S).',
-      'Selecciona dos bloques para sumar y entrega el resultado aquí.'
+      'Selecciona dos bloques y entrégalos aquí.'
     ];
   }
 
@@ -399,11 +367,13 @@ this.introBlocks = [
           this.mostrarDialogoNpc();
         }
         break;
-    case 'e':
-  const bloqueIntro = this.introBlocks.find(b => Math.abs(b.x - this.playerX) < 50);
-  if (bloqueIntro) this.empujarBloque(bloqueIntro.id);
-  break;
-      } 
+      case 'e':
+        const bloqueIntro = this.introBlocks.find(b => Math.abs(b.x - this.playerX) < 50);
+        if (bloqueIntro) this.empujarBloque(bloqueIntro.id);
+        const bloqueRegular = this.blocks.find(b => Math.abs(b.x - this.playerX) < 50);
+        if (bloqueRegular) this.empujarBloque(bloqueRegular.id);
+        break;
+    }
   }
 
   @HostListener('window:keyup', ['$event'])
