@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   standalone: true
 })
-export class NivelComponent implements OnInit {
+export class Level1Component implements OnInit {
   avatarSrc = '/assets/sprites/avatar-boy-1.png';
   vidas = 3;
   monedas = 0;
