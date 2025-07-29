@@ -1,160 +1,42 @@
-.level-container {
-  font-family: 'Comic Sans MS', cursive, sans-serif;
-  background-color: #f0ffe0;
-  color: #000;
-  padding: 10px;
-  user-select: none;
-  height: 100vh;
-  overflow: hidden;
+.nivel {
   position: relative;
-}
-
-.game-area {
   width: 100vw;
   height: 100vh;
-  margin: 0;
-  border: none;
-  overflow: hidden;
-  position: relative;
-}
-
-.world {
-  position: relative;
-  height: 100%;
-  transition: transform 0.2s ease-out;
-  background: linear-gradient(to top, #a8d5a8, #4ca14c);
-}
-
-.platform {
-  position: absolute;
-  background-color: #654321;
-  border-radius: 0 0 12px 12px;
-  box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
-}
-
-.character {
-  position: absolute;
-  width: 40px;
-  height: 60px;
-  background-color: #ff9900;
-  border-radius: 6px;
-  bottom: 0;
-  left: 100px;
-  transition: background-color 0.2s;
-}
-
-.block, .fusion-block {
-  position: absolute;
-  width: 60px;
-  height: 100px;
-  background-color: #e0e0e0;
-  border: 2px solid #000;
-  border-radius: 8px;
-  cursor: pointer;
-  user-select: none;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
-.block:hover, .fusion-block:hover {
-  transform: scale(1.05);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.4);
-}
-
-.block.selected {
-  border-color: #cc3399;
-  box-shadow: 0 0 10px #cc3399;
-}
-
-.block-fraction {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column-reverse;
-  justify-content: flex-start;
-  border-radius: 6px;
+  background-repeat: repeat-x;
   overflow: hidden;
 }
 
-.block-part {
-  height: 12.5%;
-  border-top: 1px solid #aaa;
-  background-color: transparent;
-  transition: background-color 0.3s ease;
-}
-
-.block-part.filled {
-  background-color: #2554ff;
-}
-
-.fraction-label {
+.avatar,
+.bloque,
+.npc,
+.puente {
   position: absolute;
-  bottom: 5px;
-  width: 100%;
-  text-align: center;
-  font-weight: bold;
-  font-size: 14px;
-  user-select: none;
+  width: 64px;
+  height: 64px;
 }
 
-.coin {
+.textbox {
   position: absolute;
-  font-size: 24px;
-  transition: opacity 0.5s ease;
-}
-
-.coin.collected {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.npc {
-  position: absolute;
-  font-size: 32px;
-  cursor: default;
-}
-
-.message-box {
-  position: absolute;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  max-width: 90%;
-  background-color: #fffdd0;
-  border: 2px dashed #8b8b00;
-  padding: 10px;
-  min-height: 50px;
-  border-radius: 8px;
+  bottom: 20px;
+  left: 10%;
+  width: 80%;
+  height: 120px;
+  background-size: cover;
+  padding: 20px;
   font-size: 16px;
-  z-index: 1000;
+  color: white;
+  text-shadow: 1px 1px black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.instructions {
-  font-size: 14px;
-  margin-bottom: 20px;
-}
-
-.final-screen {
-  position: fixed;
-  top: 30%;
-  left: 25%;
-  background-color: #fff;
-  padding: 30px;
-  border-radius: 15px;
-  font-family: 'Press Start 2P', cursive;
-  text-align: center;
-  box-shadow: 5px 5px #000;
-  z-index: 10000;
-}
-
-.hud-top {
+.hud {
   position: absolute;
   top: 10px;
   left: 10px;
-  font-size: 16px;
-  background: rgba(255, 255, 255, 0.7);
-  padding: 6px 12px;
-  border-radius: 6px;
-  font-weight: bold;
-  z-index: 1000;
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
 }

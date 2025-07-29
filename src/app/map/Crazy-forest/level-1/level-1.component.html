@@ -1,104 +1,47 @@
-<div class="level-container">
-  <app-hud [coins]="coinsCollected" [level]="1" class="hud-top"></app-hud>
+<div class="nivel" [ngStyle]="{ 'background-image': 'url(assets/images/fondo-nivel.jpg)' }">
+  <!-- Avatar -->
+  <img
+    class="avatar"
+    [src]="avatarSrc"
+    [style.left.px]="player.x"
+    [style.bottom.px]="player.y"
+  />
 
-  <div class="game-area" #gameArea>
-    <div class="world" [style.transform]="'translateX(-' + scrollX + 'px)'" [style.width.px]="worldWidth">
+  <!-- Bloque fraccionario -->
+  <img
+    *ngFor="let bloque of bloques"
+    class="bloque"
+    [src]="bloque.img"
+    [style.left.px]="bloque.x"
+    [style.bottom.px]="bloque.y"
+  />
 
-      <!-- Plataformas -->
-      <div
-        *ngFor="let platform of platforms"
-        class="platform"
-        [style.left.px]="platform.x"
-        [style.bottom.px]="platform.y"
-        [style.width.px]="platform.width"
-        [style.height.px]="platform.height">
-      </div>
+  <!-- NPC -->
+  <img
+    class="npc"
+    src="assets/sprites/npc.jpg"
+    [style.left.px]="npc.x"
+    [style.bottom.px]="npc.y"
+  />
 
-      <!-- Personaje -->
-      <div #character class="character"></div>
+  <!-- Puente roto -->
+  <img
+    class="puente"
+    src="assets/images/puente-roto-t.jpg"
+    [style.left.px]="puente.x"
+    [style.bottom.px]="puente.y"
+  />
 
-      <!-- Bloques introductorios -->
-      <div
-        *ngFor="let block of introBlocks"
-        class="block"
-        [attr.id]="'block-' + block.id"
-        (click)="empujarBloque(block.id)">
-        <div class="block-fraction">
-          <div
-            *ngFor="let i of [].constructor(block.denominator); let j = index"
-            class="block-part"
-            [class.filled]="j < block.numerator">
-          </div>
-        </div>
-        <div class="fraction-label">{{ block.numerator }}/{{ block.denominator }}</div>
-      </div>
-
-      <!-- Bloques normales -->
-      <div
-        *ngFor="let block of blocks"
-        class="block"
-        [attr.id]="'block-' + block.id"
-        [class.selected]="isSelected(block.id)"
-        (click)="seleccionarBloqueParaSuma(block.id)">
-        <div class="block-fraction">
-          <div
-            *ngFor="let i of [].constructor(block.denominator); let j = index"
-            class="block-part"
-            [class.filled]="j < block.numerator">
-          </div>
-        </div>
-        <div class="fraction-label">{{ block.numerator }}/{{ block.denominator }}</div>
-      </div>
-
-      <!-- Bloque fusionado -->
-      <div
-        *ngIf="fusionBlock"
-        class="block fusion-block"
-        [attr.id]="'block-' + fusionBlock.id">
-        <div class="block-fraction">
-          <div
-            *ngFor="let i of [].constructor(fusionBlock.denominator); let j = index"
-            class="block-part"
-            [class.filled]="j < fusionBlock.numerator">
-          </div>
-        </div>
-        <div class="fraction-label">{{ fusionBlock.numerator }}/{{ fusionBlock.denominator }}</div>
-      </div>
-
-      <!-- NPC -->
-      <div class="npc" [style.left.px]="npcX - scrollX" [style.bottom.px]="npcY">🤓</div>
-
-      <!-- Monedas -->
-      <div
-        *ngFor="let coin of coins"
-        class="coin"
-        [style.left.px]="coin.x - scrollX"
-        [style.bottom.px]="getPlatformHeightAt(coin.x) + 40"
-        [class.collected]="coin.collected">🪙</div>
-
-      <!-- Representación del puente roto -->
-      <div
-        *ngIf="!bridge.repaired"
-        class="platform"
-        [style.left.px]="bridge.x"
-        [style.bottom.px]="0"
-        [style.width.px]="bridge.width"
-        [style.height.px]="10"
-        style="background-color: #8b4513; opacity: 0.3;">
-      </div>
-    </div>
+  <!-- Textbox -->
+  <div *ngIf="dialogoActivo" class="textbox" [style.background-image]="'url(assets/images/textbox.png)'">
+    <p>{{ dialogo[dialogoIndex] }}</p>
+    <button (click)="siguienteDialogo()">Continuar</button>
   </div>
 
-  <!-- Cuadro de mensajes -->
-  <div class="message-box" *ngIf="messages.length > 0">
-    <div *ngFor="let msg of messages">{{ msg }}</div>
-  </div>
-
-  <!-- Pantalla final -->
-  <div *ngIf="nivelCompletado" class="final-screen">
-    <h2>¡Nivel completado!</h2>
-    <p>Monedas recolectadas: {{ coinsCollected }}</p>
-    <p>Estrellas ganadas: {{ estrellasGanadas }}</p>
-    <app-button (click)="avanzar()" texto="Continuar"></app-button>
+  <!-- HUD temporal -->
+  <div class="hud">
+    <p>Vidas: {{ vidas }}</p>
+    <p>Monedas: {{ monedas }}</p>
+    <p>Tiempo: {{ tiempo }}s</p>
   </div>
 </div>
