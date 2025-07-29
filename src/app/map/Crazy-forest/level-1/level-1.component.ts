@@ -2,84 +2,98 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-nivel',
+  selector: 'app-level-1',
   templateUrl: './level-1.component.html',
-  styleUrls: ['./level-1.component.css'],
-  imports: [CommonModule],
+  styleUrls: ['./level-1.component.scss'],
+  imports: [ CommonModule ],
   standalone: true
 })
 export class Level1Component implements OnInit {
-  avatarSrc = '/assets/sprites/avatar-boy-1.png';
-  vidas = 3;
-  monedas = 0;
-  tiempo = 0;
-  intervaloTiempo: any;
+  showIntro = true;
 
-  player = { x: 50, y: 0, velocidadY: 0, enElSuelo: false };
-  gravedad = -2;
+  playerX = 100;
+  playerY = 400;
+  velocityY = 0;
+  isJumping = false;
 
-  bloques = [
-    { x: 150, y: 0, img: 'assets/images/bloque.png', fraccion: '4/6' },
-    // otros bloques si deseas
-  ];
+  blockX = 200;
+  blockY = 400;
 
-  npc = { x: 800, y: 0 };
-  puente = { x: 900, y: 0 };
+  gravity = 2;
 
-  modoSuma = false;
-  dialogoActivo = true;
-  dialogoIndex = 0;
-  dialogo = [
-    'Bienvenido a Aventura Numeral.',
-    'En este juego las fracciones se representan con bloques divididos en secciones.',
-    'Las secciones coloradas representan el numerador y todas las secciones el denominador.',
-    'El bloque que tienes al frente es 4/6.',
-    'Presiona E para empujar bloques. Vamos, empuja el bloque para cubrir el agujero.'
-  ];
-
-  musica = new Audio('/assets/sonidos/musica-nivel.mp3');
-  sonidoPuente = new Audio('/assets/sonidos/puente.mp3');
-
-  ngOnInit() {
-    this.musica.loop = true;
-    this.musica.play();
-    this.intervaloTiempo = setInterval(() => this.tiempo++, 1000);
+  get playerStyle() {
+    return {
+      left: `${this.playerX}px`,
+      bottom: `${this.playerY}px`
+    };
   }
 
-  siguienteDialogo() {
-    if (this.dialogoIndex < this.dialogo.length - 1) {
-      this.dialogoIndex++;
-    } else {
-      this.dialogoActivo = false;
-    }
+  get blockStyle() {
+    return {
+      left: `${this.blockX}px`,
+      bottom: `${this.blockY}px`
+    };
+  }
+
+  ngOnInit() {
+    setInterval(() => this.updatePhysics(), 30);
   }
 
   @HostListener('window:keydown', ['$event'])
-  manejarTeclas(event: KeyboardEvent) {
-    if (event.key === 'ArrowRight') {
-      this.player.x += 10;
+  handleKey(e: KeyboardEvent) {
+    if (this.showIntro && (e.key === 'Enter' || e.key === ' ')) {
+      this.hideIntro();
+      return;
     }
-    if (event.key === 'ArrowLeft') {
-      this.player.x -= 10;
+
+    if (e.key === 'ArrowRight') this.playerX += 10;
+    if (e.key === 'ArrowLeft') this.playerX -= 10;
+
+    if (e.key === ' ' && !this.isJumping) {
+      this.velocityY = 20;
+      this.isJumping = true;
     }
-    if (event.key === ' ' && this.player.enElSuelo) {
-      this.player.velocidadY = 20;
-      this.player.enElSuelo = false;
-    }
-    if (event.key === 'e') {
-      this.empujarBloque();
-    }
-    if (event.key === 's') {
-      this.modoSuma = true;
-      console.log('Modo suma activado');
+
+    if (e.key === 'e' || e.key === 'E') this.tryPushBlock();
+  }
+
+  hideIntro() {
+    this.showIntro = false;
+  }
+
+  tryPushBlock() {
+    const distance = Math.abs(this.playerX - this.blockX);
+    if (distance < 70) {
+      this.blockX += 64;
     }
   }
 
-  empujarBloque() {
-    for (let bloque of this.bloques) {
-      if (Math.abs(this.player.x - bloque.x) < 70) {
-        bloque.x += 64;
-      }
+  updatePhysics() {
+    // gravedad
+    if (this.playerY > 0) {
+      this.velocityY -= this.gravity;
+      this.playerY += this.velocityY;
     }
+
+    if (this.playerY <= 0) {
+      this.playerY = 0;
+      this.velocityY = 0;
+      this.isJumping = false;
+    }
+
+    // caída al agujero
+    if (
+      this.playerX > 300 &&
+      this.playerX < 364 &&
+      this.playerY === 0 &&
+      !(this.blockX === 300)
+    ) {
+      this.respawn();
+    }
+  }
+
+  respawn() {
+    this.playerX = 100;
+    this.playerY = 400;
   }
 }
