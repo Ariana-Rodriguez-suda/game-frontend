@@ -1,0 +1,12 @@
+.moneda {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  z-index: 50;
+  animation: girar 1s infinite linear;
+}
+
+@keyframes girar {
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(360deg); }
+}

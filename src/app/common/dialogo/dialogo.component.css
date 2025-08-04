@@ -1,0 +1,24 @@
+.textbox-container {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-image: url('/assets/hud/dialogo.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  width: 600px;
+  height: 190px;
+  padding: 35px 40px;
+  color: white;
+  font-size: 18px;
+  font-family: 'Comic Sans MS', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 100;
+}
+
+.textbox-content {
+  width: 100%;
+}

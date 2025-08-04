@@ -1,0 +1,84 @@
+.nivel {
+  position: relative;
+  width: 4000px;
+  height: 500px;
+  overflow: hidden;
+  transition: transform 0.1s linear;
+}
+
+.fondo {
+  position: absolute;
+  width: 800px;
+  height: 500px;
+  top: 0;
+}
+
+.suelo {
+  position: absolute;
+  width: 800px;
+  height: 100px;
+  bottom: 0;
+}
+
+.plataforma {
+  position: absolute;
+  width: 100px;
+  height: 20px;
+}
+
+.bloque, .moneda, .npc, .nube, .puente {
+  position: absolute;
+  bottom: 100px;
+}
+
+.personaje {
+  position: absolute;
+  width: 60px;
+  height: 90px;
+}
+
+.hud {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  gap: 20px;
+  z-index: 1000;
+}
+
+.vidas {
+  height: 40px;
+}
+
+.coin-score {
+  position: relative;
+}
+
+.coin-score img {
+  height: 40px;
+}
+
+.score-text {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 20px;
+  color: black;
+  font-weight: bold;
+}
+
+.fin-nivel {
+  position: fixed;
+  top: 30%;
+  left: 35%;
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+  z-index: 999;
+}
+
+.estrellas img {
+  height: 40px;
+  margin: 5px;
+}
