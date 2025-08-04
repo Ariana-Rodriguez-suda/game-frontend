@@ -21,7 +21,7 @@ import { CoinScoreComponent } from '../../game-ui/score-coin/coins.component';
     CoinScoreComponent
   ]
 })
-export class Nivel1Component implements OnInit {
+export class Level1Component implements OnInit {
   vidas = 3;
   monedas = 0;
   mensaje = '';
