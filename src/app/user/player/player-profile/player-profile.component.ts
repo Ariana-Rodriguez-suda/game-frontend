@@ -29,7 +29,7 @@ export class PlayerProfileComponent implements OnInit {
   }
 
   irJugar(): void {
-    this.router.navigate(['/map/crazy-forest/level-1']);
+    this.router.navigate(['/map/level-1']);
   }
 
   irTienda(): void {
