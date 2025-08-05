@@ -35,7 +35,7 @@
   pointer-events: none;
 
   /* Agrega padding para que el texto no toque los bordes del botón gráfico */
-  padding: 6px 16px;
+  padding: 6px 26px;
 
   box-sizing: border-box;
   white-space: nowrap;
@@ -46,7 +46,7 @@
 
 /* Más alto para “Iniciar sesión” */
 .boton-alto {
-  height: 50px;
+  height: 45px;
   min-width: 250px;
 }
 
