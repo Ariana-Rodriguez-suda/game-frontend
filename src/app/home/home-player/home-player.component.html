@@ -1,13 +1,18 @@
 <div class="home-container">
-  <app-boton class="role-switch" texto="Maestro" (click)="goToTeacher()"></app-boton>
-<button class="custom-button" style="min-width: 150px; height: 35px;"
-  (click)="goToLogin()">
-  Iniciar sesión
-</button>
 
-<button class="custom-button" style="min-width: 120px; height: 35px;"
-  (click)="goToRegister()">
-  Registrarse
-</button>
+  <!-- Botón cambiar a Maestro -->
+  <button class="image-button role-switch" (click)="goToTeacher()">
+    <img src="/assets/hud/maestro.png" alt="Maestro" />
+  </button>
+
+  <!-- Botón Iniciar Sesión -->
+  <button class="image-button" (click)="goToLogin()">
+    <img src="/assets/hud/iniciar.png" alt="Iniciar sesión" />
+  </button>
+
+  <!-- Botón Registrarse -->
+  <button class="image-button" (click)="goToRegister()">
+    <img src="/assets/hud/registrarse.png" alt="Registrarse" />
+  </button>
 
 </div>

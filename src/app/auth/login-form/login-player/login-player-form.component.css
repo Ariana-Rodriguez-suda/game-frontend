@@ -4,7 +4,7 @@
   align-items: center;
   height: 100vh;
   overflow: hidden;
-  background-image: url('/assets/images/fondo.jpg'); /* Tu fondo */
+  background-image: url('/assets/images/fondo.jpg');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -13,12 +13,12 @@
 }
 
 .form-container {
-  background-color: #f3c427; /* Fondo del cuadro del formulario */
+  background-color: #f3c427;
   border-radius: 12px;
   padding: 30px;
   box-shadow: 4px 4px #000;
   width: 100%;
-  max-width: 600px; /* Cuadro más largo */
+  max-width: 600px;
   color: #000;
   position: relative;
   display: flex;
@@ -32,12 +32,6 @@ form {
   gap: 1rem;
 }
 
-.custom-back-button {
-  width: 150px;
-  height: 50px;
-  align-self: flex-start;
-}
-
 input {
   width: 100%;
   padding: 10px;
@@ -48,24 +42,28 @@ input {
   font-size: 12px;
 }
 
-.custom-button {
-  background-image: url('/assets/hud/framebotones.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  
-  padding: 12px 20px;
-  font-family: 'Press Start 2P', cursive;
-  font-size: 10px;
-  color: black;
-
-  cursor: pointer;
+.image-button {
+  background: none;
   border: none;
-  display: inline-flex;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 160px;
-  height: 40px;
-  box-sizing: border-box;
-  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.image-button img {
+  width: 160px;
+  height: auto;
+  object-fit: contain;
+}
+
+.image-button:hover {
+  transform: scale(1.05);
+}
+
+.volver-btn {
+  align-self: flex-start;
+  margin-bottom: 10px;
 }

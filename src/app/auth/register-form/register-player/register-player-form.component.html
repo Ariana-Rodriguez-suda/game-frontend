@@ -1,10 +1,18 @@
 <div class="form-container">
-  <app-boton texto="Volver a Inicio" (click)="goBack()" class="custom-back-button"></app-boton>
+  <!-- Botón Volver -->
+  <button class="image-button volver-btn" (click)="goBack()">
+    <img src="/assets/hud/volver.png" alt="Volver a Inicio" />
+  </button>
 
   <h2>Registro - Jugador</h2>
+
   <form [formGroup]="registerForm" (ngSubmit)="onSubmitPlayer()">
     <input type="text" placeholder="Nombre de usuario" formControlName="username" />
     <input type="password" placeholder="Contraseña" formControlName="password" />
-    <app-boton texto="Registrarse" type="submit"></app-boton>
+
+    <!-- Botón Registrarse -->
+    <button class="image-button" type="submit">
+      <img src="/assets/hud/registrarse.png" alt="Registrarse" />
+    </button>
   </form>
 </div>

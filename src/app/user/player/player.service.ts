@@ -34,15 +34,18 @@ export class PlayerService {
     });
   }
 
-  // Obtener lista de avatares disponibles para el jugador
-  getAvatars(): Observable<any[]> {
-    const token = localStorage.getItem('token') || '';
-    return this.http.get<any[]>(`${this.apiUrl}/avatar/list`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-  }
+// Cambiar getAvatars para que consulte el endpoint correcto de avatares
+getAvatars(): Observable<any[]> {
+  const token = localStorage.getItem('token') || '';
+  return this.http.get<any[]>(`${this.apiUrl}/avatar`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+}
+
+// El endpoint para setActiveAvatar ya apunta a /avatar/select
+
 
   // Unirse a una clase con código
   joinClass(code: string): Observable<any> {

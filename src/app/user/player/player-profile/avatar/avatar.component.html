@@ -1,22 +1,27 @@
-<h3>Selecciona un avatar</h3>
+<div class="avatar-selector-container">
+  <button class="flecha izquierda" (click)="anteriorAvatar()"></button>
 
-<div class="avatar-list" *ngIf="avatars.length > 0; else noAvatars">
-  <div class="avatar-card" *ngFor="let avatar of avatars">
-    <img 
-      [src]="avatarImages[avatar.id] || 'assets/avatars/default.png'" 
-      alt="{{ avatar.name }}" 
-      width="80"
+  <div class="avatar-display">
+    <img [src]="avatarActual?.imageUrl" alt="{{ avatarActual?.name }}" />
+    <p>{{ avatarActual?.name }}</p>
+
+    <img
+      src="/assets/hud/usar.png"
+      alt="Usar avatar"
+      class="boton-hud"
+      (click)="activarAvatar()"
     />
-    <p>{{ avatar.name }}</p>
-    <button (click)="activarAvatar(avatar.id)">Usar</button>
   </div>
+
+  <button class="flecha derecha" (click)="siguienteAvatar()"></button>
 </div>
 
-<ng-template #noAvatars>
-  <p>No hay avatares disponibles.</p>
-</ng-template>
-
-<!-- 🔙 Botón para volver al perfil -->
-<div style="text-align: center; margin-top: 20px;">
-  <button (click)="goBack()">Volver al perfil</button>
+<!-- Botón volver -->
+<div class="volver-container">
+  <img
+    src="/assets/hud/volver.png"
+    alt="Volver"
+    class="boton-hud"
+    (click)="goBack()"
+  />
 </div>

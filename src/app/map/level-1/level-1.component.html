@@ -1,80 +1,38 @@
-<div class="viewport">
-  <div class="nivel">
+<div class="level-container">
 
-    <!-- HUD -->
+  <!-- Fondo -->
+  <img src="/assets/images/fondolv1.png" alt="Fondo" class="fondo" />
+
+  <!-- HUD -->
+  <div class="hud">
     <app-vidas [vidas]="vidas"></app-vidas>
     <app-coin-score [monedas]="monedas"></app-coin-score>
-
-    <!-- Vista del nivel -->
-    <div class="juego-box">
-
-      <!-- Fondo -->
-      <img src="/assets/images/fondolv1.png" class="fondo" alt="Fondo del nivel" />
-
-      <!-- Suelo y plataformas -->
-      <img src="/assets/images/floor1.png" class="suelo suelo1" />
-      <img src="/assets/images/hole1.png" class="agujero agujero1" />
-      <img src="/assets/images/floor2.1.png" class="suelo suelo2-1" />
-      <img src="/assets/images/floor2.2.png" class="suelo suelo2-2" />
-      <img src="/assets/images/hole2.png" class="agujero agujero2" />
-      <img src="/assets/images/floor3.png" class="suelo suelo3" />
-
-      <!-- Bloque de césped -->
-      <img src="/assets/bloques/bloqueCesped.png" class="bloque bloque-cesped" [style.left.px]="bloqueCesped.x" />
-
-      <!-- Bloques de suma -->
-      <img *ngIf="!bloqueSumaFusionado" src="/assets/bloques/bloqueSuma.png" class="bloque bloque-suma1" [style.left.px]="bloquesSuma[0].x" />
-      <img *ngIf="!bloqueSumaFusionado" src="/assets/bloques/bloqueSuma.png" class="bloque bloque-suma2" [style.left.px]="bloquesSuma[1].x" />
-
-      <!-- Bloque resultado de la suma -->
-      <img *ngIf="bloqueSumaFusionado" src="/assets/bloques/bloqueResult.png" class="bloque bloque-result" [style.left.px]="bloqueResult.x" />
-
-      <!-- NPC -->
-      <img *ngIf="!npcTrabajando" src="/assets/sprites/npc.png" class="npc" [style.left.px]="npc.x" />
-      <img *ngIf="npcTrabajando" src="/assets/sprites/npc_trabajando.png" class="npc trabajando" [style.left.px]="npc.x" />
-
-      <!-- Amuleto -->
-      <img *ngIf="mostrarAmuleto" src="/assets/hud/suma.jpg" class="amuleto" [style.left.px]="amuleto.x" />
-
-      <!-- Puente -->
-      <img *ngIf="!puenteReparado" src="/assets/hud/puentebroken.png" class="puente roto" [style.left.px]="puente.x" />
-      <img *ngIf="puenteReparado" src="/assets/hud/puentefixed.png" class="puente reparado" [style.left.px]="puente.x" />
-
-      <!-- Nube de construcción -->
-      <img *ngIf="mostrarNubeConstruccion" src="/assets/hud/nube.png" class="nube" [style.left.px]="nube.x" />
-
-      <!-- Monedas -->
-      <app-moneda *ngFor="let moneda of monedasArray" [personajeRef]="personajeRef" (recolectada)="recolectarMoneda()"></app-moneda>
-
-      <!-- Personaje -->
-      <img #personaje src="/assets/sprites/avatarBoy1run.png" class="personaje" [style.left.px]="personajeX" [style.bottom.px]="personajeY" />
-
-      <!-- Mensaje de introducción reemplazando componente -->
-      <div *ngIf="mostrarMensaje" class="mensaje-intro">
-        <p>{{ mensajesIntro[mensajeIndex] }}</p>
-        <button (click)="continuarIntro()">Continuar</button>
-      </div>
-
-      <!-- Diálogos con NPC -->
-      <app-textbox-dialogo *ngIf="mostrarDialogo" [linea]="dialogosNpc[dialogoIndex]" [showButton]="true" (continue)="continuarDialogo()"></app-textbox-dialogo>
-
-      <!-- Pantalla de evaluación -->
-      <div class="pantalla-evaluacion" *ngIf="mostrarEvaluacion">
-        <div class="evaluacion-contenido">
-          <h2>¡Nivel Completado!</h2>
-          <div class="estrellas">
-            <img *ngFor="let _ of estrellasArray; let i = index" src="/assets/hud/star.png" class="estrella" />
-          </div>
-          <button (click)="continuar()">Continuar</button>
-        </div>
-      </div>
-
-      <!-- Pantalla final -->
-      <div class="pantalla-final" *ngIf="mostrarPantallaFinal">
-        <h2>¡Gracias por jugar!</h2>
-        <p>Más contenido estará disponible próximamente...</p>
-      </div>
-
-    </div>
   </div>
+
+  <!-- Suelo primera sección -->
+  <img src="/assets/images/floor1.png" alt="Suelo" class="suelo" />
+
+  <!-- Agujero -->
+  <img src="/assets/images/hole1.png" alt="Agujero" class="agujero" />
+
+  <!-- Plataforma extra para la hierba -->
+  <img src="/assets/hud/plataforma.png" alt="Plataforma" class="plataforma" [style.left.px]="bloqueCesped.x" *ngIf="bloqueCesped.visible" />
+
+  <!-- Bloque de césped (bloque a empujar) -->
+  <img src="/assets/bloques/bloqueCesped.png" alt="Bloque Césped" class="bloque-cesped" [style.left.px]="bloqueCesped.x" *ngIf="bloqueCesped.visible" />
+
+<img #personaje [style.left.px]="personajeX" [style.bottom.px]="personajeY"
+     [src]="avatarRunUrl"
+     class="personaje" />
+
+  <!-- Moneda -->
+  <app-moneda [x]="550" [y]="60"></app-moneda>
+
+  <!-- Mensaje de introducción -->
+  <div class="mensaje-intro" *ngIf="mostrarMensaje">
+    {{ mensajesIntro[mensajeIndex] }}
+    <br />
+    <small>Presiona ENTER para continuar</small>
+  </div>
+
 </div>

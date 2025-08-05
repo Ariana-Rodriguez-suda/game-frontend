@@ -11,6 +11,8 @@ import { CommonModule } from '@angular/common';
 export class MonedaComponent implements OnInit, OnDestroy {
   @Input() personajeRef!: ElementRef;
   @Output() recolectada = new EventEmitter<void>();
+    @Input() x: number = 0;
+  @Input() y: number = 0;
 
   visible: boolean = true;
   checkInterval: any;

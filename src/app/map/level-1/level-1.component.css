@@ -1,157 +1,112 @@
-/* Centra la vista del juego en la pantalla */
-.viewport {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+:host {
+  position: relative;
+  display: block;
+  width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background-color: #000;
+  background-image: url('/assets/images/fondolv1.png');
+  background-size: cover;
+  background-position: center bottom;
+  font-family: 'Press Start 2P', cursive;
 }
 
-/* Contenedor principal del nivel */
-.nivel {
-  position: relative;
-  width: 960px;
-  height: 540px;
-  overflow: hidden;
-  background-color: #aaddff;
-  border: 4px solid #333;
-  box-shadow: 0 0 20px rgba(0,0,0,0.7);
-}
-
-/* Contenedor del juego */
-.juego-box {
-  position: relative;
-  width: 960px;
-  height: 540px;
-  overflow: hidden;
-}
-
-/* Fondo del nivel */
-.fondo {
+/* HUD */
+.hud {
   position: absolute;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -1;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+  display: flex;
+  gap: 1rem;
 }
 
-/* Todas las imágenes ajustadas */
-img {
-  image-rendering: pixelated;
-  max-width: 100%;
-  height: auto;
+/* Plataforma suelo */
+.plataforma {
   position: absolute;
+  bottom: 0;
+  height: 60px;
+  background-image: url('/assets/hud/plataforma.png');
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
-/* Personaje */
+/* Suelo inicial */
+.floor1 {
+  position: absolute;
+  bottom: 0;
+  width: 500px;
+  height: 60px;
+  background-image: url('/assets/images/floor1.png');
+  background-size: cover;
+}
+
+/* Agujero */
+.hole {
+  position: absolute;
+  bottom: 0;
+  width: 100px;
+  height: 60px;
+  background-image: url('/assets/images/hole1.png');
+  background-size: cover;
+}
+
+/* Plataforma segunda sección */
+.floor2 {
+  position: absolute;
+  bottom: 0;
+  width: 400px;
+  height: 60px;
+  background-image: url('/assets/images/floor2.1.png');
+  background-size: cover;
+}
+
+/* Bloque césped */
+.bloque-cesped {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background-image: url('/assets/bloques/bloqueCesped.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/* Avatar */
 .personaje {
+  position: absolute;
   width: 50px;
-  height: 70px;
+  height: 60px;
+  background-image: url('/assets/sprites/avatarBoy1run.png');
+  background-size: cover;
 }
 
-/* Suelos y agujeros */
-.suelo, .agujero {
-  bottom: 0;
-  height: 80px;
-}
-
-/* Bloques */
-.bloque {
-  bottom: 80px;
-  width: 64px;
-  height: 64px;
-}
-
-/* NPC */
-.npc {
-  bottom: 80px;
-  width: 64px;
-  height: 64px;
-}
-
-/* Nube */
-.nube {
-  bottom: 160px;
-  width: 96px;
-  height: auto;
-}
-
-/* Amuleto */
-.amuleto {
-  bottom: 160px;
-  width: 48px;
-  height: 48px;
-}
-
-/* Puente */
-.puente {
-  bottom: 0;
-  height: 80px;
-}
-
-/* Mensaje de introducción personalizado */
+/* Diálogo de introducción */
 .mensaje-intro {
   position: absolute;
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
+  width: 90%;
+  max-width: 600px;
   background: white;
   color: black;
-  padding: 20px;
-  border: 4px solid black;
-  width: 80%;
-  max-width: 500px;
-  font-family: 'Press Start 2P', cursive;
-  font-size: 12px;
-  z-index: 20;
-  text-align: center;
-}
-
-/* Botón dentro del mensaje */
-.mensaje-intro button {
-  margin-top: 10px;
-  padding: 6px 12px;
-  font-family: 'Press Start 2P', cursive;
+  padding: 1rem;
+  border: 2px solid #000;
+  border-radius: 8px;
   font-size: 10px;
+  text-align: justify;
+  z-index: 20;
 }
 
-/* Pantalla evaluación */
-.pantalla-evaluacion,
-.pantalla-final {
+/* Botón volver */
+.volver-boton {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 30;
-}
-
-.evaluacion-contenido {
-  background: #222;
-  padding: 30px;
-  border-radius: 10px;
-  text-align: center;
-}
-
-.estrellas {
-  display: flex;
-  gap: 10px;
-  margin: 15px 0;
-}
-
-.estrella {
-  width: 40px;
+  top: 10px;
+  right: 10px;
+  width: 100px;
   height: 40px;
-}
-
-/* Prevenir que las flechas del teclado muevan el scroll */
-body, html {
-  overflow: hidden;
+  background-image: url('/assets/hud/volver.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
 }
