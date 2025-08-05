@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, HostBinding } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -11,7 +11,11 @@ import { CommonModule } from '@angular/common';
 export class BotonComponent {
   @Input() texto: string = 'OK';
   @Output() click = new EventEmitter<void>();
-  @Input() claseExtra: string = '';
+
+  // Permite aplicar clases externas al componente
+  @Input()
+  @HostBinding('class')
+  claseExtra: string = '';
 
   handleClick() {
     this.click.emit();
