@@ -1,7 +1,7 @@
 <div class="home-container">
-  <button class="role-switch" (click)="goToTeacher()">Maestro</button>
+  <app-boton class="role-switch" texto="Maestro" (click)="goToTeacher()"></app-boton>
   <div class="button-group">
-    <button (click)="goToLogin()">Iniciar Sesión</button>
-    <button (click)="goToRegister()">Registrarse</button>
+    <app-boton texto="Iniciar Sesión" (click)="goToLogin()"></app-boton>
+    <app-boton texto="Registrarse" (click)="goToRegister()"></app-boton>
   </div>
 </div>
