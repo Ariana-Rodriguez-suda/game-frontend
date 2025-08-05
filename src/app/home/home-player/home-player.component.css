@@ -23,8 +23,6 @@
   gap: 1rem;
 }
 
-
-
 .button-group {
   display: flex;
   flex-direction: column;
@@ -34,19 +32,6 @@
 button:hover {
   background-color: #74b816;
   transform: scale(1.05);
-}
-
-.role-switch {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: #ff595e;
-  color: white;
-  padding: 0.6rem 1.2rem;
-  border-radius: 10px;
-  font-size: 0.9rem;
-  box-shadow: 2px 2px 0 #333;
-  z-index: 10;
 }
 
 .role-switch:hover {
