@@ -3,22 +3,29 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-color: transparent;
-  width: 200px;
-  height: 55px;
+
+  width: 300px;
+  height: 60px;
   border: none;
+
   color: black;
-  font-size: 12px;
+  font-size: 10px;
   font-family: 'Press Start 2P', cursive;
+
   cursor: pointer;
   margin-top: 10px;
 
-  /* Centrado del texto */
+  /* Centrado de texto */
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
 
-  /* Previene desbordamiento */
+  /* Asegura que el padding no cause desborde */
   padding: 4px;
   box-sizing: border-box;
+
+  /* Evita que el texto se salga del botón */
+  overflow: hidden;
+  white-space: nowrap;
 }

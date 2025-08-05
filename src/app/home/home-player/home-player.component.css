@@ -5,9 +5,9 @@
   height: 100vh;
   overflow: hidden; /* evita espacio sobrante */
   background-image: url('/assets/images/home.png');
-  background-size: cover;
-  background-position: center center;
+  background-size: contain;
   background-repeat: no-repeat;
+  background-position: center center;
   font-family: 'Press Start 2P', cursive;
   position: relative;
 }
@@ -30,10 +30,23 @@
 }
 
 button:hover {
-  background-color: #74b816;
   transform: scale(1.05);
 }
 
-.role-switch:hover {
-  background-color: #e0484e;
+app-boton.role-switch {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: auto; /* si deseas que se ajuste al contenido */
+  height: auto;
+  font-size: 10px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  color: white;
+  box-shadow: 2px 2px 0 #333;
+  z-index: 10;
+}
+
+app-boton.role-switch:hover {
+  transform: scale(1.05);
 }
