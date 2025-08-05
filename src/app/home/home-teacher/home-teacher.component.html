@@ -1,9 +1,7 @@
 <div class="home-container">
   <app-boton class="role-switch" texto="Jugador" (click)="goToPlayer()"></app-boton>
   <div class="button-group">
-<app-boton texto="Iniciar sesión" claseExtra="boton-alto" (click)="goToLogin()"></app-boton>
-
-<app-boton texto="Registrarse" claseExtra="boton-ancho" (click)="goToRegister()"></app-boton>
-
+<app-boton texto="Iniciar sesión" [claseExtra]="'boton-alto'" (click)="goToLogin()"></app-boton>
+<app-boton texto="Registrarse" [claseExtra]="'boton-ancho'" (click)="goToRegister()"></app-boton>
 
 </div>
