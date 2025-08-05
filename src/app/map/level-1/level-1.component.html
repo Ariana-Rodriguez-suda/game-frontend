@@ -21,35 +21,35 @@
 
       <!-- Bloque de césped -->
       <img src="/assets/bloques/bloqueCesped.png" class="bloque bloque-cesped"
-        [style.left.px]="bloqueCesped.x - scrollX" />
+        [style.left.px]="bloqueCesped.x" />
 
       <!-- Bloques de suma -->
       <img *ngIf="!bloqueSumaFusionado" src="/assets/bloques/bloqueSuma.png" class="bloque bloque-suma1"
-        [style.left.px]="bloquesSuma[0].x - scrollX" />
+        [style.left.px]="bloquesSuma[0].x" />
       <img *ngIf="!bloqueSumaFusionado" src="/assets/bloques/bloqueSuma.png" class="bloque bloque-suma2"
-        [style.left.px]="bloquesSuma[1].x - scrollX" />
+        [style.left.px]="bloquesSuma[1].x" />
 
       <!-- Bloque resultado de la suma -->
       <img *ngIf="bloqueSumaFusionado" src="/assets/bloques/bloqueResult.png" class="bloque bloque-result"
-        [style.left.px]="bloqueResult.x - scrollX" />
+        [style.left.px]="bloqueResult.x" />
 
       <!-- NPC -->
-      <img *ngIf="!npcTrabajando" src="/assets/sprites/npc.png" class="npc" [style.left.px]="npc.x - scrollX" />
+      <img *ngIf="!npcTrabajando" src="/assets/sprites/npc.png" class="npc" [style.left.px]="npc.x" />
       <img *ngIf="npcTrabajando" src="/assets/sprites/npc_trabajando.png" class="npc trabajando"
-        [style.left.px]="npc.x - scrollX" />
+        [style.left.px]="npc.x" />
 
       <!-- Amuleto -->
-      <img *ngIf="mostrarAmuleto" src="/assets/hud/suma.jpg" class="amuleto" [style.left.px]="amuleto.x - scrollX" />
+      <img *ngIf="mostrarAmuleto" src="/assets/hud/suma.jpg" class="amuleto" [style.left.px]="amuleto.x" />
 
       <!-- Puente -->
       <img *ngIf="!puenteReparado" src="/assets/hud/puentebroken.png" class="puente roto"
-        [style.left.px]="puente.x - scrollX" />
+        [style.left.px]="puente.x" />
       <img *ngIf="puenteReparado" src="/assets/hud/puentefixed.png" class="puente reparado"
-        [style.left.px]="puente.x - scrollX" />
+        [style.left.px]="puente.x" />
 
       <!-- Nube de construcción -->
       <img *ngIf="mostrarNubeConstruccion" src="/assets/hud/nube.png" class="nube"
-        [style.left.px]="nube.x - scrollX" />
+        [style.left.px]="nube.x" />
 
       <!-- Monedas -->
       <app-moneda *ngFor="let moneda of monedasArray" [personajeRef]="personajeRef"
