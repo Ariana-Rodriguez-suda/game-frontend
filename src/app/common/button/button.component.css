@@ -1,4 +1,3 @@
-/* Base */
 .button-wrapper {
   position: relative;
   min-width: 160px;
@@ -9,13 +8,11 @@
   display: inline-block;
 }
 
-/* Más alto */
-.boton-alto .button-wrapper {
+.button-wrapper.boton-alto {
   height: 48px;
 }
 
-/* Más ancho */
-.boton-ancho .button-wrapper {
+.button-wrapper.boton-ancho {
   min-width: 300px;
 }
 

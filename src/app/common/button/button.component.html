@@ -1,4 +1,7 @@
-<div class="button-wrapper" (click)="handleClick()">
+<div class="button-wrapper" [ngClass]="{
+  'boton-alto': variante === 'alto',
+  'boton-ancho': variante === 'ancho'
+}" (click)="handleClick()">
   <img class="button-bg" src="/assets/hud/framebotones.png" alt="botón fondo" />
   <div class="button-text">{{ texto }}</div>
 </div>
