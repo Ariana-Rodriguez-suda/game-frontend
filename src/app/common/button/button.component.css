@@ -1,79 +1,30 @@
-.custom-button {
+.button-wrapper {
   position: relative;
+  width: 200px; /* tamaño de tu imagen original */
+  height: 40px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.button-bg {
   width: 100%;
-  min-height: 40px;
-  height: auto;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
 
-  background-color: #fefefe; /* fondo blanco */
-  border: 2px solid #FFD700; /* borde fino amarillo */
-  border-radius: 32px;
-
+.button-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-family: 'Press Start 2P', cursive;
   font-size: 10px;
   color: black;
   text-align: center;
-
-  padding: 12px 24px;
-  box-sizing: border-box;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  cursor: pointer;
-  margin-top: 10px;
-
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-
-  transition: transform 0.2s ease;
-
-  /* sombra roja simulando base inferior */
-  box-shadow: 0 6px 0 #FF5A4D;
-}
-
-/* Curva decorativa amarilla arriba a la izquierda */
-.custom-button::before {
-  content: '';
-  position: absolute;
-  width: 24px;
-  height: 24px;
-  background-color: #FFD700;
-  border-radius: 50%;
-  top: -6px;
-  left: -6px;
-  z-index: 0;
-}
-
-/* Curva decorativa amarilla abajo a la derecha */
-.custom-button::after {
-  content: '';
-  position: absolute;
-  width: 24px;
-  height: 24px;
-  background-color: #FFD700;
-  border-radius: 50%;
-  bottom: -6px;
-  right: -6px;
-  z-index: 0;
-}
-
-.custom-button:hover {
-  transform: scale(1.05);
-}
-
-/* Responsivo */
-@media (max-width: 600px) {
-  .custom-button {
-    font-size: 8px;
-    min-height: 35px;
-    padding: 8px 16px;
-  }
-
-  .custom-button::before,
-  .custom-button::after {
-    width: 18px;
-    height: 18px;
-  }
+  pointer-events: none; /* para que los clics pasen al wrapper */
 }
