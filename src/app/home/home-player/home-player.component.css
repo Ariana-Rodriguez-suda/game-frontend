@@ -16,11 +16,11 @@
 
 .custom-button {
   background-image: url('/assets/hud/framebotones.png');
-  background-size: contain;
+ background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   
-  padding: 12px 30px; /* ajusta al tamaño que quieras */
+  padding: 12px 20px; /* ajusta al tamaño que quieras */
   font-family: 'Press Start 2P', cursive;
   font-size: 10px;
   color: black;
