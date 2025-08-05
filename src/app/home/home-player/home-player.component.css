@@ -5,50 +5,91 @@
   height: 100vh;
   overflow: hidden; /* evita espacio sobrante */
   background-image: url('/assets/images/home.png');
-  background-size: contain;
+  background-size: contain; /* ajusta la imagen para que se vea completa */
   background-repeat: no-repeat;
-background-position: center center;
+  background-position: center center;
   font-family: 'Press Start 2P', cursive;
   position: relative;
+  padding: 1rem; /* para evitar que contenido toque bordes */
+  box-sizing: border-box;
 }
 
 .home-container {
   height: 100%;
   width: 100%;
+  max-width: 480px; /* limita ancho máximo para laptops grandes */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-top: 170px; /* empuja hacia abajo sin romper el centrado */
-  gap: 1rem;
+  padding-top: 170px;
+  gap: 1.5rem;
+  margin: 0 auto; /* centrar en pantallas más anchas */
+  box-sizing: border-box;
 }
 
-.button-group app-boton {
+.button-group {
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
-  width: 200px;
-  height: 40px;
+  width: 100%; /* toma todo el ancho del contenedor */
+  max-width: 300px; /* máximo ancho para grupo de botones */
+  box-sizing: border-box;
+}
+
+.button-group app-boton {
+  width: 100%; /* para que el botón llene el contenedor */
+  max-width: 300px;
+  min-width: 120px;
+  margin: 0 auto;
 }
 
 button:hover {
   transform: scale(1.05);
+  transition: transform 0.2s ease;
 }
 
 app-boton.role-switch {
   position: absolute;
   top: 20px;
   right: 20px;
-  font-size: 10px;
+  font-size: 12px;
   padding: 8px 16px;
   border-radius: 10px;
   color: white;
   box-shadow: 2px 2px 0 #333;
   z-index: 10;
-  width: 200px;
+  width: 160px;
   height: 40px;
+  box-sizing: border-box;
 }
 
 app-boton.role-switch:hover {
   transform: scale(1.05);
+  transition: transform 0.2s ease;
+}
+
+/* MEDIA QUERIES para pantallas pequeñas y medianas */
+@media (max-width: 600px) {
+  :host {
+    padding: 0.5rem;
+    background-size: cover; /* para móviles ocupar todo */
+  }
+  
+  .home-container {
+    padding-top: 100px;
+    max-width: 100%;
+    gap: 1rem;
+  }
+  
+  .button-group {
+    max-width: 100%;
+  }
+  
+  app-boton.role-switch {
+    width: 140px;
+    font-size: 10px;
+    top: 10px;
+    right: 10px;
+  }
 }

@@ -4,8 +4,12 @@
   background-repeat: no-repeat;
   background-color: transparent;
 
-  width: 100%; /* <- Se adaptará al contenedor externo */
-  height: 100%;
+  width: 100%; /* Se adapta al contenedor externo */
+
+  /* Cambiar height: 100% a min-height */
+  min-height: 40px; /* altura mínima cómoda */
+  height: auto;
+
   border: none;
 
   color: black;
@@ -20,10 +24,25 @@
   align-items: center;
   text-align: center;
 
-  padding: 4px 8px;
+  padding: 8px 12px; /* algo más de padding para mejor clic */
   box-sizing: border-box;
 
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+
+  transition: transform 0.2s ease;
+}
+
+.custom-button:hover {
+  transform: scale(1.05);
+}
+
+/* Ajustes responsivos de fuente */
+@media (max-width: 600px) {
+  .custom-button {
+    font-size: 8px;
+    min-height: 35px;
+    padding: 6px 10px;
+  }
 }
