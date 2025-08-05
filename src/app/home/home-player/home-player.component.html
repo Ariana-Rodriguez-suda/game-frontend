@@ -1,9 +1,5 @@
 <div class="home-container">
   <app-boton class="role-switch" texto="Maestro" (click)="goToTeacher()"></app-boton>
-
-  <div class="button-group">
-<app-boton texto="Iniciar sesión" [claseExtra]="'boton-alto'" (click)="goToLogin()"></app-boton>
-<app-boton texto="Registrarse" [claseExtra]="'boton-ancho'" (click)="goToRegister()"></app-boton>
-
-  </div>
+  <app-boton texto="Iniciar sesión" class="boton-alto" (click)="goToLogin()"></app-boton>
+  <app-boton texto="Registrarse" class="boton-ancho" (click)="goToRegister()"></app-boton>
 </div>

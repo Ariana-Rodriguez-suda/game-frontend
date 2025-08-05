@@ -12,11 +12,6 @@ export class BotonComponent {
   @Input() texto: string = 'OK';
   @Output() click = new EventEmitter<void>();
 
-  // Permite aplicar clases externas al componente
-  @Input()
-  @HostBinding('class')
-  claseExtra: string = '';
-
   handleClick() {
     this.click.emit();
   }
