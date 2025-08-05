@@ -1,11 +1,11 @@
 <div class="form-container">
-  <button class="back-button" (click)="goBack()">Volver a Inicio</button>
+  <app-boton texto="Volver a Inicio" (click)="goBack()" class="custom-back-button"></app-boton>
 
   <h2>Registro - Maestro</h2>
   <form [formGroup]="registerForm" (ngSubmit)="onSubmitTeacher()">
     <input type="text" placeholder="Nombre de usuario" formControlName="username" />
     <input type="email" placeholder="Correo electrónico" formControlName="email" />
     <input type="password" placeholder="Contraseña" formControlName="password" />
-    <button type="submit">Registrarse</button>
+    <app-boton texto="Registrarse" type="submit"></app-boton>
   </form>
 </div>

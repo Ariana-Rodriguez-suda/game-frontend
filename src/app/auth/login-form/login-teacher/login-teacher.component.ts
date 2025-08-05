@@ -3,13 +3,14 @@ import { AuthService } from '../../auth.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { BotonComponent } from '../../../common/button/button.component';
 
 @Component({
   selector: 'app-login-teacher-form',
   standalone: true,
   templateUrl: './login-teacher.component.html',
   styleUrls: ['./login-teacher.component.css'],
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, BotonComponent],
 })
 export class LoginTeacherFormComponent {
   email = '';

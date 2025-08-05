@@ -1,22 +1,23 @@
-<!-- Caja del juego con resolución fija -->
-<div class="game-container">
-
-  <!-- HUD (vidas y monedas) -->
+<!-- Cámara del juego -->
+<div class="viewport">
+  
+  <!-- HUD -->
   <div class="hud">
-    <app-vidas [vidas]="vidas" class="vidas"></app-vidas>
-    <app-coin-score [monedas]="monedas" class="coin-score"></app-coin-score>
+    <app-vidas [vidas]="vidas"></app-vidas>
+    <app-coin-score [monedas]="monedas"></app-coin-score>
   </div>
 
   <!-- Nivel desplazable -->
-  <div class="scrollable-world" [style.transform]="'translateX(' + scrollX + 'px)'">
-
-    <!-- Fondos -->
+  <div class="nivel" [style.transform]="'translateX(' + scrollX + 'px)'">
+    
+    <!-- Fondo único -->
     <img src="/assets/images/fondolv1.png" class="fondo" />
 
     <!-- Suelo -->
     <img src="/assets/images/floor1.png" class="suelo" />
     <img src="/assets/images/hole1.png" class="suelo" style="left: 800px;" />
-    <img src="/assets/images/floor2.png" class="suelo" style="left: 1200px;" />
+    <img src="/assets/images/floor2.1.png" class="suelo" style="left: 1200px;" />
+    <img src="/assets/images/floor2.2.png" class="suelo" style="left: 1500px;" />
     <img src="/assets/images/hole2.png" class="suelo" style="left: 1800px;" />
     <img src="/assets/images/floor3.png" class="suelo" style="left: 2400px;" />
 
@@ -45,7 +46,7 @@
     <img *ngIf="!npcDesaparecido" src="/assets/sprites/npc.png" class="npc" style="left: 950px;" />
     <img *ngIf="puenteReparado" src="/assets/sprites/npc.png" class="npc" style="left: 1800px;" />
 
-    <!-- Nube de reparación -->
+    <!-- Nube reparación -->
     <img *ngIf="!puenteReparado && npcDesaparecido" src="/assets/hud/nube.png" class="nube" style="left: 1800px;" />
 
     <!-- Puente roto / reparado -->
@@ -53,17 +54,15 @@
     <img *ngIf="puenteReparado" src="/assets/hud/puentefixed.png" class="puente" style="left: 1800px;" />
 
     <!-- Personaje -->
-    <img src="/assets/sprites/avatarBoy1run.png" class="personaje"
-         [style.left.px]="personajeX"
-         [style.top.px]="personajeY" />
+    <img src="/assets/sprites/avatarBoy1run.png" class="personaje" [style.left.px]="personajeX" [style.top.px]="personajeY" />
 
   </div>
 
-  <!-- Diálogos y mensajes -->
+  <!-- Mensajes -->
   <app-textbox-mensaje *ngIf="mostrarMensaje" [mensaje]="mensaje" (continuar)="continuarMensaje()"></app-textbox-mensaje>
   <app-textbox-dialogo *ngIf="mostrarDialogo" [linea]="dialogosNpc[indexDialogo]" (continuar)="continuarDialogo()"></app-textbox-dialogo>
 
-  <!-- Fin del nivel -->
+  <!-- Estrellas final -->
   <div class="fin-nivel" *ngIf="mostrarEstrellas">
     <h2>¡Nivel completado!</h2>
     <div class="estrellas">

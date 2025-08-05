@@ -23,10 +23,12 @@
   gap: 1rem;
 }
 
-.button-group {
+.button-group app-boton {
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
+  width: 300px;
+  height: 60px;
 }
 
 button:hover {
@@ -37,14 +39,14 @@ app-boton.role-switch {
   position: absolute;
   top: 20px;
   right: 20px;
-  width: auto; /* si deseas que se ajuste al contenido */
-  height: auto;
   font-size: 10px;
   padding: 8px 16px;
   border-radius: 10px;
   color: white;
   box-shadow: 2px 2px 0 #333;
   z-index: 10;
+  width: 300px;
+  height: 60px;
 }
 
 app-boton.role-switch:hover {

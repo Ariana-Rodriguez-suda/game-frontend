@@ -1,5 +1,5 @@
 <div class="form-container">
-  <button class="back-button" (click)="goBack()">Volver a Inicio</button>
+  <app-boton texto="Volver a Inicio" (click)="goBack()" class="custom-back-button"></app-boton>
 
   <form (ngSubmit)="onSubmit()">
     <label>Usuario:</label>
@@ -8,6 +8,6 @@
     <label>Contraseña:</label>
     <input [(ngModel)]="password" name="password" type="password" required />
 
-    <button type="submit">Iniciar sesión</button>
+    <app-boton texto="Iniciar sesión" type="submit"></app-boton>
   </form>
 </div>

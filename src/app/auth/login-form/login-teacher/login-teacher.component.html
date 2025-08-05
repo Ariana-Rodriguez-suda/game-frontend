@@ -1,5 +1,5 @@
 <div class="form-container">
-  <button class="back-button" (click)="goBack()">Volver a Inicio</button>
+  <app-boton texto="Volver a Inicio" (click)="goBack()" class="custom-back-button"></app-boton>
 
   <h2>Iniciar Sesión - Maestro</h2>
 
@@ -18,6 +18,6 @@
       placeholder="Contraseña"
       required
     />
-    <button type="submit">Iniciar sesión</button>
+    <app-boton texto="Iniciar sesión" type="submit"></app-boton>
   </form>
 </div>

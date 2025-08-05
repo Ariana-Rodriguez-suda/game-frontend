@@ -3,13 +3,14 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { Router } from '@angular/router';
 import { AuthService } from '../../auth.service';
 import { CommonModule } from '@angular/common';
+import { BotonComponent } from '../../../common/button/button.component';
 
 @Component({
   selector: 'app-register-player-form',
   standalone: true,
   templateUrl: './register-player-form.component.html',
   styleUrls: ['./register-player-form.component.css'],
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, BotonComponent],
 })
 export class RegisterPlayerFormComponent {
   registerForm!: FormGroup;

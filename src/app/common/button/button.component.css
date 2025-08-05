@@ -4,8 +4,8 @@
   background-repeat: no-repeat;
   background-color: transparent;
 
-  width: 300px;
-  height: 60px;
+  width: 100%; /* <- Se adaptará al contenedor externo */
+  height: 100%;
   border: none;
 
   color: black;
@@ -15,17 +15,15 @@
   cursor: pointer;
   margin-top: 10px;
 
-  /* Centrado de texto */
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
 
-  /* Asegura que el padding no cause desborde */
-  padding: 4px;
+  padding: 4px 8px;
   box-sizing: border-box;
 
-  /* Evita que el texto se salga del botón */
   overflow: hidden;
   white-space: nowrap;
+  text-overflow: ellipsis;
 }
