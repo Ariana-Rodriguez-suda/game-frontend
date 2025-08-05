@@ -38,9 +38,10 @@
 }
 
 .button-group app-boton {
-  width: fit-content;
-  min-width: 160px;
+  width: 100%;
+  max-width: 400px;
 }
+
 
 /* El hover real ahora está en .custom-button o .button-wrapper */
 /* Si decides mantener efecto al pasar por app-boton, puedes hacer: */
