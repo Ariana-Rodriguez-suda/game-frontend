@@ -20,59 +20,43 @@
       <img src="/assets/images/floor3.png" class="suelo suelo3" />
 
       <!-- Bloque de césped -->
-      <img src="/assets/bloques/bloqueCesped.png" class="bloque bloque-cesped"
-        [style.left.px]="bloqueCesped.x"
-        style="bottom: 60px;" />
+      <img src="/assets/bloques/bloqueCesped.png" class="bloque bloque-cesped" [style.left.px]="bloqueCesped.x" />
 
       <!-- Bloques de suma -->
-      <img *ngIf="!bloqueSumaFusionado" src="/assets/bloques/bloqueSuma.png" class="bloque bloque-suma1"
-        [style.left.px]="bloquesSuma[0].x"
-        style="bottom: 60px;" />
-      <img *ngIf="!bloqueSumaFusionado" src="/assets/bloques/bloqueSuma.png" class="bloque bloque-suma2"
-        [style.left.px]="bloquesSuma[1].x"
-        style="bottom: 60px;" />
+      <img *ngIf="!bloqueSumaFusionado" src="/assets/bloques/bloqueSuma.png" class="bloque bloque-suma1" [style.left.px]="bloquesSuma[0].x" />
+      <img *ngIf="!bloqueSumaFusionado" src="/assets/bloques/bloqueSuma.png" class="bloque bloque-suma2" [style.left.px]="bloquesSuma[1].x" />
 
       <!-- Bloque resultado de la suma -->
-      <img *ngIf="bloqueSumaFusionado" src="/assets/bloques/bloqueResult.png" class="bloque bloque-result"
-        [style.left.px]="bloqueResult.x"
-        style="bottom: 60px;" />
+      <img *ngIf="bloqueSumaFusionado" src="/assets/bloques/bloqueResult.png" class="bloque bloque-result" [style.left.px]="bloqueResult.x" />
 
       <!-- NPC -->
-      <img *ngIf="!npcTrabajando" src="/assets/sprites/npc.png" class="npc" [style.left.px]="npc.x" style="bottom: 60px;" />
-      <img *ngIf="npcTrabajando" src="/assets/sprites/npc_trabajando.png" class="npc trabajando"
-        [style.left.px]="npc.x" style="bottom: 60px;" />
+      <img *ngIf="!npcTrabajando" src="/assets/sprites/npc.png" class="npc" [style.left.px]="npc.x" />
+      <img *ngIf="npcTrabajando" src="/assets/sprites/npc_trabajando.png" class="npc trabajando" [style.left.px]="npc.x" />
 
       <!-- Amuleto -->
-      <img *ngIf="mostrarAmuleto" src="/assets/hud/suma.jpg" class="amuleto" [style.left.px]="amuleto.x" style="bottom: 200px;" />
+      <img *ngIf="mostrarAmuleto" src="/assets/hud/suma.jpg" class="amuleto" [style.left.px]="amuleto.x" />
 
       <!-- Puente -->
-      <img *ngIf="!puenteReparado" src="/assets/hud/puentebroken.png" class="puente roto"
-        [style.left.px]="puente.x" style="bottom: 0px;" />
-      <img *ngIf="puenteReparado" src="/assets/hud/puentefixed.png" class="puente reparado"
-        [style.left.px]="puente.x" style="bottom: 0px;" />
+      <img *ngIf="!puenteReparado" src="/assets/hud/puentebroken.png" class="puente roto" [style.left.px]="puente.x" />
+      <img *ngIf="puenteReparado" src="/assets/hud/puentefixed.png" class="puente reparado" [style.left.px]="puente.x" />
 
       <!-- Nube de construcción -->
-      <img *ngIf="mostrarNubeConstruccion" src="/assets/hud/nube.png" class="nube"
-        [style.left.px]="nube.x" style="bottom: 150px;" />
+      <img *ngIf="mostrarNubeConstruccion" src="/assets/hud/nube.png" class="nube" [style.left.px]="nube.x" />
 
       <!-- Monedas -->
-      <app-moneda *ngFor="let moneda of monedasArray" [personajeRef]="personajeRef"
-        (recolectada)="recolectarMoneda()"
-        [style.left.px]="moneda.x"
-        style="bottom: 60px;">
-      </app-moneda>
+      <app-moneda *ngFor="let moneda of monedasArray" [personajeRef]="personajeRef" (recolectada)="recolectarMoneda()"></app-moneda>
 
       <!-- Personaje -->
-      <img #personaje src="/assets/sprites/avatarBoy1run.png" class="personaje" [style.left.px]="personajeX"
-        [style.bottom.px]="personajeY" />
+      <img #personaje src="/assets/sprites/avatarBoy1run.png" class="personaje" [style.left.px]="personajeX" [style.bottom.px]="personajeY" />
 
-      <!-- Mensajes de introducción -->
-      <app-textbox-mensaje *ngIf="mostrarMensaje" [mensaje]="mensajesIntro[mensajeIndex]" [showButton]="true"
-        (continue)="continuarIntro()"></app-textbox-mensaje>
+      <!-- Mensaje de introducción reemplazando componente -->
+      <div *ngIf="mostrarMensaje" class="mensaje-intro">
+        <p>{{ mensajesIntro[mensajeIndex] }}</p>
+        <button (click)="continuarIntro()">Continuar</button>
+      </div>
 
       <!-- Diálogos con NPC -->
-      <app-textbox-dialogo *ngIf="mostrarDialogo" [linea]="dialogosNpc[dialogoIndex]" [showButton]="true"
-        (continue)="continuarDialogo()"></app-textbox-dialogo>
+      <app-textbox-dialogo *ngIf="mostrarDialogo" [linea]="dialogosNpc[dialogoIndex]" [showButton]="true" (continue)="continuarDialogo()"></app-textbox-dialogo>
 
       <!-- Pantalla de evaluación -->
       <div class="pantalla-evaluacion" *ngIf="mostrarEvaluacion">

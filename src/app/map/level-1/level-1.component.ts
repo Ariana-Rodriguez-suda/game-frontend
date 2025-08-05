@@ -1,6 +1,5 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TextboxMensajeComponent } from '../../common/message/message.component';
 import { TextboxDialogoComponent } from '../../common/dialogo/dialogo.component';
 import { CoinScoreComponent } from '../../game-ui/score-coin/coins.component';
 import { VidasComponent } from '../../game-ui/vidas/life.component';
@@ -13,7 +12,6 @@ import { MonedaComponent } from '../../common/moneda/moneda.component';
   standalone: true,
   imports: [
     CommonModule,
-    TextboxMensajeComponent,
     TextboxDialogoComponent,
     CoinScoreComponent,
     VidasComponent,
