@@ -1,4 +1,4 @@
-<div class="button-wrapper" (click)="handleClick()">
+<div class="button-wrapper" [ngClass]="claseExtra" (click)="handleClick()">
   <img src="/assets/hud/framebotones.png" alt="botón" class="button-bg" />
   <span class="button-text">{{ texto }}</span>
 </div>
