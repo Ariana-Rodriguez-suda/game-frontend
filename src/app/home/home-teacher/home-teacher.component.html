@@ -1,7 +1,10 @@
 <div class="home-container">
   <app-boton class="role-switch" texto="Jugador" (click)="goToPlayer()"></app-boton>
   <div class="button-group">
-  <app-boton texto="Iniciar Sesión" claseExtra="boton-alto" (click)="goToLogin()"></app-boton>
-  <app-boton texto="Registrarse" claseExtra="boton-ancho" (click)="goToRegister()"></app-boton>
+    <!-- Aquí aplica la clase "boton-alto" para que sea más alto -->
+    <app-boton class="boton-alto" texto="Iniciar Sesión" (click)="goToLogin()"></app-boton>
+
+    <!-- Aquí aplica la clase "boton-ancho" para que sea más largo -->
+    <app-boton class="boton-ancho" texto="Registrarse" (click)="goToRegister()"></app-boton>
   </div>
 </div>
