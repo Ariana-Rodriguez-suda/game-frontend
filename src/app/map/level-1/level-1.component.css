@@ -1,241 +1,211 @@
-/* === Vista general del juego === */
 .viewport {
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #87ceeb; /* Cielo de fondo */
+  width: 900px;          /* ancho visible del nivel */
+  height: 320px;         /* altura limitada */
+  overflow-x: auto;      /* scroll horizontal solo */
+  overflow-y: hidden;    /* no scroll vertical */
+  position: relative;
+  border: 2px solid black;
+  background-color: #cce0ff; /* fondo celeste claro */
+  margin: 0 auto;        /* centrar horizontalmente */
+  user-select: none;     /* evitar selección accidental */
 }
 
 .nivel {
+  width: 2200px;         /* ancho total del nivel (suma de suelos + agujeros) */
+  height: 320px;
   position: relative;
-  width: 1000px; /* Tamaño visible del rectángulo de juego */
-  height: 600px;
-  overflow: hidden;
-  border: 3px solid #333;
-  background-color: #cceeff;
 }
 
-/* Scroll dentro del juego (simulado) */
 .juego-box {
   position: relative;
-  width: 2200px; /* Largo total del nivel */
-  height: 600px;
+  width: 2200px;
+  height: 320px;
 }
 
-/* === Fondo === */
+/* Fondo */
 .fondo {
   position: absolute;
-  top: 0;
   left: 0;
-  height: 100%;
+  bottom: 0;
   width: 2200px;
-  z-index: -2;
+  height: 320px;
+  user-select: none;
+  pointer-events: none;
 }
 
-/* === Suelos y agujeros === */
-.suelo {
+/* Suelos y agujeros */
+.suelo, .agujero, .puente {
   position: absolute;
   bottom: 0;
-  height: 100px;
+  user-select: none;
+  pointer-events: none;
 }
 
 .suelo1 {
   left: 0;
   width: 500px;
-}
-
-.suelo2-1 {
-  left: 600px;
-  width: 400px;
-}
-
-.suelo2-2 {
-  left: 1100px;
-  width: 300px;
-}
-
-.suelo3 {
-  left: 1600px;
-  width: 600px;
-}
-
-.agujero {
-  position: absolute;
-  bottom: 0;
-  width: 100px;
-  height: 100px;
-  z-index: 1;
+  height: 60px;
 }
 
 .agujero1 {
   left: 500px;
-}
-
-.agujero2 {
-  left: 1000px;
-}
-
-/* === Bloques === */
-.bloque {
-  position: absolute;
-  bottom: 100px;
   width: 60px;
   height: 60px;
 }
 
+.suelo2-1 {
+  left: 560px;
+  width: 400px;
+  height: 60px;
+}
+
+.suelo2-2 {
+  left: 960px;
+  width: 300px;
+  height: 60px;
+}
+
+.agujero2 {
+  left: 1260px;
+  width: 60px;
+  height: 60px;
+}
+
+.suelo3 {
+  left: 1320px;
+  width: 880px;
+  height: 60px;
+}
+
+/* Bloques (césped, suma y resultado) */
+.bloque {
+  position: absolute;
+  bottom: 60px;  /* justo sobre las plataformas */
+  width: 60px;
+  height: 60px;
+  user-select: none;
+  cursor: pointer;
+}
+
 .bloque-cesped {
-  bottom: 100px;
+  width: 60px;
+  height: 60px;
 }
 
 .bloque-suma1,
 .bloque-suma2,
 .bloque-result {
-  bottom: 160px;
-}
-
-/* === NPC === */
-.npc {
-  position: absolute;
-  bottom: 100px;
-  width: 70px;
-  height: auto;
-}
-
-.trabajando {
-  animation: martillar 1s infinite;
-}
-
-@keyframes martillar {
-  0%, 100% { transform: rotate(0); }
-  50% { transform: rotate(-10deg); }
-}
-
-/* === Nube de construcción === */
-.nube {
-  position: absolute;
-  bottom: 170px;
-  width: 100px;
-  height: auto;
-}
-
-/* === Puente === */
-.puente {
-  position: absolute;
-  bottom: 100px;
-  width: 150px;
-  height: auto;
-}
-
-.puente.roto {
-  opacity: 0.6;
-}
-
-.puente.reparado {
-  opacity: 1;
-}
-
-/* === Amuleto de suma === */
-.amuleto {
-  position: absolute;
-  bottom: 140px;
   width: 60px;
   height: 60px;
 }
 
-/* === Personaje === */
+/* NPC */
+.npc {
+  position: absolute;
+  bottom: 60px;
+  width: 50px;
+  height: 80px;
+  user-select: none;
+  cursor: default;
+}
+
+
+/* Amuleto */
+.amuleto {
+  position: absolute;
+  bottom: 200px; /* arriba del NPC */
+  width: 50px;
+  height: 50px;
+  user-select: none;
+  cursor: pointer;
+}
+
+/* Puente roto y reparado */
+.puente {
+  position: absolute;
+  bottom: 0;
+  width: 150px;
+  height: 80px;
+  user-select: none;
+  pointer-events: none;
+}
+
+
+/* Nube de construcción */
+.nube {
+  position: absolute;
+  bottom: 150px;
+  width: 100px;
+  height: 80px;
+  user-select: none;
+}
+
+/* Personaje */
 .personaje {
   position: absolute;
   width: 50px;
   height: 60px;
-  z-index: 10;
-  transition: bottom 0.1s, left 0.1s;
+  user-select: none;
+  cursor: default;
+  /* bottom se setea dinámicamente desde TS */
 }
 
-/* === HUD === */
-app-vidas, app-coin-score {
-  position: fixed;
-  top: 10px;
-  z-index: 999;
+/* Monedas */
+app-moneda {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  bottom: 60px; /* para que estén sobre las plataformas */
+  user-select: none;
+  cursor: pointer;
 }
 
-app-vidas {
-  left: 20px;
+/* Mensajes y diálogos */
+app-textbox-mensaje, app-textbox-dialogo {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 900px;
+  user-select: text;
 }
 
-app-coin-score {
-  right: 20px;
-}
-
-/* === Pantalla de evaluación === */
+/* Pantalla evaluación */
 .pantalla-evaluacion {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.75);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  color: white;
-  flex-direction: column;
-}
-
-.evaluacion-contenido {
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 400px;
+  background: white;
+  border: 2px solid black;
+  padding: 20px;
+  z-index: 1000;
   text-align: center;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.5);
 }
 
+/* Estrellas */
 .estrellas {
-  margin: 15px 0;
+  margin: 10px 0;
 }
 
 .estrella {
   width: 40px;
+  height: 40px;
   margin: 0 5px;
 }
 
-/* === Pantalla final === */
+/* Pantalla final */
 .pantalla-final {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-
-.pantalla-final h2 {
-  font-size: 32px;
-  margin-bottom: 10px;
-}
-
-.pantalla-final p {
-  font-size: 18px;
-}
-
-/* === Mensajes / Diálogos === */
-app-textbox-mensaje,
-app-textbox-dialogo {
-  position: absolute;
-  bottom: 30px;
+  top: 100px;
   left: 50%;
   transform: translateX(-50%);
+  width: 400px;
+  background: white;
+  border: 2px solid black;
+  padding: 20px;
   z-index: 1000;
-  color: black; /* Letras negras */
-  font-size: 16px;
-  max-width: 80%;
-}
-
-app-textbox-mensaje,
-app-textbox-dialogo {
-  color: black;
+  text-align: center;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.5);
 }

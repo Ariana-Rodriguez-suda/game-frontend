@@ -72,9 +72,9 @@ export class Level1Component implements OnInit, OnDestroy {
   npcTrabajando = false;
 
   monedasArray = [
-    { x: 600, y: 0 },
-    { x: 950, y: 0 },
-    { x: 1300, y: 0 }
+    { x: 600, y: 60 },
+    { x: 950, y: 60 },
+    { x: 1300, y: 60 }
   ];
 
   mostrarEvaluacion = false;
@@ -86,23 +86,108 @@ export class Level1Component implements OnInit, OnDestroy {
 
   mostrarPantallaFinal = false;
 
+  // Tamaño personaje para colisiones
+  anchoPersonaje = 50;
+  altoPersonaje = 60;
+
+  // Plataformas base del nivel (x, ancho, y)
+  plataformasBase = [
+    { x: 0, ancho: 500, y: 0 },      // suelo inicial
+    { x: 600, ancho: 400, y: 0 },    // segunda sección parte 1
+    { x: 1100, ancho: 300, y: 0 },   // segunda sección parte 2
+    { x: 1600, ancho: 600, y: 0 },   // tercera sección, suelo y puente
+  ];
+
+  alturaBloque = 60;
+
   ngOnInit(): void {
     this.gravedadLoop();
   }
 
-  // Scroll desactivado — no se usará más scroll automático
   ngOnDestroy(): void {}
+
+  get plataformasActivas() {
+    const plataformas = [...this.plataformasBase];
+
+    if (this.bloqueCesped.visible) {
+      plataformas.push({ x: this.bloqueCesped.x, ancho: 60, y: this.alturaBloque });
+    }
+
+    if (!this.bloqueSumaFusionado) {
+      this.bloquesSuma.forEach(b => plataformas.push({ x: b.x, ancho: 60, y: this.alturaBloque }));
+    }
+
+    if (this.bloqueSumaFusionado) {
+      plataformas.push({ x: this.bloqueResult.x, ancho: 60, y: this.alturaBloque });
+    }
+
+    if (this.puenteReparado) {
+      plataformas.push({ x: this.puente.x, ancho: 150, y: 0 });
+    }
+
+    return plataformas;
+  }
+
+  colisionHorizontal(nuevaX: number): boolean {
+    const plataformas = this.plataformasActivas;
+
+    for (const p of plataformas) {
+      const colisionX = (nuevaX + this.anchoPersonaje) > p.x && nuevaX < (p.x + p.ancho);
+      const colisionY = (this.personajeY < (p.y + this.alturaBloque)) && ((this.personajeY + this.altoPersonaje) > p.y);
+      if (colisionX && colisionY) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  estaSobrePlataforma(): boolean {
+    const plataformas = this.plataformasActivas;
+    for (const p of plataformas) {
+      const dentroX = (this.personajeX + this.anchoPersonaje) > p.x && this.personajeX < (p.x + p.ancho);
+      const cercaYSuelo = Math.abs(this.personajeY - p.y) <= 10;
+      if (dentroX && cercaYSuelo) {
+        this.personajeY = p.y; // corregir altura para que esté pegado
+        return true;
+      }
+    }
+    return false;
+  }
 
   gravedadLoop() {
     setInterval(() => {
-      this.personajeY -= this.velocidadY;
-      this.velocidadY -= this.gravedad;
-      if (this.personajeY <= 0) {
-        this.personajeY = 0;
-        this.saltando = false;
+      if (!this.estaSobrePlataforma() || this.velocidadY > 0) {
+        this.personajeY -= this.velocidadY;
+        this.velocidadY -= this.gravedad;
+      } else {
         this.velocidadY = 0;
+        this.saltando = false;
+      }
+
+      if (this.personajeY < -100) {
+        this.perderVidaYReiniciar();
       }
     }, 30);
+  }
+
+  perderVidaYReiniciar() {
+    this.vidas--;
+    if (this.vidas <= 0) {
+      alert('Has perdido todas las vidas. Reiniciando nivel.');
+      this.vidas = 3;
+      this.monedas = 0;
+    }
+    this.resetearPosicion();
+  }
+
+  resetearPosicion() {
+    this.personajeX = 100;
+    this.personajeY = 0;
+    this.saltando = false;
+    this.velocidadY = 0;
+    this.mostrarMensaje = true;
+    this.mensajeIndex = 0;
+    this.mostrarDialogo = false;
   }
 
   recolectarMoneda() {
@@ -145,7 +230,7 @@ export class Level1Component implements OnInit, OnDestroy {
       this.npc.visible = true;
       this.npcTrabajando = false;
       this.dialogoIndex++;
-      this.mostrarDialogo = true; // Activa automáticamente el 3er diálogo
+      this.mostrarDialogo = true; // activa 3er diálogo
     }, 5000);
   }
 
@@ -161,12 +246,19 @@ export class Level1Component implements OnInit, OnDestroy {
       return;
     }
 
+    const nivelAncho = 2200; // ancho total del nivel
+    const maxX = nivelAncho - this.anchoPersonaje;
+
     switch (event.key) {
       case 'ArrowRight':
-        this.personajeX += this.velocidad;
+        if (!this.colisionHorizontal(this.personajeX + this.velocidad) && this.personajeX + this.velocidad <= maxX) {
+          this.personajeX += this.velocidad;
+        }
         break;
       case 'ArrowLeft':
-        this.personajeX -= this.velocidad;
+        if (!this.colisionHorizontal(this.personajeX - this.velocidad) && this.personajeX - this.velocidad >= 0) {
+          this.personajeX -= this.velocidad;
+        }
         break;
       case ' ':
         if (!this.saltando) {
