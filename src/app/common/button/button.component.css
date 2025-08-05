@@ -1,7 +1,6 @@
 .button-wrapper {
   position: relative;
   min-width: 160px;
-  width: fit-content;
   height: 40px;
   padding: 0 16px;
   cursor: pointer;
