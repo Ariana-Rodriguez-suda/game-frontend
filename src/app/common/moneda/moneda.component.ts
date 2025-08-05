@@ -1,9 +1,12 @@
 import { Component, ElementRef, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-moneda',
   templateUrl: './moneda.component.html',
-  styleUrls: ['./moneda.component.scss']
+  styleUrls: ['./moneda.component.scss'],
+  standalone: true,
+  imports: [ CommonModule ]
 })
 export class MonedaComponent implements OnInit, OnDestroy {
   @Input() personajeRef!: ElementRef;

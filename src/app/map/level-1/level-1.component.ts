@@ -1,14 +1,13 @@
-// nivel1.component.ts
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TextboxMensajeComponent } from "../../common/message/message.component";
-import { TextboxDialogoComponent } from "../../common/dialogo/dialogo.component";
-import { BotonComponent } from "../../common/button/button.component";
-import { VidasComponent } from '../../game-ui/vidas/life.component';
+import { TextboxMensajeComponent } from '../../common/message/message.component';
+import { TextboxDialogoComponent } from '../../common/dialogo/dialogo.component';
 import { CoinScoreComponent } from '../../game-ui/score-coin/coins.component';
+import { VidasComponent } from '../../game-ui/vidas/life.component';
+import { MonedaComponent } from '../../common/moneda/moneda.component';
 
 @Component({
-  selector: 'app-nivel1',
+  selector: 'app-level-1',
   templateUrl: './level-1.component.html',
   styleUrls: ['./level-1.component.css'],
   standalone: true,
@@ -16,214 +15,215 @@ import { CoinScoreComponent } from '../../game-ui/score-coin/coins.component';
     CommonModule,
     TextboxMensajeComponent,
     TextboxDialogoComponent,
-    BotonComponent,
+    CoinScoreComponent,
     VidasComponent,
-    CoinScoreComponent
+    MonedaComponent
   ]
 })
-export class Level1Component implements OnInit {
-  vidas = 3;
-  monedas = 0;
-  mensaje = '';
-  mostrarMensaje = false;
-  mostrarDialogo = false;
-  enDialogo = false;
-  indexDialogo = 0;
-  personajeX = 100;
-  personajeY = 300;
-  velocidad = 5;
+export class Level1Component implements OnInit, OnDestroy {
+  @ViewChild('personaje') personajeRef!: ElementRef;
+
+  // HUD
+  monedas: number = 0;
+  vidas: number = 3;
+
+  // Introducción y diálogo
+  mensajesIntro: string[] = [
+    'Bienvenido a Aventura Numeral, en este juego las fracciones se representan con bloques divididos en secciones, las secciones coloradas representan el numerador y todas las secciones representan el denominador, el bloque que tienes en frente tiene 4 secciones coloradas y son 6 secciones en total por lo que es una fracción de 4/6. Puedes empujar los bloques con la tecla E, vamos empuja el bloque para seguir con el juego'
+  ];
+  mensajeIndex = 0;
+  mostrarMensaje: boolean = true;
+
+  dialogosNpc: string[] = [
+    'Hola, ¿quieres cruzar el puente? Bueno, la última tormenta lo destruyó, pero podría arreglarlo si me consigues 8/16 madera, debiste haber pasado unos bloques no más tienes que sumarlos y ya. Toma, te doy este amuleto que te deja usar el MODO SUMA, actívalo con la tecla S y no más empuja los bloques juntos y se sumarán.',
+    'Gracias. Ya me pongo a trabajar.',
+    'Bueno ahí está, te deseo buena suerte. También ten cuidado. Los soldados se encuentran más adelante. Adiós.'
+  ];
+  dialogoIndex = 0;
+  mostrarDialogo: boolean = false;
+
+  // Scroll
   scrollX = 0;
-  bloqueCespedPuesto = false;
-  modoSuma = false;
-  bloquesSumados = false;
-  puenteReparado = false;
-  npcDesaparecido = false;
-  mostrarAmuleto = false;
-  bloqueResultActivo = false;
+  scrollInterval: any;
 
-  // física del salto
+  personajeX: number = 100;
+  personajeY: number = 0;
+  velocidad = 5;
   saltando = false;
-  gravedad = 3;
-  velocidadSalto = 0;
-  alturaSalto = 15;
-  sueloY = 300;
+  gravedad = 2;
+  impulsoSalto = 25;
+  velocidadY = 0;
 
-  plataformas = [
-    { x: 1200, y: 400 },
-    { x: 1400, y: 350 },
-    { x: 1600, y: 300 },
-    { x: 1800, y: 300 },
-    { x: 2000, y: 300 }
-  ];
-
-  monedasPos = [
-    { x: 1250, y: 360 },
-    { x: 1450, y: 310 },
-    { x: 1650, y: 260 },
-    { x: 1850, y: 260 },
-    { x: 2050, y: 260 }
-  ];
-
-  monedasRecolectadas: boolean[] = new Array(5).fill(false);
-
+  bloqueCesped = { x: 500, visible: true };
   bloquesSuma = [
-    { x: 2200, y: 300, usado: false },
-    { x: 2400, y: 300, usado: false }
+    { x: 800, empujado: false },
+    { x: 880, empujado: false }
+  ];
+  bloqueSumaFusionado: boolean = false;
+  bloqueResult = { x: 850, empujado: false };
+
+  npc = { x: 1200, visible: true };
+
+  puente = { x: 1800 };
+  puenteReparado: boolean = false;
+
+  mostrarNubeConstruccion: boolean = false;
+  nube = { x: 1780, y: 100 };
+
+  modoSumaActivo = false;
+  mostrarAmuleto = false;
+  amuleto = { x: 1100, y: 150 };
+  npcTrabajando = false;
+
+  monedasArray = [
+    { x: 600, y: 0 },
+    { x: 950, y: 0 },
+    { x: 1300, y: 0 }
   ];
 
-  npcX = 2650;
-  puenteX = 2750;
-  huecos = [
-    { x: 700, width: 180 },
-    { x: 2700, width: 200 }
-  ];
+  mostrarEvaluacion = false;
+  estrellas: number = 3; // Número de estrellas que quieres mostrar
 
-  dialogosNpc = [
-    'Hola, quieres cruzar el puente? Bueno la ultima tormenta lo destruyo...',
-    '...pero podria arreglarlo si me consigues 8/16 madera...',
-    'Toma te doy este amuleto que te deja usar el MODO SUMA activalo con la tecla S.'
-  ];
-  dialogoFinal = 'Bueno ahi esta, te deseo buena suerte. Tambien ten cuidado. Los soldados se encuentran mas adelante. Adios';
-
-  nivelTerminado = false;
-  mostrarEstrellas = false;
-  estrellas = 0;
-
-  ngOnInit(): void {
-    this.mensaje = 'Bienvenido a Aventura Numeral, en este juego las fracciones se representan con bloques divididos en secciones, las secciones coloradas representan el numerador y todas las secciones representan el denominador, el bloque que tienes en frente tiene 4 secciones coloradas y son 6 secciones en total por lo que es una fraccion de 4/6. Puedes empujar los bloques con la tecla E, vamos empuja el bloque para seguir con el juego';
-    this.mostrarMensaje = true;
-
-    setInterval(() => this.actualizarFisica(), 50);
+  get estrellasArray() {
+    return new Array(this.estrellas);
   }
 
-  continuarMensaje() {
-    this.mostrarMensaje = false;
+  mostrarPantallaFinal = false;
+
+  ngOnInit(): void {
+    this.iniciarScroll();
+    this.gravedadLoop();
+  }
+
+  iniciarScroll() {
+    this.scrollInterval = setInterval(() => {
+      const personaje = this.personajeRef?.nativeElement;
+      if (personaje) {
+        const posicion = personaje.getBoundingClientRect();
+        this.scrollX = posicion.left - window.innerWidth / 2;
+        window.scrollTo({ left: this.scrollX, behavior: 'smooth' });
+      }
+    }, 100);
+  }
+
+  gravedadLoop() {
+    setInterval(() => {
+      this.personajeY -= this.velocidadY;
+      this.velocidadY -= this.gravedad;
+      if (this.personajeY <= 0) {
+        this.personajeY = 0;
+        this.saltando = false;
+        this.velocidadY = 0;
+      }
+    }, 30);
+  }
+
+  recolectarMoneda() {
+    this.monedas++;
+  }
+
+  continuarIntro() {
+    this.mensajeIndex++;
+    if (this.mensajeIndex >= this.mensajesIntro.length) {
+      this.mostrarMensaje = false;
+      this.mostrarDialogo = true;
+    }
   }
 
   continuarDialogo() {
-    this.indexDialogo++;
-    if (this.indexDialogo >= this.dialogosNpc.length) {
+    this.dialogoIndex++;
+    if (this.dialogoIndex === 1) {
       this.mostrarDialogo = false;
-      this.enDialogo = false;
-    }
-  }
-
-  @HostListener('document:keydown', ['$event'])
-  manejarTeclas(event: KeyboardEvent) {
-    if (this.mostrarMensaje || this.mostrarDialogo) return;
-
-    switch (event.key) {
-      case 'ArrowRight':
-        this.personajeX += this.velocidad;
-        this.scrollX -= this.velocidad;
-        break;
-      case 'ArrowLeft':
-        this.personajeX -= this.velocidad;
-        this.scrollX += this.velocidad;
-        break;
-      case ' ':
-        if (!this.saltando) {
-          this.saltando = true;
-          this.velocidadSalto = -this.alturaSalto;
-        }
-        break;
-      case 'e':
-        this.interactuar();
-        break;
-      case 's':
-        this.modoSuma = !this.modoSuma;
-        break;
-    }
-
-    this.verificarZona();
-  }
-
-  actualizarFisica() {
-    if (this.saltando) {
-      this.personajeY += this.velocidadSalto;
-      this.velocidadSalto += this.gravedad;
-
-      if (this.personajeY >= this.sueloY) {
-        this.personajeY = this.sueloY;
-        this.saltando = false;
-      }
-    }
-  }
-
-  interactuar() {
-    if (!this.bloqueCespedPuesto && this.personajeX > 300 && this.personajeX < 360) {
-      this.bloqueCespedPuesto = true;
-    }
-
-    if (!this.enDialogo && this.personajeX > this.npcX - 50 && this.personajeX < this.npcX + 50 && !this.mostrarAmuleto) {
-      this.mostrarDialogo = true;
-      this.enDialogo = true;
-      this.indexDialogo = 0;
       this.mostrarAmuleto = true;
-    }
-  }
-
-  verificarZona() {
-    for (const hueco of this.huecos) {
-      if (this.personajeX > hueco.x && this.personajeX < hueco.x + hueco.width) {
-        if ((hueco.x === 700 && !this.bloqueCespedPuesto) || (hueco.x === 2700 && !this.puenteReparado)) {
-          this.perderVida();
-        }
-      }
-    }
-
-    this.monedasPos.forEach((moneda, index) => {
-      if (!this.monedasRecolectadas[index] && this.personajeX > moneda.x - 10 && this.personajeX < moneda.x + 10) {
-        this.monedas++;
-        this.monedasRecolectadas[index] = true;
-      }
-    });
-
-    if (this.modoSuma && !this.bloquesSumados && this.personajeX > 2250 && this.personajeX < 2450) {
-      this.bloquesSumados = true;
-      this.bloqueResultActivo = true;
-    }
-
-    if (this.bloqueResultActivo && !this.puenteReparado && this.personajeX > this.npcX - 10 && this.personajeX < this.npcX + 10) {
+    } else if (this.dialogoIndex === 2) {
       this.repararPuente();
-    }
-
-    if (this.puenteReparado && this.personajeX > 2900 && this.personajeX < 3000 && !this.nivelTerminado) {
-      this.finalizarNivel();
-    }
-  }
-
-  perderVida() {
-    this.vidas--;
-    this.personajeX = 100;
-    this.scrollX = 0;
-    if (this.vidas <= 0) {
-      alert('Fin del juego');
+    } else {
+      this.mostrarDialogo = false;
     }
   }
 
   repararPuente() {
-    this.npcDesaparecido = true;
-    this.mostrarMensaje = true;
-    this.mensaje = 'Gracias. Ya me pongo a trabajar';
+    this.npc.visible = false;
+    this.npcTrabajando = true;
+    this.mostrarNubeConstruccion = true;
+
+    const sonidoConstru = new Audio('/assets/sounds/constru.mp3');
+    const sonidoMartillo = new Audio('/assets/sounds/martillo.mp3');
+    sonidoConstru.play();
+    sonidoMartillo.play();
+
     setTimeout(() => {
-      setTimeout(() => {
-        this.puenteReparado = true;
-        this.mostrarMensaje = false;
-        this.mostrarDialogo = true;
-        this.dialogosNpc = [this.dialogoFinal];
-        this.indexDialogo = 0;
-        this.enDialogo = true;
-      }, 5000);
-    }, 1000);
+      this.mostrarNubeConstruccion = false;
+      this.puenteReparado = true;
+      this.npc.visible = true;
+      this.npcTrabajando = false;
+      this.dialogoIndex++;
+      this.mostrarDialogo = true;
+    }, 5000);
   }
 
-  finalizarNivel() {
-    this.nivelTerminado = true;
-    this.estrellas = this.vidas;
-    this.mostrarEstrellas = true;
+  @HostListener('document:keydown', ['$event'])
+  manejarTeclado(event: KeyboardEvent) {
+    switch (event.key) {
+      case 'ArrowRight':
+        this.personajeX += this.velocidad;
+        break;
+      case 'ArrowLeft':
+        this.personajeX -= this.velocidad;
+        break;
+      case ' ':
+        if (!this.saltando) {
+          this.saltando = true;
+          this.velocidadY = this.impulsoSalto;
+        }
+        break;
+      case 'E':
+        this.empujarBloques();
+        break;
+      case 'S':
+        this.modoSumaActivo = !this.modoSumaActivo;
+        break;
+      case 'Enter':
+        if (this.mostrarDialogo) this.continuarDialogo();
+        break;
+    }
+  }
+
+  empujarBloques() {
+    if (!this.bloqueSumaFusionado && this.modoSumaActivo && this.bloquesSuma[0].x + 80 >= this.bloquesSuma[1].x) {
+      this.bloqueSumaFusionado = true;
+    } else if (this.bloqueSumaFusionado) {
+      this.bloqueResult.x += 40;
+      if (this.bloqueResult.x >= this.npc.x - 50 && this.dialogoIndex === 1) {
+        this.mostrarDialogo = true;
+      }
+    } else {
+      this.bloquesSuma.forEach(b => b.x += 40);
+    }
+
+    if (this.bloqueCesped.visible && this.personajeX >= this.bloqueCesped.x - 50 && this.personajeX <= this.bloqueCesped.x + 50) {
+      this.bloqueCesped.x += 40;
+      if (this.bloqueCesped.x >= 650) {
+        this.bloqueCesped.visible = false;
+      }
+    }
+  }
+
+  terminarNivel() {
+    this.mostrarEvaluacion = true;
+    if (this.vidas === 3 && this.monedas >= 3) this.estrellas = 3;
+    else if (this.vidas >= 2) this.estrellas = 2;
+    else this.estrellas = 1;
+  }
+
+  continuar() {
+    this.mostrarPantallaFinal = true;
     setTimeout(() => {
       window.location.href = '/perfil';
     }, 10000);
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.scrollInterval);
   }
 }

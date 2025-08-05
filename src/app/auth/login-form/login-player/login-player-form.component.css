@@ -13,7 +13,7 @@
 }
 
 .form-container {
-  background-color: #ffffff; /* Fondo del cuadro del formulario */
+  background-color: #f3c427; /* Fondo del cuadro del formulario */
   border-radius: 12px;
   padding: 30px;
   box-shadow: 4px 4px #000;
@@ -33,7 +33,7 @@ form {
 }
 
 .custom-back-button {
-  width: 200px;
+  width: 150px;
   height: 50px;
   align-self: flex-start;
 }
