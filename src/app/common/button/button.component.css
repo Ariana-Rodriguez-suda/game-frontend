@@ -44,13 +44,10 @@
 }
 
 
-/* Más alto para “Iniciar sesión” */
-.boton-alto {
+:host(.boton-alto) .button-wrapper {
   height: 45px;
-  min-width: 600px;
 }
 
-/* Más largo para “Registrarse” */
-.boton-ancho {
-  min-width: 600px;
+:host(.boton-ancho) .button-wrapper {
+  min-width: 400px;
 }
