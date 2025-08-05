@@ -1,5 +1,13 @@
 <div class="home-container">
   <app-boton class="role-switch" texto="Jugador" (click)="goToPlayer()"></app-boton>
-<button class="custom-button" style="min-width: 150px; height: 40px;">Iniciar sesión</button>
-<button class="custom-button" style="min-width: 150px; height: 40px;">Registrarse</button>
+<button class="custom-button" style="min-width: 150px; height: 35px; background-image: url('/assets/hud/framebotones.png');"
+  (click)="goToLogin()">
+  Iniciar sesión
+</button>
+
+<button class="custom-button" style="min-width: 120px; height: 35px; background-image: url('/assets/hud/framebotones.png');"
+  (click)="goToRegister()">
+  Registrarse
+</button>
+
 </div>
