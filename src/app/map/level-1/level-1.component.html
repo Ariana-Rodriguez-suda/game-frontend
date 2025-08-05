@@ -1,71 +1,79 @@
-<div class="nivel" [style.transform]="'translateX(' + scrollX + 'px)'">
+<!-- Caja del juego con resolución fija -->
+<div class="game-container">
 
-  <!-- Fondo -->
-  <img src="/assets/images/fondo1.png" class="fondo" />
-  <img src="/assets/images/fondoHole1.png" class="fondo" style="left: 800px;" />
-  <img src="/assets/images/fondo2.png" class="fondo" style="left: 1200px;" />
-  <img src="/assets/images/fondohole2.png" class="fondo" style="left: 1800px;" />
-  <img src="/assets/images/fondo3.png" class="fondo" style="left: 2400px;" />
-
-  <!-- Suelo -->
-  <img src="/assets/images/floor1.png" class="suelo" />
-  <img src="/assets/images/hole1.png" class="suelo" style="left: 800px;" />
-  <img src="/assets/images/floor2.png" class="suelo" style="left: 1200px;" />
-  <img src="/assets/images/hole2.png" class="suelo" style="left: 1800px;" />
-  <img src="/assets/images/floor3.png" class="suelo" style="left: 2400px;" />
-
-  <!-- Plataformas -->
-  <img src="/assets/hud/plataforma.png" class="plataforma" style="left: 1350px; top: 250px;" />
-  <img src="/assets/hud/plataforma.png" class="plataforma" style="left: 1500px; top: 220px;" />
-  <img src="/assets/hud/plataforma.png" class="plataforma" style="left: 1650px; top: 190px;" />
-
-  <!-- Bloque introducción -->
-  <img *ngIf="!bloqueCespedPuesto" src="/assets/bloques/bloqueCesped.png" class="bloque" style="left: 200px;" />
-  <img *ngIf="bloqueCespedPuesto" src="/assets/bloques/bloqueCesped.png" class="bloque" style="left: 820px;" />
-
-  <!-- Bloques de suma -->
-  <img *ngIf="!bloquesSumados" src="/assets/bloques/bloqueSuma.png" class="bloque" style="left: 1400px;" />
-  <img *ngIf="!bloquesSumados" src="/assets/bloques/bloqueSuma.png" class="bloque" style="left: 1500px;" />
-
-  <!-- Bloque resultado -->
-  <img *ngIf="bloquesSumados && !puenteReparado" src="/assets/bloques/bloqueResult.png" class="bloque" style="left: 950px;" />
-
-  <!-- Monedas -->
-  <img src="/assets/hud/coin.png" class="moneda" style="left: 1280px;" />
-  <img src="/assets/hud/coin.png" class="moneda" style="left: 1350px;" />
-  <img src="/assets/hud/coin.png" class="moneda" style="left: 1450px;" />
-
-  <!-- NPC -->
-  <img *ngIf="!npcDesaparecido" src="/assets/sprites/npc.png" class="npc" style="left: 950px;" />
-  <img *ngIf="puenteReparado" src="/assets/sprites/npc.png" class="npc" style="left: 1800px;" />
-
-  <!-- Nube de reparación -->
-  <img *ngIf="!puenteReparado && npcDesaparecido" src="/assets/hud/nube.png" class="nube" style="left: 1800px;" />
-
-  <!-- Puente roto / reparado -->
-  <img *ngIf="!puenteReparado" src="/assets/hud/puentebroken.png" class="puente" style="left: 1800px;" />
-  <img *ngIf="puenteReparado" src="/assets/hud/puentefixed.png" class="puente" style="left: 1800px;" />
-
-  <!-- Personaje -->
-  <img src="/assets/sprites/avatarBoy1run.png" class="personaje" [style.left.px]="personajeX" [style.top.px]="personajeY" />
-
-</div>
-
-<!-- HUD -->
-<div class="hud">
-  <app-vidas [vidas]="vidas"></app-vidas>
-  <app-coin-score [monedas]="monedas"></app-coin-score>
-</div>
-
-<!-- Mensajes -->
-<app-textbox-mensaje *ngIf="mostrarMensaje" [mensaje]="mensaje" (continuar)="continuarMensaje()"></app-textbox-mensaje>
-<app-textbox-dialogo *ngIf="mostrarDialogo" [linea]="dialogosNpc[indexDialogo]" (continuar)="continuarDialogo()"></app-textbox-dialogo>
-
-<!-- Estrellas final -->
-<div class="fin-nivel" *ngIf="mostrarEstrellas">
-  <h2>¡Nivel completado!</h2>
-  <div class="estrellas">
-    <img *ngFor="let i of [1,2,3]" [src]="'/assets/hud/' + (i <= estrellas ? 'estrella_on' : 'estrella_off') + '.png'" />
+  <!-- HUD (vidas y monedas) -->
+  <div class="hud">
+    <app-vidas [vidas]="vidas" class="vidas"></app-vidas>
+    <app-coin-score [monedas]="monedas" class="coin-score"></app-coin-score>
   </div>
-  <app-boton texto="Continuar" (click)="finalizarNivel()"></app-boton>
+
+  <!-- Nivel desplazable -->
+  <div class="scrollable-world" [style.transform]="'translateX(' + scrollX + 'px)'">
+
+    <!-- Fondos -->
+    <img src="/assets/images/fondo1.png" class="fondo" />
+    <img src="/assets/images/fondoHole1.png" class="fondo" style="left: 800px;" />
+    <img src="/assets/images/fondo2.png" class="fondo" style="left: 1200px;" />
+    <img src="/assets/images/fondohole2.png" class="fondo" style="left: 1800px;" />
+    <img src="/assets/images/fondo3.png" class="fondo" style="left: 2400px;" />
+
+    <!-- Suelo -->
+    <img src="/assets/images/floor1.png" class="suelo" />
+    <img src="/assets/images/hole1.png" class="suelo" style="left: 800px;" />
+    <img src="/assets/images/floor2.png" class="suelo" style="left: 1200px;" />
+    <img src="/assets/images/hole2.png" class="suelo" style="left: 1800px;" />
+    <img src="/assets/images/floor3.png" class="suelo" style="left: 2400px;" />
+
+    <!-- Plataformas -->
+    <img src="/assets/hud/plataforma.png" class="plataforma" style="left: 1350px; top: 250px;" />
+    <img src="/assets/hud/plataforma.png" class="plataforma" style="left: 1500px; top: 220px;" />
+    <img src="/assets/hud/plataforma.png" class="plataforma" style="left: 1650px; top: 190px;" />
+
+    <!-- Bloque introducción -->
+    <img *ngIf="!bloqueCespedPuesto" src="/assets/bloques/bloqueCesped.png" class="bloque" style="left: 200px;" />
+    <img *ngIf="bloqueCespedPuesto" src="/assets/bloques/bloqueCesped.png" class="bloque" style="left: 820px;" />
+
+    <!-- Bloques de suma -->
+    <img *ngIf="!bloquesSumados" src="/assets/bloques/bloqueSuma.png" class="bloque" style="left: 1400px;" />
+    <img *ngIf="!bloquesSumados" src="/assets/bloques/bloqueSuma.png" class="bloque" style="left: 1500px;" />
+
+    <!-- Bloque resultado -->
+    <img *ngIf="bloquesSumados && !puenteReparado" src="/assets/bloques/bloqueResult.png" class="bloque" style="left: 950px;" />
+
+    <!-- Monedas -->
+    <img src="/assets/hud/coin.png" class="moneda" style="left: 1280px;" />
+    <img src="/assets/hud/coin.png" class="moneda" style="left: 1350px;" />
+    <img src="/assets/hud/coin.png" class="moneda" style="left: 1450px;" />
+
+    <!-- NPC -->
+    <img *ngIf="!npcDesaparecido" src="/assets/sprites/npc.png" class="npc" style="left: 950px;" />
+    <img *ngIf="puenteReparado" src="/assets/sprites/npc.png" class="npc" style="left: 1800px;" />
+
+    <!-- Nube de reparación -->
+    <img *ngIf="!puenteReparado && npcDesaparecido" src="/assets/hud/nube.png" class="nube" style="left: 1800px;" />
+
+    <!-- Puente roto / reparado -->
+    <img *ngIf="!puenteReparado" src="/assets/hud/puentebroken.png" class="puente" style="left: 1800px;" />
+    <img *ngIf="puenteReparado" src="/assets/hud/puentefixed.png" class="puente" style="left: 1800px;" />
+
+    <!-- Personaje -->
+    <img src="/assets/sprites/avatarBoy1run.png" class="personaje"
+         [style.left.px]="personajeX"
+         [style.top.px]="personajeY" />
+
+  </div>
+
+  <!-- Diálogos y mensajes -->
+  <app-textbox-mensaje *ngIf="mostrarMensaje" [mensaje]="mensaje" (continuar)="continuarMensaje()"></app-textbox-mensaje>
+  <app-textbox-dialogo *ngIf="mostrarDialogo" [linea]="dialogosNpc[indexDialogo]" (continuar)="continuarDialogo()"></app-textbox-dialogo>
+
+  <!-- Fin del nivel -->
+  <div class="fin-nivel" *ngIf="mostrarEstrellas">
+    <h2>¡Nivel completado!</h2>
+    <div class="estrellas">
+      <img *ngFor="let i of [1,2,3]" [src]="'/assets/hud/' + (i <= estrellas ? 'estrella_on' : 'estrella_off') + '.png'" />
+    </div>
+    <app-boton texto="Continuar" (click)="finalizarNivel()"></app-boton>
+  </div>
+
 </div>

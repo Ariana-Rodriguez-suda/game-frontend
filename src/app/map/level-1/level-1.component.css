@@ -1,84 +1,44 @@
-.nivel {
+.game-container {
   position: relative;
-  width: 4000px;
-  height: 500px;
+  width: 1280px;
+  height: 720px;
   overflow: hidden;
-  transition: transform 0.1s linear;
+  margin: auto;
+  border: 2px solid white;
+  background-color: black;
 }
 
-.fondo {
+.scrollable-world {
   position: absolute;
-  width: 800px;
-  height: 500px;
   top: 0;
+  left: 0;
+  height: 100%;
+  width: 3000px; /* ajusta según tu nivel */
+  transition: transform 0.02s linear;
 }
 
-.suelo {
+.hud {
   position: absolute;
-  width: 800px;
-  height: 100px;
-  bottom: 0;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+  display: flex;
+  gap: 20px;
 }
 
-.plataforma {
-  position: absolute;
-  width: 100px;
-  height: 20px;
-}
-
-.bloque, .moneda, .npc, .nube, .puente {
-  position: absolute;
-  bottom: 100px;
+.vidas, .coin-score {
+  width: 120px;
+  height: auto;
 }
 
 .personaje {
   position: absolute;
   width: 60px;
-  height: 90px;
+  height: auto;
+  z-index: 5;
 }
 
-.hud {
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  display: flex;
-  gap: 20px;
-  z-index: 1000;
-}
-
-.vidas {
-  height: 40px;
-}
-
-.coin-score {
-  position: relative;
-}
-
-.coin-score img {
-  height: 40px;
-}
-
-.score-text {
+/* Asegúrate que los elementos tengan clases con tamaños y posiciones relativas */
+.fondo, .suelo, .bloque, .moneda, .npc, .puente, .nube, .plataforma {
   position: absolute;
-  top: 5px;
-  right: 10px;
-  font-size: 20px;
-  color: black;
-  font-weight: bold;
-}
-
-.fin-nivel {
-  position: fixed;
-  top: 30%;
-  left: 35%;
-  background: white;
-  padding: 20px;
-  border-radius: 15px;
-  text-align: center;
-  z-index: 999;
-}
-
-.estrellas img {
-  height: 40px;
-  margin: 5px;
 }
