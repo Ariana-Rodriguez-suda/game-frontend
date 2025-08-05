@@ -47,10 +47,10 @@
 /* Más alto para “Iniciar sesión” */
 .boton-alto {
   height: 45px;
-  min-width: 250px;
+  min-width: 350px;
 }
 
 /* Más largo para “Registrarse” */
 .boton-ancho {
-  min-width: 300px;
+  min-width: 350px;
 }
