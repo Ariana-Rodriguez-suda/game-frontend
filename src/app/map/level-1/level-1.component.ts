@@ -42,10 +42,6 @@ export class Level1Component implements OnInit, OnDestroy {
   dialogoIndex = 0;
   mostrarDialogo: boolean = false;
 
-  // Scroll
-  scrollX = 0;
-  scrollInterval: any;
-
   personajeX: number = 100;
   personajeY: number = 0;
   velocidad = 5;
@@ -82,7 +78,7 @@ export class Level1Component implements OnInit, OnDestroy {
   ];
 
   mostrarEvaluacion = false;
-  estrellas: number = 3; // Número de estrellas que quieres mostrar
+  estrellas: number = 3;
 
   get estrellasArray() {
     return new Array(this.estrellas);
@@ -91,20 +87,11 @@ export class Level1Component implements OnInit, OnDestroy {
   mostrarPantallaFinal = false;
 
   ngOnInit(): void {
-    this.iniciarScroll();
     this.gravedadLoop();
   }
 
-  iniciarScroll() {
-    this.scrollInterval = setInterval(() => {
-      const personaje = this.personajeRef?.nativeElement;
-      if (personaje) {
-        const posicion = personaje.getBoundingClientRect();
-        this.scrollX = posicion.left - window.innerWidth / 2;
-        window.scrollTo({ left: this.scrollX, behavior: 'smooth' });
-      }
-    }, 100);
-  }
+  // Scroll desactivado — no se usará más scroll automático
+  ngOnDestroy(): void {}
 
   gravedadLoop() {
     setInterval(() => {
@@ -158,12 +145,22 @@ export class Level1Component implements OnInit, OnDestroy {
       this.npc.visible = true;
       this.npcTrabajando = false;
       this.dialogoIndex++;
-      this.mostrarDialogo = true;
+      this.mostrarDialogo = true; // Activa automáticamente el 3er diálogo
     }, 5000);
   }
 
   @HostListener('document:keydown', ['$event'])
   manejarTeclado(event: KeyboardEvent) {
+    if (this.mostrarMensaje && event.key === 'Enter') {
+      this.continuarIntro();
+      return;
+    }
+
+    if (this.mostrarDialogo && event.key === 'Enter') {
+      this.continuarDialogo();
+      return;
+    }
+
     switch (event.key) {
       case 'ArrowRight':
         this.personajeX += this.velocidad;
@@ -183,9 +180,6 @@ export class Level1Component implements OnInit, OnDestroy {
       case 'S':
         this.modoSumaActivo = !this.modoSumaActivo;
         break;
-      case 'Enter':
-        if (this.mostrarDialogo) this.continuarDialogo();
-        break;
     }
   }
 
@@ -195,7 +189,7 @@ export class Level1Component implements OnInit, OnDestroy {
     } else if (this.bloqueSumaFusionado) {
       this.bloqueResult.x += 40;
       if (this.bloqueResult.x >= this.npc.x - 50 && this.dialogoIndex === 1) {
-        this.mostrarDialogo = true;
+        this.mostrarDialogo = true; // Activa automáticamente el 2do diálogo
       }
     } else {
       this.bloquesSuma.forEach(b => b.x += 40);
@@ -221,9 +215,5 @@ export class Level1Component implements OnInit, OnDestroy {
     setTimeout(() => {
       window.location.href = '/perfil';
     }, 10000);
-  }
-
-  ngOnDestroy(): void {
-    clearInterval(this.scrollInterval);
   }
 }

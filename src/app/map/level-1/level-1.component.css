@@ -11,17 +11,17 @@
 
 .nivel {
   position: relative;
-  width: 2200px; /* Ancho total del nivel */
+  width: 1000px; /* Tamaño visible del rectángulo de juego */
   height: 600px;
-  overflow-x: scroll;
-  overflow-y: hidden;
+  overflow: hidden;
   border: 3px solid #333;
   background-color: #cceeff;
 }
 
+/* Scroll dentro del juego (simulado) */
 .juego-box {
   position: relative;
-  width: 2200px;
+  width: 2200px; /* Largo total del nivel */
   height: 600px;
 }
 
@@ -90,14 +90,8 @@
   bottom: 100px;
 }
 
-.bloque-suma1 {
-  bottom: 160px;
-}
-
-.bloque-suma2 {
-  bottom: 160px;
-}
-
+.bloque-suma1,
+.bloque-suma2,
 .bloque-result {
   bottom: 160px;
 }
@@ -232,8 +226,16 @@ app-coin-score {
 app-textbox-mensaje,
 app-textbox-dialogo {
   position: absolute;
-  bottom: 20px;
+  bottom: 30px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
+  color: black; /* Letras negras */
+  font-size: 16px;
+  max-width: 80%;
+}
+
+app-textbox-mensaje,
+app-textbox-dialogo {
+  color: black;
 }
