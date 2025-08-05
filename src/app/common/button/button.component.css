@@ -4,9 +4,9 @@
   min-height: 40px;
   height: auto;
 
-  background-color: #fefefe; /* fondo claro */
-  border: none;
-  border-radius: 48px; /* bordes redondeados */
+  background-color: #fefefe; /* fondo blanco */
+  border: 2px solid #FFD700; /* borde fino amarillo */
+  border-radius: 32px;
 
   font-family: 'Press Start 2P', cursive;
   font-size: 10px;
@@ -29,42 +29,34 @@
 
   transition: transform 0.2s ease;
 
-  /* Borde superior amarillo */
-  box-shadow: inset 0 6px 0 #FFD700; /* amarillo arriba */
+  /* sombra roja simulando base inferior */
+  box-shadow: 0 6px 0 #FF5A4D;
 }
 
-.custom-button::before,
+/* Curva decorativa amarilla arriba a la izquierda */
+.custom-button::before {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  background-color: #FFD700;
+  border-radius: 50%;
+  top: -6px;
+  left: -6px;
+  z-index: 0;
+}
+
+/* Curva decorativa amarilla abajo a la derecha */
 .custom-button::after {
   content: '';
   position: absolute;
+  width: 24px;
+  height: 24px;
   background-color: #FFD700;
   border-radius: 50%;
-  z-index: 1;
-}
-
-/* Esquina superior izquierda (curva amarilla) */
-.custom-button::before {
-  width: 48px;
-  height: 80px;
-  top: -20px;
-  left: -20px;
-}
-
-/* Esquina inferior derecha (curva amarilla) */
-.custom-button::after {
-  width: 60px;
-  height: 40px;
-  bottom: -10px;
-  right: -10px;
-}
-
-/* Borde rojo inferior simulado */
-.custom-button::selection {
-  background: none;
-}
-
-.custom-button::part(base) {
-  box-shadow: 0 12px 0 #ff5a4d; /* sombra inferior roja */
+  bottom: -6px;
+  right: -6px;
+  z-index: 0;
 }
 
 .custom-button:hover {
@@ -79,17 +71,9 @@
     padding: 8px 16px;
   }
 
-  .custom-button::before {
-    width: 36px;
-    height: 60px;
-    top: -16px;
-    left: -16px;
-  }
-
+  .custom-button::before,
   .custom-button::after {
-    width: 40px;
-    height: 28px;
-    bottom: -8px;
-    right: -8px;
+    width: 18px;
+    height: 18px;
   }
 }
