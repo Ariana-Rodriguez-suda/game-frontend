@@ -1,35 +1,30 @@
 .custom-button {
-  background-image: url('/assets/hud/framebotones.png');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-color: transparent;
-
-  width: 100%; /* Se adapta al contenedor externo */
-
-  /* Cambiar height: 100% a min-height */
-  min-height: 40px; /* altura mínima cómoda */
+  position: relative;
+  background: #f8f8f8;
+  border: none;
+  width: 100%;
+  min-height: 40px;
   height: auto;
 
-  border: none;
-
-  color: black;
-  font-size: 10px;
   font-family: 'Press Start 2P', cursive;
-
+  font-size: 10px;
+  color: black;
+  text-align: center;
   cursor: pointer;
-  margin-top: 10px;
+
+  padding: 8px 12px;
+  box-sizing: border-box;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  border-radius: 40px;
+  border-top: 8px solid #FFD700; /* amarillo */
+  box-shadow: 0 12px 0 #ff5a4d;  /* sombra roja abajo */
 
   display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center;
-
-  padding: 8px 12px; /* algo más de padding para mejor clic */
-  box-sizing: border-box;
-
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
 
   transition: transform 0.2s ease;
 }
@@ -38,11 +33,48 @@
   transform: scale(1.05);
 }
 
-/* Ajustes responsivos de fuente */
+/* Decoración izquierda: signo de interrogación */
+.custom-button::before {
+  content: "❓";
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 28px;
+  color: #FFD700;
+  pointer-events: none;
+}
+
+/* Decoración inferior derecha (imitando la curva amarilla) */
+.custom-button::after {
+  content: "";
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+  width: 36px;
+  height: 20px;
+  background-color: #FFD700;
+  border-radius: 50% 50% 0 50%;
+  transform: rotate(15deg);
+  pointer-events: none;
+}
+
+/* Responsivo */
 @media (max-width: 600px) {
   .custom-button {
     font-size: 8px;
     min-height: 35px;
     padding: 6px 10px;
+  }
+
+  .custom-button::before {
+    font-size: 20px;
+    left: 8px;
+  }
+
+  .custom-button::after {
+    width: 28px;
+    height: 16px;
+    right: 10px;
   }
 }
