@@ -14,6 +14,29 @@
   box-sizing: border-box;
 }
 
+.custom-button {
+  background-image: url('/assets/hud/framebotones.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  
+  padding: 12px 30px; /* ajusta al tamaño que quieras */
+  font-family: 'Press Start 2P', cursive;
+  font-size: 10px;
+  color: black;
+
+  cursor: pointer;
+  border: none;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 160px;
+  height: 40px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+
 .home-container {
   height: 100%;
   width: 100%;
