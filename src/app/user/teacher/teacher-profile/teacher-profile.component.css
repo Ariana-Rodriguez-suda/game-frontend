@@ -9,18 +9,17 @@
   background-position: center center;
   background-repeat: no-repeat;
   font-family: 'Press Start 2P', cursive;
-  padding: 20px;
-  box-sizing: border-box;
+  padding: 10px;
 }
 
 .profile-card {
   background-color: #f3c427;
-  border: 2px dashed #d08700;
-  border-radius: 14px;
-  padding: 18px 24px;
-  max-width: 380px;
+  border: 2px dashed #4a90e2;
+  border-radius: 16px;
+  padding: 15px 20px; /* menos padding */
+  max-width: 450px; /* reducido de 700px */
   width: 100%;
-  box-shadow: 3px 3px #000;
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
 }
 
@@ -28,74 +27,79 @@
 .profile-card h3 {
   text-align: center;
   color: #2a2a6e;
-  font-size: 16px;
-  margin-bottom: 14px;
+  font-size: 16px; /* reducido de 20px */
+  margin-bottom: 12px;
 }
 
 .profile-card label {
   font-weight: bold;
+  color: #333;
   display: block;
   margin-top: 10px;
-  font-size: 11px;
-  color: #333;
+  font-size: 10px; /* reducido */
 }
 
 .profile-card input {
   width: 100%;
-  padding: 8px;
-  border: 2px solid #d08700;
+  padding: 6px 8px; /* menos padding */
+  border: 2px solid #8ecae6;
   border-radius: 8px;
   margin-bottom: 10px;
-  background-color: #fffdd0;
-  font-size: 11px;
-  font-family: inherit;
+  background-color: #f3c427;
+  font-size: 11px; /* reducido */
   box-sizing: border-box;
+  font-family: inherit;
 }
 
 button {
-  padding: 10px;
+  padding: 6px 10px; /* menos padding */
   border: none;
   border-radius: 10px;
-  background-color: #f3c427;
-  color: #000;
+  background-color: #219ebc;
+  color: white;
   font-weight: bold;
-  font-size: 11px;
-  box-shadow: 2px 2px #000;
+  margin: 4px 4px 8px 0;
   cursor: pointer;
   transition: background 0.3s ease, transform 0.2s;
-  font-family: 'Press Start 2P', cursive;
+  font-family: inherit;
+  font-size: 10px; /* reducido */
+  box-shadow: 2px 2px #000;
 }
 
 button:hover {
-  background-color: #ffd60a;
+  background-color: #023047;
   transform: scale(1.05);
 }
 
 .volver-btn {
   background-color: #f3c427;
+  color: #000;
   margin-bottom: 15px;
+  font-size: 11px; /* reducido */
   box-shadow: 2px 2px #000;
 }
 
+.volver-btn:hover {
+  background-color: #ffd60a;
+}
+
 hr {
-  margin: 16px 0;
-  border: 1px dashed #d08700;
+  margin: 15px 0;
+  border: 1px dashed #219ebc;
 }
 
 ul {
   list-style: none;
   padding: 0;
-  margin: 0;
 }
 
 ul li {
-  background-color: #fffbe5;
-  padding: 10px;
-  border-radius: 10px;
+  background-color: #f3c427;
+  padding: 10px; /* menos padding */
+  border-radius: 8px;
   margin-bottom: 10px;
   box-shadow: 2px 2px #000;
-  font-size: 11px;
-  color: #000;
+  font-size: 11px; /* reducido */
 }
 
 .class-info {
@@ -104,7 +108,7 @@ ul li {
 
 .class-buttons {
   display: flex;
-  gap: 4px;
+  gap: 6px;
   flex-wrap: wrap;
   margin-top: 6px;
 }
