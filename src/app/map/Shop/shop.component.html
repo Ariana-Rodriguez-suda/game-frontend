@@ -1,11 +1,18 @@
-<div class="shop">
-  <div class="item" *ngFor="let item of items">
-    <img [src]="'assets/shop/' + item.image" alt="{{ item.name }}" />
-    <p>{{ item.name }}</p>
-    <button (click)="comprar(item.id)" disabled>
-      Comprar ({{ item.price }} monedas)
+<div class="shop" *ngIf="items.length > 0">
+  <div class="item">
+    <img src="/assets/shop/item1.png" alt="{{ items[0].name }}" />
+    <p>{{ items[0].name }}</p>
+    <button (click)="comprar(items[0].id)" [disabled]="true">
+      Comprar ({{ items[0].price }} monedas)
     </button>
   </div>
 </div>
 
-<button (click)="goBack()">Volver</button>
+<img
+  src="/assets/hud/volver.png"
+  alt="Volver"
+  class="back-img"
+  (click)="goBack()"
+  role="button"
+  tabindex="0"
+/>

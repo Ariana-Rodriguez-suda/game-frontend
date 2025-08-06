@@ -2,7 +2,11 @@
   <button class="flecha izquierda" (click)="anteriorAvatar()"></button>
 
   <div class="avatar-display">
-    <img [src]="avatarActual?.imageUrl" alt="{{ avatarActual?.name }}" />
+<img
+  [src]="avatarActual ? avatarImages[avatarActual.id] : ''"
+  alt="{{ avatarActual?.name }}"
+/>
+
     <p>{{ avatarActual?.name }}</p>
 
     <img

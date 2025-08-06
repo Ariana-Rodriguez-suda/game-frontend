@@ -1,100 +1,71 @@
-.carousel-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 30px;
-  background-color: #fff3b0;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 4px 4px #000;
-  position: relative;
-}
-
-.avatar-preview {
-  text-align: center;
-  font-family: 'Press Start 2P', cursive;
-}
-
-.avatar-preview img {
-  width: 100px;
-  height: 100px;
-  object-fit: contain;
-  border: 2px solid #000;
-  border-radius: 10px;
-  background-color: white;
-}
-
-.avatar-preview p {
-  margin: 10px 0;
-  font-size: 12px;
-}
-
-.arrow {
-  width: 0;
-  height: 0;
-  border-style: solid;
-  cursor: pointer;
-}
-
-.arrow.left {
-  border-width: 20px 30px 20px 0;
-  border-color: transparent black transparent transparent;
-}
-
-.arrow.right {
-  border-width: 20px 0 20px 30px;
-  border-color: transparent transparent transparent black;
-}
-
-.arrow:hover {
-  opacity: 0.6;
-}
-
 .avatar-selector-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 24px;
+  gap: 40px;        /* un poco más de espacio */
+  max-width: 600px; /* limita ancho total */
+  margin: 0 auto;   /* centra horizontalmente */
+  padding: 20px;
+  background-color: #fff3b0;
+  border-radius: 12px;
+  box-shadow: 4px 4px #000;
 }
 
 .avatar-display {
   text-align: center;
+  flex-shrink: 0;
+  max-width: 220px; /* más ancho para imagen y texto */
+}
+
+.avatar-display img {
+  width: 180px;   /* imagen más grande */
+  height: 180px;
+  object-fit: contain;
+  border: 2px solid #000;
+  border-radius: 12px;
+  background-color: white;
+}
+
+.avatar-display p {
+  margin: 12px 0;
+  font-size: 14px;
+  font-weight: bold;
 }
 
 .flecha {
-  width: 0; 
-  height: 0; 
-  border-top: 25px solid transparent;
-  border-bottom: 25px solid transparent;
+  width: 0;
+  height: 0;
+  border-top: 40px solid transparent;
+  border-bottom: 40px solid transparent;
   cursor: pointer;
   user-select: none;
   transition: transform 0.2s ease;
 }
 
 .flecha.izquierda {
-  border-right: 25px solid #f3c427;
+  border-right: 40px solid #f3c427;
 }
 
 .flecha.derecha {
-  border-left: 25px solid #f3c427;
+  border-left: 40px solid #f3c427;
 }
 
 .flecha:hover {
-  transform: scale(1.2);
+  transform: scale(1.3);
 }
 
 .boton-hud {
-  width: 90px;
-  margin-top: 12px;
+  width: 110px;  /* más grande */
+  margin-top: 15px;
   cursor: pointer;
   transition: transform 0.2s ease;
 }
 
 .boton-hud:hover {
-  transform: scale(1.1);
+  transform: scale(1.15);
 }
 
 .volver-container {
-  margin-top: 30px;
+  margin-top: 40px;
   text-align: center;
 }
