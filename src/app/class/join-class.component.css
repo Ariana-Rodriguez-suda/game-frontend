@@ -62,3 +62,16 @@ button:hover {
   margin-top: 10px;
   font-size: 10px;
 }
+
+img[alt="Unirse"],
+img[alt="Volver"] {
+  display: block;
+  margin: 10px auto 0 auto;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+img[alt="Unirse"]:hover,
+img[alt="Volver"]:hover {
+  transform: scale(1.05);
+}

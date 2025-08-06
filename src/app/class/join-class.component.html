@@ -9,11 +9,23 @@
       placeholder="Código de clase"
       required
     />
-    <button type="submit">Unirse</button>
+
+    <img
+      src="/assets/hud/unirse.png"
+      alt="Unirse"
+      width="120"
+      height="50"
+      style="cursor: pointer; margin-top: 10px;"
+      (click)="unirseClase()" />
   </form>
 
   <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
 </div>
 
-<button (click)="goBack()">Volver</button>
-
+<img
+  src="/assets/hud/volver.png"
+  alt="Volver"
+  width="80"
+  height="40"
+  style="cursor: pointer; margin-top: 20px;"
+  (click)="goBack()" />

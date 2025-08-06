@@ -72,3 +72,16 @@ button:hover {
   background-color: #ccc;
   color: #000;
 }
+
+.button-img {
+  width: 180px;
+  height: auto;
+  cursor: pointer;
+  display: block;
+  margin: 0 auto;
+  transition: transform 0.2s ease;
+}
+
+.button-img:hover {
+  transform: scale(1.05);
+}

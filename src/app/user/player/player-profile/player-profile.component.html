@@ -4,17 +4,40 @@
   <p><strong>Usuario:</strong> {{ player.username }}</p>
   <p><strong>Monedas:</strong> {{ player.coins }}</p>
 
-<div *ngIf="player?.activeAvatar">
-  <app-avatar [avatarUrl]="player.activeAvatar.imageUrl"></app-avatar>
-  <p><strong>Avatar activo:</strong> {{ player.activeAvatar.name }}</p>
-</div>
-
+  <div *ngIf="player?.activeAvatar">
+    <app-avatar [avatarUrl]="player.activeAvatar.imageUrl"></app-avatar>
+    <p><strong>Avatar activo:</strong> {{ player.activeAvatar.name }}</p>
+  </div>
 
   <div class="button-group">
-    <button (click)="irJugar()">Jugar</button>
-    <button (click)="irSeleccionarAvatar()">Seleccionar Avatar</button>
-    <button (click)="irTienda()">Tienda</button>
-    <button (click)="irUnirseClase()">Unirse a Clase</button>
-    <button class="back-button" (click)="goBack()">Volver a Inicio</button>
+    <img
+      src="/assets/hud/jugar.png"
+      alt="Jugar"
+      class="button-img"
+      (click)="irJugar()" />
+
+    <img
+      src="/assets/hud/avatar.png"
+      alt="Seleccionar Avatar"
+      class="button-img"
+      (click)="irSeleccionarAvatar()" />
+
+    <img
+      src="/assets/hud/tienda.png"
+      alt="Tienda"
+      class="button-img"
+      (click)="irTienda()" />
+
+    <img
+      src="/assets/hud/unirse.png"
+      alt="Unirse a Clase"
+      class="button-img"
+      (click)="irUnirseClase()" />
+
+    <img
+      src="/assets/hud/volver.png"
+      alt="Volver a Inicio"
+      class="button-img"
+      (click)="goBack()" />
   </div>
 </div>

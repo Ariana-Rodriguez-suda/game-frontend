@@ -1,15 +1,25 @@
 <div class="profile-card">
-<button class="volver-btn" (click)="volverHome()">← Volver a inicio</button>
+  <img
+    src="/assets/hud/volver.png"
+    class="icon-button"
+    alt="Volver"
+    (click)="volverHome()"
+  />
 
   <h2>Perfil de Maestro</h2>
 
   <div *ngIf="!editMode">
     <p><strong>Usuario:</strong> {{ user.username }}</p>
     <p><strong>Correo:</strong> {{ user.email }}</p>
-    <button (click)="editMode = true">Modificar datos</button>
+    <img
+      src="/assets/hud/actualizar.png"
+      alt="Modificar"
+      class="icon-button"
+      (click)="editMode = true"
+    />
   </div>
 
-  <div *ngIf="editMode">
+  <div *ngIf="editMode" class="edit-form">
     <label>Usuario:</label>
     <input [(ngModel)]="editUsername" name="editUsername" />
 
@@ -19,18 +29,50 @@
     <label>Nueva Contraseña:</label>
     <input [(ngModel)]="editPassword" name="editPassword" type="password" />
 
-    <button (click)="saveProfileChanges()">Guardar Cambios</button>
-    <button (click)="editMode = false">Cancelar</button>
+    <div class="edit-buttons">
+      <img
+        src="/assets/hud/actualizar.png"
+        alt="Guardar"
+        class="icon-button"
+        (click)="saveProfileChanges()"
+      />
+      <img
+        src="/assets/hud/volver.png"
+        alt="Cancelar"
+        class="icon-button"
+        (click)="editMode = false"
+      />
+    </div>
   </div>
 
   <hr />
 
   <h3>Crear nueva clase</h3>
-  <form (ngSubmit)="createClass()">
-    <input [(ngModel)]="newClassName" name="newClassName" placeholder="Nombre" required />
-    <input [(ngModel)]="newClassSubject" name="newClassSubject" placeholder="Materia" required />
-    <input [(ngModel)]="newClassInstitution" name="newClassInstitution" placeholder="Institución" required />
-    <button type="submit">Crear clase</button>
+  <form (ngSubmit)="createClass()" class="create-class-form">
+    <input
+      [(ngModel)]="newClassName"
+      name="newClassName"
+      placeholder="Nombre"
+      required
+    />
+    <input
+      [(ngModel)]="newClassSubject"
+      name="newClassSubject"
+      placeholder="Materia"
+      required
+    />
+    <input
+      [(ngModel)]="newClassInstitution"
+      name="newClassInstitution"
+      placeholder="Institución"
+      required
+    />
+    <img
+      src="/assets/hud/crear.png"
+      alt="Crear"
+      class="icon-button"
+      type="submit"
+    />
   </form>
 
   <hr />
@@ -38,17 +80,23 @@
   <div *ngIf="classes.length > 0">
     <h3>Mis clases</h3>
     <ul>
-<li *ngFor="let c of classes">
-  <div class="class-info">
-    <strong>{{ c.name }}</strong> - {{ c.subject }} ({{ c.institution }})<br />
-    <small><strong>Código:</strong> {{ c.code }}</small>
-  </div>
-  <div class="class-buttons">
-    <button (click)="goToClass(c.id)">Ver estudiantes</button>
-    <button (click)="editClass(c)">Editar</button>
-    <button (click)="deleteClass(c.id)">Eliminar</button>
-  </div>
-</li>
+      <li *ngFor="let c of classes">
+        <div class="class-info">
+          <strong>{{ c.name }}</strong> - {{ c.subject }} ({{ c.institution
+          }})<br />
+          <small><strong>Código:</strong> {{ c.code }}</small>
+        </div>
+        <div class="class-buttons">
+          <button (click)="goToClass(c.id)">Ver estudiantes</button>
+          <button (click)="editClass(c)">Editar</button>
+          <img
+            src="/assets/hud/eliminar.png"
+            alt="Eliminar"
+            class="icon-button small"
+            (click)="deleteClass(c.id)"
+          />
+        </div>
+      </li>
     </ul>
   </div>
 </div>
