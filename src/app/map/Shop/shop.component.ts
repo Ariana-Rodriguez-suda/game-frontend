@@ -5,7 +5,7 @@ import { CommonModule, NgForOf } from '@angular/common';
 @Component({
   selector: 'app-shop',
   standalone: true,
-  imports: [CommonModule, NgForOf],
+  imports: [CommonModule],
   templateUrl: './shop.component.html',
   styleUrls: ['./shop.component.css'],
 })
